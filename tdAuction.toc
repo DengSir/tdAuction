@@ -1,0 +1,6 @@
+## Interface: 11303
+## Title: tdAuction
+## Author: Dencer
+## Version: @project-version@
+
+Load.xml

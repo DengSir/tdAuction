@@ -1,0 +1,13 @@
+<Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+    <Script file="Addon.lua" />
+    <Script file="API.lua" />
+    <Script file="SellOutput.lua" />
+
+    <Script file="Query\Querier.lua" />
+    <Script file="Query\Scaner.lua" />
+    <Script file="Query\FullScaner.lua" />
+
+    <Include file="UI\Template.xml" />
+    <Script file="UI\FullScan.lua" />
+</Ui>

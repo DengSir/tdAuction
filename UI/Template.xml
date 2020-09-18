@@ -1,0 +1,107 @@
+<Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+    <Frame name="tdAuctionFullScanFrameTemplate" hidden="true" virtual="true">
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+            <BackgroundInsets left="11" right="11" top="12" bottom="10"/>
+            <TileSize val="32"/>
+            <EdgeSize val="32"/>
+        </Backdrop>
+        <Size x="600" y="300" />
+        <Anchors>
+            <Anchor point="CENTER" />
+        </Anchors>
+        <Frames>
+            <Frame parentKey="Blocker" enableMouse="true">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="AuctionFrame" x="-20" y="20" />
+                    <Anchor point="BOTTOMRIGHT" relativeTo="AuctionFrame" x="20" y="-20" />
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+                        local ts = {
+                            AuctionFrameTopLeft,
+                            AuctionFrameTop,
+                            AuctionFrameTopRight,
+                            AuctionFrameBotLeft,
+                            AuctionFrameBot,
+                            AuctionFrameBotRight,
+                        }
+
+                        for _, v in ipairs(ts) do
+                            local m = self:CreateMaskTexture(nil, 'BACKGROUND')
+                            m:SetAllPoints(v)
+                            m:SetTexture(v:GetTexture(), 'CLAMPTOBLACKADDITIVE', 'CLAMPTOBLACKADDITIVE')
+
+                            local t = self:CreateTexture(nil, 'BACKGROUND')
+                            t:SetAllPoints(v)
+                            t:SetColorTexture(0,0,0,0.6)
+                            t:AddMaskTexture(m)
+                        end
+                    </OnLoad>
+                </Scripts>
+            </Frame>
+            <Button parentKey="CloseButton" inherits="UIPanelCloseButton">
+                <Anchors>
+                    <Anchor point="TOPRIGHT" x="-8" y="-8"/>
+                </Anchors>
+            </Button>
+            <Button parentKey="ExecButton" inherits="UIPanelButtonTemplate">
+                <Size x="120" y="22" />
+                <Anchors>
+                    <Anchor point="TOP" relativeKey="$parent.Inset" x="0" y="-60" />
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        self:GetParent():Start()
+                    </OnClick>
+                </Scripts>
+            </Button>
+            <Button parentKey="OpenButton" inherits="UIPanelButtonTemplate">
+                <Size x="80" y="20" />
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="AuctionFrame" x="70" y="-14" />
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+                        self.panel = self:GetParent()
+                        self:SetParent(AuctionFrame)
+                    </OnLoad>
+                    <OnClick>
+                        self.panel:SetShown(not self.panel:IsShown())
+                    </OnClick>
+                </Scripts>
+            </Button>
+        </Frames>
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture parentKey="Header" file="Interface\DialogFrame\UI-DialogBox-Header">
+                    <Size x="300" y="68"/>
+                    <Anchors>
+                        <Anchor point="TOP" x="0" y="12"/>
+                    </Anchors>
+                </Texture>
+                <FontString parentKey="HeaderText" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOP" relativeKey="$parent.Header">
+                            <Offset x="0" y="-14"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString parentKey="Text" inherits="GameFontHighlight">
+                    <Anchors>
+                        <Anchor point="TOP" relativeKey="$parent.ExecButton" relativePoint="BOTTOM" x="0" y="-60" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnShow>
+                self:SetFrameLevel(self:GetParent():GetFrameLevel() + 100)
+                self.Blocker:SetFrameLevel(self:GetFrameLevel() - 1)
+            </OnShow>
+            <OnHide>
+                self:Hide()
+            </OnHide>
+        </Scripts>
+    </Frame>
+</Ui>
