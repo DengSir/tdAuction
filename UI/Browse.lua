@@ -213,6 +213,27 @@ function Browse:SetupEventsAndHooks()
         self:UpdateAll()
     end)
 
+    local orig_ChatEdit_InsertLink = ChatEdit_InsertLink
+    _G.ChatEdit_InsertLink = function(text)
+        if self.Name:IsVisible() and IsShiftKeyDown() then
+            self.Name:Hide()
+            local ok = orig_ChatEdit_InsertLink(text)
+            self.Name:Show()
+
+            if not ok then
+                local name, link = GetItemInfo(text)
+                if link then
+                    self.Name:SetText(link)
+                    self:RequestSearch()
+                    ok = true
+                end
+            end
+            return ok
+        else
+            return orig_ChatEdit_InsertLink(text)
+        end
+    end
+
     self:PatchVisible('UpdateItems')
     self:PatchVisible('UpdateSelected')
     self:PatchVisible('UpdateSortButtons')

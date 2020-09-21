@@ -1,6 +1,7 @@
-## Interface: 11303
+## Interface: 11305
 ## Title: tdAuction
 ## Author: Dencer
 ## Version: @project-version@
+## SavedVariables: TDDB_AUCTION
 
 Load.xml

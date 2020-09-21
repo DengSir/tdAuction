@@ -16,4 +16,5 @@
     <Script file="UI\BrowseItem.lua" />
     <Script file="UI\Browse.lua" />
     <Script file="UI\Sell.lua" />
+    <Script file="UI\Tooltip.lua" />
 </Ui>

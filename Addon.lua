@@ -20,6 +20,9 @@ ns.L = setmetatable({}, {
 ---@class GLOBAL
 local DEFAULT_GLOBAL = {prices = {}}
 
+---@class PROFILE
+local DEFAULT_PROFILE = {tooltip = {price = true, auctionPrice = true, decomposePrice = true}}
+
 function Addon:OnInitialize()
     self:SetupDatabase()
     self:SetupBlizzardUI()
@@ -39,9 +42,10 @@ function Addon:OnClassCreated(class, name)
 end
 
 function Addon:SetupDatabase()
-    ns.db = LibStub('AceDB-3.0'):New('TDDB_AUCTION', {global = {prices = {}}})
+    ns.db = LibStub('AceDB-3.0'):New('TDDB_AUCTION', {global = DEFAULT_GLOBAL, profile = DEFAULT_PROFILE})
 
     ns.global = ns.db.global
+    ns.profile = ns.db.profile
 end
 
 function Addon:SetupBlizzardUI()
@@ -164,4 +168,16 @@ function Addon:SetupUI()
     ns.UI.FullScan:Bind(CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionFullScanFrameTemplate'))
     ns.UI.Browse:Bind(AuctionFrameBrowse)
     ns.UI.Sell:Bind(AuctionFrameAuctions)
+
+    hooksecurefunc('ContainerFrameItemButton_OnModifiedClick', function(button)
+        if AuctionFrame:IsShown() and IsAltKeyDown() then
+            local bag = button:GetParent():GetID()
+            local slot = button:GetID()
+
+            AuctionFrameTab_OnClick(AuctionFrameTab3)
+            PickupContainerItem(bag, slot)
+            ClickAuctionSellItemButton()
+            ClearCursor()
+        end
+    end)
 end

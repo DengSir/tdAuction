@@ -12,6 +12,7 @@
 ---@field PriceScaner PriceScaner
 ---@field Querier Querier
 ---@field global GLOBAL
+---@field profile PROFILE
 
 ---@class UI
 ---@field FullScan FullScan
