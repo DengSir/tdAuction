@@ -6,6 +6,48 @@
 ---@type ns
 local ns = select(2, ...)
 
+local Hider
+function ns.hide(obj)
+    if not Hider then
+        Hider = CreateFrame('Frame')
+        Hider:Hide()
+    end
+    obj:Hide()
+    obj:SetParent(Hider)
+end
+
+function ns.point(obj, ...)
+    obj:ClearAllPoints()
+    obj:SetPoint(...)
+end
+
+function ns.rgb(r, g, b)
+    if b then
+        return r, g, b
+    elseif r.r then
+        return r.r, r.g, r.b
+    else
+        return unpack(r)
+    end
+end
+
+function ns.gsc(money)
+    money = floor(money)
+    local text = ''
+    if (money % 100 > 0) and (money < 10000) or (money == 0) then
+        text = COPPER_AMOUNT_TEXTURE:format(money % 100, 0, 0)
+    end
+    money = floor(money / 100)
+    if (money % 100 > 0) and (money < 100000) then
+        text = SILVER_AMOUNT_TEXTURE:format(money % 100) .. ' ' .. text
+    end
+    money = floor(money / 100)
+    if (money > 0) then
+        text = GOLD_AMOUNT_TEXTURE:format(money, 0, 0) .. ' ' .. text
+    end
+    return text:trim()
+end
+
 local Tooltip
 function ns.GetAuctionSellItemLink()
     if not Tooltip then
@@ -75,4 +117,13 @@ end
 function ns.IsValidNpc()
     local npcId = NpcId()
     return npcId and VALID_NPCS[npcId]
+end
+
+function ns.ParamsEqual(a, b)
+    if not a or not b then
+        return false
+    end
+
+    return a.text == b.text and a.minLevel == b.minLevel and a.maxLevel == b.maxLevel and a.filters == b.filters and
+               a.usable == b.usable and a.quality == b.quality
 end

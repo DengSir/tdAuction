@@ -6,6 +6,8 @@
 ---@type ns
 local ns = select(2, ...)
 
+local QueryAuctionItems = QueryAuctionItems
+
 local STATUS_PENDING = 1
 local STATUS_WAITRESP = 2
 local STATUS_RUNNING = 3
@@ -25,11 +27,19 @@ function Querier:OnInitialize()
         [STATUS_RUNNING] = self.Running,
     }
 
+    hooksecurefunc('QueryAuctionItems', function()
+        if not self.ourQuery then
+            self.updater:Hide()
+            self.scaner = nil
+        end
+    end)
+
     self:RegisterEvent('AUCTION_HOUSE_CLOSED')
 end
 
 function Querier:AUCTION_HOUSE_CLOSED()
     self.queryAllDisabled = nil
+    self.scaner = nil
     self.updater:Hide()
 end
 
@@ -109,8 +119,10 @@ function Querier:Pending()
 
     self.scaner:PreQuery()
 
+    self.ourQuery = true
     QueryAuctionItems(text, params.minLevel, params.maxLevel, self.page, params.usable, params.quality, params.queryAll,
                       exact, params.filters)
+    self.ourQuery = nil
 
     if params.queryAll then
         self.queryAllDisabled = true

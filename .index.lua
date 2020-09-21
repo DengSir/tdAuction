@@ -8,18 +8,27 @@
 ---@field Addon Addon
 ---@field Scaner Scaner
 ---@field FullScaner FullScaner
+---@field BrowseScaner BrowseScaner
+---@field PriceScaner PriceScaner
 ---@field Querier Querier
 ---@field global GLOBAL
 
 ---@class UI
 ---@field FullScan FullScan
 ---@field Browse Browse
+---@field BrowseItem BrowseItem
+---@field Sell Sell
 
 ---@class Addon
 
 ---@class Scaner
+---@field params Params
 
 ---@class FullScaner: Scaner
+
+---@class BrowseScaner: Scaner
+
+---@class PriceScaner: Scaner
 
 ---@class Params
 ---@field text string
@@ -41,3 +50,7 @@
 ---@class FullScan: Frame
 
 ---@class Browse: Frame
+
+---@class Sell: Frame
+
+---@class BrowseItem: Button

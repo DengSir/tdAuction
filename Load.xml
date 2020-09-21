@@ -7,7 +7,13 @@
     <Script file="Query\Querier.lua" />
     <Script file="Query\Scaner.lua" />
     <Script file="Query\FullScaner.lua" />
+    <Script file="Query\BrowseScaner.lua" />
+    <Script file="Query\PriceScaner.lua" />
 
     <Include file="UI\Template.xml" />
+    <Script file="UI\ComboBox.lua" />
     <Script file="UI\FullScan.lua" />
+    <Script file="UI\BrowseItem.lua" />
+    <Script file="UI\Browse.lua" />
+    <Script file="UI\Sell.lua" />
 </Ui>

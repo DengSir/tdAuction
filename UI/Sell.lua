@@ -1,0 +1,275 @@
+-- Sell.lua
+-- @Author : Dencer (tdaddon@163.com)
+-- @Link   : https://dengsir.github.io
+-- @Date   : 9/21/2020, 1:46:18 PM
+--
+---@type ns
+local ns = select(2, ...)
+
+local L = ns.L
+
+local Sell = ns.Addon:NewClass('UI.Sell', 'Frame')
+
+function Sell:Constructor()
+
+    self.scaner = ns.PriceScaner:New()
+    self.scaner:SetCallback('OnDone', function()
+        local link = ns.GetAuctionSellItemLink()
+        local itemKey = ns.ParseItemKey(link)
+        local price = ns.global.prices[itemKey]
+        local items = self.scaner:GetResponseItems()
+        local errText
+
+        if not price then
+            local vendoPrice = select(11, GetItemInfo(link))
+            if vendoPrice then
+                price = vendoPrice * 10
+                errText = format(L['Use merchant price x%d'], 10)
+            else
+                errText = L['No price']
+            end
+        else
+            if #items > 0 then
+                for i, item in ipairs(items) do
+                    if not item.isMine then
+                        price = item.price - 1
+                        break
+                    else
+                        price = item.price
+                    end
+                end
+            else
+                price = price - 1
+                errText = L['Use history price']
+            end
+        end
+
+        if items and #items > 0 then
+            self.PriceListButton:Show()
+        end
+
+        if errText then
+            self.PriceSetText:SetText(errText)
+            self.PriceSetText:SetTextColor(1, 0, 0)
+        else
+            self.PriceSetText:SetText(L['Choose other price'])
+            self.PriceSetText:SetTextColor(1, 0.81, 0)
+        end
+
+        self.items = self.scaner:GetResponseItems()
+        self:SetPrice(price)
+        self:UpdatePriceList()
+        self.PriceReading:Hide()
+        self.PriceSetText:Show()
+    end)
+
+    self:LayoutBlizzard()
+    self:SetupEvents()
+end
+
+function Sell:LayoutBlizzard()
+    local t = AuctionsItemButton:CreateTexture(nil, 'BACKGROUND')
+    t:SetSize(173, 40)
+    t:SetPoint('TOPLEFT', -2, 2)
+    t:SetTexture([[Interface\AuctionFrame\UI-AuctionFrame-ItemSlot]])
+    t:SetTexCoord(0.15625, 0.83203125, 0.171875, 0.796875)
+
+    self.SellFrame = CreateFrame('Frame', nil, self, 'tdAuctionSellFrameTemplate')
+    self.StartPrice = StartPrice
+    self.BuyoutPrice = BuyoutPrice
+    self.PriceDropDown = PriceDropDown
+    self.ItemCount = AuctionsItemButtonCount
+    self.StackSizeEntry = AuctionsStackSizeEntry
+    self.NumStacksEntry = AuctionsNumStacksEntry
+    self.StackSizeMaxButton = AuctionsStackSizeMaxButton
+    self.NumStacksMaxButton = AuctionsNumStacksMaxButton
+    self.DurationDropDown = self.SellFrame.DurationDropDown
+    self.PriceReading = self.SellFrame.PriceReading
+    self.PriceList = self.SellFrame.PriceList
+    self.PriceListButton = self.SellFrame.PriceListButton
+    self.PriceSetText = self.SellFrame.PriceSetText
+
+    local point = ns.point
+    local hide = ns.hide
+
+    hide(AuctionsShortAuctionButton)
+    hide(AuctionsMediumAuctionButton)
+    hide(AuctionsLongAuctionButton)
+
+    point(AuctionsItemButton, 'TOPLEFT', 30, -94)
+    point(AuctionsDurationText, 'LEFT', self.DurationDropDown, 'RIGHT', -192, 3)
+    point(self.StartPrice, 'BOTTOMLEFT', 35, 196)
+    point(self.BuyoutPrice, 'BOTTOMLEFT', self.StartPrice, 'BOTTOMLEFT', 0, -35)
+    point(self.PriceDropDown, 'TOPRIGHT', self, 'TOPLEFT', 217, -192)
+
+    point(self.StackSizeMaxButton, 'LEFT', self.StackSizeEntry, 'RIGHT', 0, 1)
+    point(self.NumStacksMaxButton, 'LEFT', self.NumStacksEntry, 'RIGHT', 0, 1)
+    point(self.StackSizeEntry, 'TOPLEFT', 33, -153)
+    point(self.NumStacksEntry, 'LEFT', self.StackSizeEntry, 'RIGHT', 50, 0)
+    point(AuctionsStackSizeEntryRight, 'RIGHT')
+    point(AuctionsNumStacksEntryRight, 'RIGHT')
+
+    point(AuctionsWowTokenAuctionFrame.BuyoutPriceLabel, 'TOPLEFT', 6, -58)
+
+    AuctionsBuyoutErrorText:Hide()
+    AuctionsBuyoutErrorText = self.SellFrame.BuyoutError
+
+    self.StackSizeEntry:SetWidth(40)
+    self.NumStacksEntry:SetWidth(40)
+    self.StackSizeMaxButton:SetWidth(40)
+    self.NumStacksMaxButton:SetWidth(40)
+
+    self.PriceList.CountLabel:SetText(L['Count'])
+    self.PriceList.PriceLabel:SetText(L['Price'])
+
+    ns.UI.ComboBox:Bind(self.DurationDropDown)
+    self.DurationDropDown:SetItems{
+        {text = '2 ' .. HOURS, value = 1},
+        {text = '8 ' .. HOURS, value = 2},
+        {text = '24 ' .. HOURS, value = 3},
+    }
+    self.DurationDropDown:SetCallback('OnValueChanged', function(_, value)
+        self:SetDuration(value)
+    end)
+
+    self.priceType = 1
+    self.DurationDropDown:SetValue(self.duration)
+
+    HybridScrollFrame_CreateButtons(self.PriceList.ScrollFrame, 'tdAuctionPriceItemTemplate')
+    self.PriceList.ScrollFrame.update = function()
+        return self:UpdatePriceList()
+    end
+    self.PriceList:SetScript('OnShow', self.PriceList.ScrollFrame.update)
+
+    local function OnClick(button)
+        self:SetPrice(button.price - (button.isMine and 0 or 1))
+    end
+
+    for _, button in ipairs(self.PriceList.ScrollFrame.buttons) do
+        button:SetScript('OnClick', OnClick)
+    end
+end
+
+function Sell:SetupEvents()
+    AuctionsItemButton:HookScript('OnEvent', function()
+        local name, texture, count, quality, canUse, price, pricePerUnit, stackCount, totalCount, itemId =
+            GetAuctionSellItemInfo()
+
+        self.PriceList:Hide()
+        self.PriceListButton:Hide()
+        self.PriceSetText:Hide()
+
+        if not C_WowTokenPublic.IsAuctionableWowToken(itemId) then
+            if totalCount > 1 then
+                self.ItemCount:SetText(totalCount)
+                self.ItemCount:Show()
+                self.StackSizeEntry:Show()
+                self.StackSizeMaxButton:Show()
+                self.NumStacksEntry:Show()
+                self.NumStacksMaxButton:Show()
+                self.PriceDropDown:Show()
+                UpdateMaximumButtons()
+            else
+                self.ItemCount:Hide()
+                self.StackSizeEntry:Hide()
+                self.StackSizeMaxButton:Hide()
+                self.NumStacksEntry:Hide()
+                self.NumStacksMaxButton:Hide()
+                self.PriceDropDown:Hide()
+            end
+
+            if totalCount > 0 then
+                -- local stackSize = ns.profile.auction.sell.stackSize
+                local stackSize = 0
+                if stackSize == 0 then
+                    stackSize = stackCount
+                end
+                stackSize = min(stackSize, totalCount, stackCount)
+                local numStacks = floor(totalCount / stackSize)
+
+                print(stackSize, numStacks)
+
+                self.StackSizeEntry:SetNumber(stackSize)
+                self.NumStacksEntry:SetNumber(numStacks)
+
+                local duration = 2
+                local durationNoDeposit = 3
+
+                local deposit = GetAuctionDeposit(duration, 1, 1, stackSize, numStacks)
+                if durationNoDeposit ~= 0 and deposit == 0 then
+                    self:SetDuration(durationNoDeposit)
+                else
+                    self:SetDuration(duration)
+                end
+
+                MoneyInputFrame_SetCopper(StartPrice, 0)
+                MoneyInputFrame_SetCopper(BuyoutPrice, 0)
+
+                local link = ns.GetAuctionSellItemLink()
+                self.scaner:Query({text = link})
+                self.PriceReading:Show()
+            end
+
+            self.DurationDropDown:Show()
+        else
+            self.DurationDropDown:Hide()
+        end
+    end)
+end
+
+function Sell:UpdatePriceList()
+    if not self.items or not self.PriceList:IsVisible() then
+        return
+    end
+
+    local scrollFrame = self.PriceList.ScrollFrame
+    local buttons = scrollFrame.buttons
+    local offset = HybridScrollFrame_GetOffset(scrollFrame)
+    local hasScrollBar = #self.items * 20 > scrollFrame:GetHeight()
+    local width = hasScrollBar and 149 or 169
+
+    for i, button in ipairs(buttons) do
+        local item = self.items[i + offset]
+        if not item then
+            button:Hide()
+        else
+            button.isMine = item.isMine
+            button.price = item.price
+            button.Count:SetFormattedText('%dx%d', item.stackSize, item.count)
+            button.Price:SetText(GetMoneyString(item.price))
+            button:Show()
+            button:SetWidth(width)
+
+            if item.isMine then
+                button.Price:SetTextColor(0, 1, 0)
+            else
+                button.Price:SetTextColor(1, 1, 1)
+            end
+        end
+    end
+
+    HybridScrollFrame_Update(scrollFrame, #self.items * 20, scrollFrame:GetHeight())
+
+    scrollFrame:SetWidth(width)
+end
+
+function Sell:SetPrice(price)
+    if not price then
+        return
+    end
+
+    if self.priceType == 1 then
+        MoneyInputFrame_SetCopper(self.BuyoutPrice, price)
+        MoneyInputFrame_SetCopper(self.StartPrice, price * 0.95)
+    else
+        local stackSize = self.StackSizeEntry:GetNumber()
+        MoneyInputFrame_SetCopper(self.BuyoutPrice, price * stackSize)
+        MoneyInputFrame_SetCopper(self.StartPrice, price * 0.95 * stackSize)
+    end
+end
+
+function Sell:SetDuration(duration)
+    self.duration = duration
+    self.DurationDropDown:SetValue(duration)
+    UpdateDeposit()
+end
