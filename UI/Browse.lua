@@ -243,6 +243,10 @@ function Browse:SetupEventsAndHooks()
         end
     end
 
+    AuctionFrame:HookScript('OnHide', function()
+        self.Name:SetText('')
+    end)
+
     self:PatchVisible('UpdateItems')
     self:PatchVisible('UpdateSelected')
     self:PatchVisible('UpdateControls')

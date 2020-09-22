@@ -47,7 +47,7 @@ function FullScaner:OnDone()
     for itemKey, quality in pairs(self.cache) do
         qualities[quality] = (qualities[quality] or 0) + 1
 
-        if not ns.global.prices[itemKey] then
+        if not ns.prices[itemKey] then
             new = new + 1
         else
             update = update + 1

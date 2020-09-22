@@ -99,7 +99,7 @@ function Scaner:SavePrices(db)
     end
 
     for itemKey, price in pairs(db) do
-        ns.global.prices[itemKey] = price
+        ns.prices[itemKey] = price
     end
 end
 

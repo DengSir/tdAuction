@@ -63,6 +63,10 @@ function Addon:SetupDatabase()
 
     ns.global = ns.db.global
     ns.profile = ns.db.profile
+
+    local realm = GetRealmName()
+    ns.global.prices[realm] = ns.global.prices[realm] or {}
+    ns.prices = ns.global.prices[realm]
 end
 
 function Addon:SetupBlizzardUI()

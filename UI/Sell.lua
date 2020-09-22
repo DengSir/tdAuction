@@ -202,7 +202,7 @@ end
 function Sell:OnItemPriceScanDone()
     local link = ns.GetAuctionSellItemLink()
     local itemKey = ns.ParseItemKey(link)
-    local price = ns.global.prices[itemKey]
+    local price = ns.prices[itemKey]
     local items = self.scaner:GetResponseItems()
     local errText
 
