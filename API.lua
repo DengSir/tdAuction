@@ -127,3 +127,12 @@ function ns.ParamsEqual(a, b)
     return a.text == b.text and a.minLevel == b.minLevel and a.maxLevel == b.maxLevel and a.filters == b.filters and
                a.usable == b.usable and a.quality == b.quality
 end
+
+ns.ITEM_QUALITY_DESCS = {}
+do
+    for quality = Enum.ItemQuality.Poor, Enum.ItemQuality.Heirloom do
+        local r, g, b = GetItemQualityColor(quality)
+        ns.ITEM_QUALITY_DESCS[quality] = format('|cff%02x%02x%02x%s|r', r * 255, g * 255, b * 255,
+                                                _G['ITEM_QUALITY' .. quality .. '_DESC'])
+    end
+end

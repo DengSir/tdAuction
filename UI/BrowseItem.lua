@@ -23,7 +23,7 @@ end
 function BrowseItem:OnClick()
     local link = GetAuctionItemLink('list', self.id)
     if IsModifiedClick() then
-        if IsControlKeyDown() and IsAltKeyDown() then
+        if ns.profile.buy.quickBuy and IsControlKeyDown() and IsAltKeyDown() then
             local buyoutPrice = select(10, GetAuctionItemInfo('list', self.id))
             if buyoutPrice and buyoutPrice > 0 then
                 PlaceAuctionBid('list', self.id, buyoutPrice)

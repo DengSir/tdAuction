@@ -1,0 +1,133 @@
+-- Option.lua
+-- @Author : Dencer (tdaddon@163.com)
+-- @Link   : https://dengsir.github.io
+-- @Date   : 9/22/2020, 10:47:50 AM
+--
+---@type ns
+local ns = select(2, ...)
+
+local L = ns.L
+
+local Addon = ns.Addon
+
+function Addon:SetupOptionFrame()
+    local order = 0
+    local function orderGen()
+        order = order + 1
+        return order
+    end
+
+    local function getConfig(paths)
+        local d = ns.profile
+        for i, v in ipairs(paths) do
+            d = d[v]
+        end
+        return d
+    end
+
+    local function setConfig(paths, value)
+        local d = ns.profile
+        local n = #paths
+        for i, v in ipairs(paths) do
+            if i < n then
+                d = d[v]
+            else
+                d[v] = value
+            end
+        end
+    end
+
+    local function inline(name)
+        return function(args)
+            return {type = 'group', name = name, inline = true, order = orderGen(), args = args}
+        end
+    end
+
+    local function drop(name)
+        return function(values)
+            local opts = { --
+                type = 'select',
+                name = name,
+                width = 'double',
+                order = orderGen(),
+            }
+
+            if type(values) == 'function' then
+                opts.values = values
+            else
+                opts.values = {}
+                opts.sorting = {}
+
+                for i, v in ipairs(values) do
+                    opts.values[v.value] = v.name
+                    opts.sorting[i] = v.value
+                end
+            end
+            return opts
+        end
+    end
+
+    local function toggle(name)
+        return {type = 'toggle', name = name, width = 'double', order = orderGen()}
+    end
+
+    local function range(name, min, max, step)
+        return {type = 'range', order = orderGen(), name = name, width = 'double', min = min, max = max, step = step}
+    end
+
+    local options = {
+        type = 'group',
+        name = 'tdAuction',
+        get = function(paths)
+            return getConfig(paths)
+        end,
+        set = function(paths, value)
+            return setConfig(paths, value)
+        end,
+        args = {
+            buy = inline(BROWSE) { --
+                quickBuy = toggle(L['Enable ALT-CTRL click to buyout']),
+            },
+            sell = inline(AUCTIONS) {
+                autoOpenPriceList = toggle(L['Auto open price list']),
+                scanFull = toggle(L['Scan full']),
+                altSell = toggle(L['Enable ALT to sell']),
+                stackSize = drop(L['Default stack size']) { --
+                    {name = L['Full'], value = 0},
+                    {name = '1', value = 1},
+                    {name = '5', value = 5},
+                    {name = '10', value = 10},
+                    {name = '20', value = 20},
+                },
+                duration = drop(L['Default auction duration']) {
+                    {name = L['Ignore'], value = false},
+                    {name = '2 ' .. HOURS, value = 1},
+                    {name = '8 ' .. HOURS, value = 2},
+                    {name = '24 ' .. HOURS, value = 3},
+                },
+                durationNoDeposit = drop(L['Duration no deposit']) {
+                    {name = L['Ignore'], value = false},
+                    {name = '2 ' .. HOURS, value = 1},
+                    {name = '8 ' .. HOURS, value = 2},
+                    {name = '24 ' .. HOURS, value = 3},
+                },
+                merchantRatio = range(L['When no price, use merchant price multiply by'], 1, 100, 0.1),
+                bidRatio = range(L['Start price discount'], 0, 1, 0.01),
+            },
+            tooltip = inline(L['Tooltip']) {
+                price = toggle(L['Merchant price']),
+                auctionPrice = toggle(L['Auction price']),
+                decomposePrice = toggle(L['Decompose price']),
+                shiftSingle = drop(L['When pressed SHIFT, to dislay']) {
+                    {name = L['Total price'], value = false},
+                    {name = L['Single price'], value = true},
+                },
+            },
+        },
+    }
+
+    local AceConfigRegistry = LibStub('AceConfigRegistry-3.0')
+    local AceConfigDialog = LibStub('AceConfigDialog-3.0')
+    AceConfigRegistry:RegisterOptionsTable('tdAuction', options)
+    AceConfigDialog:AddToBlizOptions('tdAuction', 'tdAuction')
+end

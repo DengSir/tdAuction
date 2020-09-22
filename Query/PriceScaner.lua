@@ -6,6 +6,15 @@
 ---@type ns
 local ns = select(2, ...)
 
+local pairs = pairs
+local format = string.format
+local tinsert = table.insert
+local sort = table.sort or sort
+
+local UnitIsUnit = UnitIsUnit
+local SortAuctionClearSort = SortAuctionClearSort
+local SortAuctionSetSort = SortAuctionSetSort
+
 local Scaner = ns.Scaner
 
 ---@type PriceScaner
@@ -18,7 +27,7 @@ function PriceScaner:Query(params)
 end
 
 function PriceScaner:Next()
-    return not self.db[self.itemKey]
+    return not self.db[self.itemKey] or ns.profile.sell.scanFull
 end
 
 function PriceScaner:OnStart()
@@ -43,7 +52,7 @@ function PriceScaner:OnDone()
 
     self.items = {}
 
-    for _, v in pairs(self.cache    ) do
+    for _, v in pairs(self.cache) do
         tinsert(self.items, v)
     end
 

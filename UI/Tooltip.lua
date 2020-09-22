@@ -61,11 +61,17 @@ local INVALID_EQUIP_LOC = { --
     ['INVTYPE_AMMO'] = true,
 }
 
+local PREFIX_VENDO = L.TOOLTIP_PREFIX_VENDO
+local PREFIX_AUCTION = L.TOOLTIP_PREFIX_AUCTION
+local PREFIX_DECOMPOSE = L.TOOLTIP_PREFIX_DECOMPOSE
+
 local function AddPrice(tip, prefix, unitPrice, count)
-    if IsShiftKeyDown() then
-        tip:AddDoubleLine(prefix, GetMoneyString(unitPrice), 1, 0.82, 0, 1, 1, 1)
+    count = max(1, count)
+
+    if count == 1 or (not not IsShiftKeyDown() == not ns.profile.tooltip.shiftSingle) then
+        tip:AddDoubleLine(prefix, GetMoneyString(unitPrice), 0, 1, 0.5, 1, 1, 1)
     else
-        tip:AddDoubleLine(format('%s |cffaaaaffx%d|r', prefix, count), GetMoneyString(unitPrice * count), 1, 0.82, 0, 1,
+        tip:AddDoubleLine(format('%s |cffaaaaffx%d|r', prefix, count), GetMoneyString(unitPrice * count), 0, 1, 0.5, 1,
                           1, 1)
     end
 end
@@ -75,7 +81,7 @@ local function OnTooltipItem(tip, link, count)
     if ns.profile.tooltip.price then
         local price = select(11, GetItemInfo(link))
         if price and price > 0 then
-            AddPrice(tip, L['Price'], price, count)
+            AddPrice(tip, PREFIX_VENDO, price, count)
         end
     end
 
@@ -83,7 +89,7 @@ local function OnTooltipItem(tip, link, count)
         local itemKey = ns.ParseItemKey(link)
         local price = itemKey and ns.global.prices[itemKey]
         if price then
-            AddPrice(tip, L['Auction'], price, count)
+            AddPrice(tip, PREFIX_AUCTION, price, count)
         end
     end
 

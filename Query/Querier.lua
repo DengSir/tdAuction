@@ -6,7 +6,12 @@
 ---@type ns
 local ns = select(2, ...)
 
+local floor, max = math.floor, math.max
+
 local QueryAuctionItems = QueryAuctionItems
+local GetNumAuctionItems = GetNumAuctionItems
+local CanSendAuctionQuery = CanSendAuctionQuery
+local GetItemInfo = GetItemInfo
 
 local STATUS_PENDING = 1
 local STATUS_WAITRESP = 2
@@ -67,6 +72,7 @@ function Querier:Query(params, scaner)
     self.params = params
     self.scaner = scaner
     self.status = STATUS_PENDING
+    self.page = params.page or 0
 
     self.scaner:OnStart()
     self.updater:Show()
@@ -136,12 +142,9 @@ function Querier:Running()
 
     if self.scaner:Next() and self.page < self.pageMax then
         self.page = self.page + 1
-        print(self.page)
         self.status = STATUS_PENDING
         return
     end
-
-    print('Done')
 
     self.scaner:Done()
     self.updater:Hide()

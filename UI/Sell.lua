@@ -11,60 +11,13 @@ local L = ns.L
 local Sell = ns.Addon:NewClass('UI.Sell', 'Frame')
 
 function Sell:Constructor()
-
     self.scaner = ns.PriceScaner:New()
     self.scaner:SetCallback('OnDone', function()
-        local link = ns.GetAuctionSellItemLink()
-        local itemKey = ns.ParseItemKey(link)
-        local price = ns.global.prices[itemKey]
-        local items = self.scaner:GetResponseItems()
-        local errText
-
-        if not price then
-            local vendoPrice = select(11, GetItemInfo(link))
-            if vendoPrice then
-                price = vendoPrice * 10
-                errText = format(L['Use merchant price x%d'], 10)
-            else
-                errText = L['No price']
-            end
-        else
-            if #items > 0 then
-                for i, item in ipairs(items) do
-                    if not item.isMine then
-                        price = item.price - 1
-                        break
-                    else
-                        price = item.price
-                    end
-                end
-            else
-                price = price - 1
-                errText = L['Use history price']
-            end
-        end
-
-        if items and #items > 0 then
-            self.PriceListButton:Show()
-        end
-
-        if errText then
-            self.PriceSetText:SetText(errText)
-            self.PriceSetText:SetTextColor(1, 0, 0)
-        else
-            self.PriceSetText:SetText(L['Choose other price'])
-            self.PriceSetText:SetTextColor(1, 0.81, 0)
-        end
-
-        self.items = self.scaner:GetResponseItems()
-        self:SetPrice(price)
-        self:UpdatePriceList()
-        self.PriceReading:Hide()
-        self.PriceSetText:Show()
+        self:OnItemPriceScanDone()
     end)
 
     self:LayoutBlizzard()
-    self:SetupEvents()
+    self:SetupEventsAndHooks()
 end
 
 function Sell:LayoutBlizzard()
@@ -150,71 +103,155 @@ function Sell:LayoutBlizzard()
     end
 end
 
-function Sell:SetupEvents()
-    AuctionsItemButton:HookScript('OnEvent', function()
-        local name, texture, count, quality, canUse, price, pricePerUnit, stackCount, totalCount, itemId =
-            GetAuctionSellItemInfo()
-
-        self.PriceList:Hide()
-        self.PriceListButton:Hide()
-        self.PriceSetText:Hide()
-
-        if not C_WowTokenPublic.IsAuctionableWowToken(itemId) then
-            if totalCount > 1 then
-                self.ItemCount:SetText(totalCount)
-                self.ItemCount:Show()
-                self.StackSizeEntry:Show()
-                self.StackSizeMaxButton:Show()
-                self.NumStacksEntry:Show()
-                self.NumStacksMaxButton:Show()
-                self.PriceDropDown:Show()
-                UpdateMaximumButtons()
-            else
-                self.ItemCount:Hide()
-                self.StackSizeEntry:Hide()
-                self.StackSizeMaxButton:Hide()
-                self.NumStacksEntry:Hide()
-                self.NumStacksMaxButton:Hide()
-                self.PriceDropDown:Hide()
-            end
-
-            if totalCount > 0 then
-                -- local stackSize = ns.profile.auction.sell.stackSize
-                local stackSize = 0
-                if stackSize == 0 then
-                    stackSize = stackCount
-                end
-                stackSize = min(stackSize, totalCount, stackCount)
-                local numStacks = floor(totalCount / stackSize)
-
-                print(stackSize, numStacks)
-
-                self.StackSizeEntry:SetNumber(stackSize)
-                self.NumStacksEntry:SetNumber(numStacks)
-
-                local duration = 2
-                local durationNoDeposit = 3
-
-                local deposit = GetAuctionDeposit(duration, 1, 1, stackSize, numStacks)
-                if durationNoDeposit ~= 0 and deposit == 0 then
-                    self:SetDuration(durationNoDeposit)
-                else
-                    self:SetDuration(duration)
-                end
-
-                MoneyInputFrame_SetCopper(StartPrice, 0)
-                MoneyInputFrame_SetCopper(BuyoutPrice, 0)
-
-                local link = ns.GetAuctionSellItemLink()
-                self.scaner:Query({text = link})
-                self.PriceReading:Show()
-            end
-
-            self.DurationDropDown:Show()
-        else
-            self.DurationDropDown:Hide()
+function Sell:SetupEventsAndHooks()
+    AuctionsItemButton:HookScript('OnEvent', function(_, event)
+        if event == 'NEW_AUCTION_UPDATE' then
+            return self:OnSellItemUpdate()
         end
     end)
+
+    AuctionsBlockFrame:HookScript('OnShow', function()
+        self.PriceList:Hide()
+    end)
+
+    hooksecurefunc('ContainerFrameItemButton_OnModifiedClick', function(button)
+        if ns.profile.sell.altSell and AuctionFrame:IsShown() and IsAltKeyDown() then
+            local bag = button:GetParent():GetID()
+            local slot = button:GetID()
+            local locked = select(3, GetContainerItemInfo(bag, slot))
+
+            if not locked then
+                AuctionFrameTab_OnClick(AuctionFrameTab3)
+                PickupContainerItem(bag, slot)
+                ClickAuctionSellItemButton()
+                ClearCursor()
+            end
+        end
+    end)
+
+    self:HookScript('OnShow', self.OnSellItemUpdate)
+end
+
+function Sell:OnSellItemUpdate()
+    if not self:IsVisible() then
+        return
+    end
+
+    local name, texture, count, quality, canUse, price, pricePerUnit, stackCount, totalCount, itemId =
+        GetAuctionSellItemInfo()
+
+    self.PriceList:Hide()
+    self.PriceListButton:Hide()
+    self.PriceSetText:Hide()
+    self.DurationDropDown:Hide()
+
+    if C_WowTokenPublic.IsAuctionableWowToken(itemId) then
+        return
+    end
+
+    if totalCount > 1 then
+        self.ItemCount:SetText(totalCount)
+        self.ItemCount:Show()
+        self.StackSizeEntry:Show()
+        self.StackSizeMaxButton:Show()
+        self.NumStacksEntry:Show()
+        self.NumStacksMaxButton:Show()
+        self.PriceDropDown:Show()
+        UpdateMaximumButtons()
+    else
+        self.ItemCount:Hide()
+        self.StackSizeEntry:Hide()
+        self.StackSizeMaxButton:Hide()
+        self.NumStacksEntry:Hide()
+        self.NumStacksMaxButton:Hide()
+        self.PriceDropDown:Hide()
+    end
+
+    if totalCount > 0 then
+        local stackSize = ns.profile.sell.stackSize
+        if stackSize == 0 then
+            stackSize = stackCount
+        end
+        stackSize = min(stackSize, totalCount, stackCount)
+        local numStacks = floor(totalCount / stackSize)
+
+        self.StackSizeEntry:SetNumber(stackSize)
+        self.NumStacksEntry:SetNumber(numStacks)
+
+        local duration = ns.profile.sell.duration
+        local durationNoDeposit = ns.profile.sell.durationNoDeposit
+
+        local deposit = GetAuctionDeposit(duration, 1, 1, stackSize, numStacks)
+        if durationNoDeposit ~= 0 and deposit == 0 then
+            self:SetDuration(durationNoDeposit)
+        else
+            self:SetDuration(duration)
+        end
+
+        MoneyInputFrame_SetCopper(StartPrice, 0)
+        MoneyInputFrame_SetCopper(BuyoutPrice, 0)
+
+        local link = ns.GetAuctionSellItemLink()
+        self.scaner:Query({text = link})
+        self.PriceReading:Show()
+    end
+
+    self.DurationDropDown:Show()
+end
+
+function Sell:OnItemPriceScanDone()
+    local link = ns.GetAuctionSellItemLink()
+    local itemKey = ns.ParseItemKey(link)
+    local price = ns.global.prices[itemKey]
+    local items = self.scaner:GetResponseItems()
+    local errText
+
+    if not price then
+        local vendoPrice = select(11, GetItemInfo(link))
+        if vendoPrice then
+            local merchantRatio = ns.profile.sell.merchantRatio
+            price = vendoPrice * merchantRatio
+            errText = format(L['Use merchant price x%d'], merchantRatio)
+        else
+            errText = L['No price']
+        end
+    else
+        if #items > 0 then
+            for i, item in ipairs(items) do
+                if not item.isMine then
+                    price = item.price - 1
+                    break
+                else
+                    price = item.price
+                end
+            end
+        else
+            price = price - 1
+            errText = L['Use history price']
+        end
+    end
+
+    if items and #items > 0 then
+        self.PriceListButton:Show()
+    end
+
+    self.items = items
+    self:SetPrice(price)
+    self:UpdatePriceList()
+    self.PriceReading:Hide()
+    self.PriceSetText:Show()
+
+    if errText then
+        self.PriceSetText:SetText(errText)
+        self.PriceSetText:SetTextColor(1, 0, 0)
+    else
+        self.PriceSetText:SetText(L['Choose other price'])
+        self.PriceSetText:SetTextColor(1, 0.81, 0)
+
+        if ns.profile.sell.autoOpenPriceList then
+            self.PriceList:Show()
+        end
+    end
 end
 
 function Sell:UpdatePriceList()
@@ -226,7 +263,7 @@ function Sell:UpdatePriceList()
     local buttons = scrollFrame.buttons
     local offset = HybridScrollFrame_GetOffset(scrollFrame)
     local hasScrollBar = #self.items * 20 > scrollFrame:GetHeight()
-    local width = hasScrollBar and 149 or 169
+    local width = hasScrollBar and 169 or 189
 
     for i, button in ipairs(buttons) do
         local item = self.items[i + offset]
@@ -258,14 +295,13 @@ function Sell:SetPrice(price)
         return
     end
 
-    if self.priceType == 1 then
-        MoneyInputFrame_SetCopper(self.BuyoutPrice, price)
-        MoneyInputFrame_SetCopper(self.StartPrice, price * 0.95)
-    else
-        local stackSize = self.StackSizeEntry:GetNumber()
-        MoneyInputFrame_SetCopper(self.BuyoutPrice, price * stackSize)
-        MoneyInputFrame_SetCopper(self.StartPrice, price * 0.95 * stackSize)
+    local bidRatio = ns.profile.sell.bidRatio
+    if self.priceType ~= 1 then
+        price = price * self.StackSizeEntry:GetNumber()
     end
+
+    MoneyInputFrame_SetCopper(self.BuyoutPrice, price)
+    MoneyInputFrame_SetCopper(self.StartPrice, max(1, price * bidRatio))
 end
 
 function Sell:SetDuration(duration)

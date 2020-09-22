@@ -19,6 +19,7 @@
 ---@field Browse Browse
 ---@field BrowseItem BrowseItem
 ---@field Sell Sell
+---@field ComboBox ComboBox
 
 ---@class Addon
 
@@ -55,3 +56,5 @@
 ---@class Sell: Frame
 
 ---@class BrowseItem: Button
+
+---@class ComboBox: Frame

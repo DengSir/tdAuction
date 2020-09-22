@@ -6,6 +6,9 @@
 ---@type ns
 local ns = select(2, ...)
 
+local pairs = pairs
+local min = math.min
+
 local L = ns.L
 local Scaner = ns.Scaner
 

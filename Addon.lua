@@ -11,21 +11,38 @@ local Addon = LibStub('AceAddon-3.0'):NewAddon('tdAuction', 'LibClass-2.0', 'Ace
 
 ns.Addon = Addon
 ns.UI = {}
-ns.L = setmetatable({}, {
-    __index = function(t, k)
-        return k
-    end,
-})
+ns.L = LibStub('AceLocale-3.0'):GetLocale('tdAuction')
 
 ---@class GLOBAL
-local DEFAULT_GLOBAL = {prices = {}}
+local DEFAULT_GLOBAL = { --
+    prices = {},
+}
 
 ---@class PROFILE
-local DEFAULT_PROFILE = {tooltip = {price = true, auctionPrice = true, decomposePrice = true}}
+local DEFAULT_PROFILE = { --
+    tooltip = { --
+        price = true,
+        auctionPrice = true,
+        decomposePrice = true,
+        shiftSingle = false,
+    },
+    sell = {
+        stackSize = 0,
+        duration = 2,
+        durationNoDeposit = false,
+        autoOpenPriceList = true,
+        scanFull = false,
+        altSell = true,
+        bidRatio = 0.95,
+        merchantRatio = 5,
+    },
+    buy = {quickBuy = true},
+}
 
 function Addon:OnInitialize()
     self:SetupDatabase()
     self:SetupBlizzardUI()
+    self:SetupOptionFrame()
 end
 
 function Addon:OnModuleCreated(module)
@@ -168,16 +185,4 @@ function Addon:SetupUI()
     ns.UI.FullScan:Bind(CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionFullScanFrameTemplate'))
     ns.UI.Browse:Bind(AuctionFrameBrowse)
     ns.UI.Sell:Bind(AuctionFrameAuctions)
-
-    hooksecurefunc('ContainerFrameItemButton_OnModifiedClick', function(button)
-        if AuctionFrame:IsShown() and IsAltKeyDown() then
-            local bag = button:GetParent():GetID()
-            local slot = button:GetID()
-
-            AuctionFrameTab_OnClick(AuctionFrameTab3)
-            PickupContainerItem(bag, slot)
-            ClickAuctionSellItemButton()
-            ClearCursor()
-        end
-    end)
 end

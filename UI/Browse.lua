@@ -109,6 +109,15 @@ function Browse:LayoutBlizzard()
     parent(self.SearchButton)
     parent(self.ResetButton)
 
+    ns.UI.ComboBox:Bind(self.QualityDropDown)
+    self.QualityDropDown:SetItems((function()
+        local items = {{text = ALL, value = -1}}
+        for i = Enum.ItemQuality.Poor, Enum.ItemQuality.Epic do
+            tinsert(items, {text = ns.ITEM_QUALITY_DESCS[i], value = i})
+        end
+        return items
+    end)())
+    self.QualityDropDown:SetValue(-1)
 end
 
 function Browse:SetupScrollFrame()
@@ -236,8 +245,8 @@ function Browse:SetupEventsAndHooks()
 
     self:PatchVisible('UpdateItems')
     self:PatchVisible('UpdateSelected')
-    self:PatchVisible('UpdateSortButtons')
     self:PatchVisible('UpdateControls')
+    self:PatchVisible('UpdateSortButtons')
 end
 
 function Browse:UpdateAll()

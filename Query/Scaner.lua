@@ -6,6 +6,17 @@
 ---@type ns
 local ns = select(2, ...)
 
+local pairs = pairs
+local min, floor = math.min, math.floor
+local tinsert, tremove = table.insert, table.remove
+
+local debugprofilestop = debugprofilestop
+local debugprofilestart = debugprofilestart
+
+local GetNumAuctionItems = GetNumAuctionItems
+local GetAuctionItemLink = GetAuctionItemLink
+local GetAuctionItemInfo = GetAuctionItemInfo
+
 ---@type Scaner
 local Scaner = ns.Addon:NewClass('Scaner')
 
