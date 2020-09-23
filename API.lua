@@ -137,9 +137,16 @@ do
     end
 end
 
-local function GetDisenchantPossibles(key, quality, itemLevel)
+function ns.GetDisenchantPossibles(equipLoc, quality, itemLevel)
+    local key = ns.DISENCHANT_KEYS[equipLoc]
+    if not key then
+        return
+    end
     local classData = ns.DISENCHANT_POSSIBLES[key]
-    local qualityData = classData and classData[quality]
+    if not classData then
+        return
+    end
+    local qualityData = classData[quality]
     if not qualityData then
         return
     end
@@ -156,12 +163,7 @@ function ns.GetDisenchantPrice(equipLoc, quality, itemLevel)
         return
     end
 
-    local disenchantKey = ns.DISENCHANT_KEYS[equipLoc]
-    if not disenchantKey then
-        return
-    end
-
-    local possibles = GetDisenchantPossibles(disenchantKey, quality, itemLevel)
+    local possibles = ns.GetDisenchantPossibles(equipLoc, quality, itemLevel)
     if not possibles then
         return
     end

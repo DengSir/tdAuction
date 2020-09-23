@@ -98,6 +98,35 @@ local function OnTooltipItem(tip, link, count)
         local price = ns.GetDisenchantPrice(equipLoc, quality, itemLevel)
         if price then
             AddPrice(tip, PREFIX_DISENCHANT, price, count)
+
+            local showDisenchant = ns.profile.tooltip.showDisenchant
+            if showDisenchant and (showDisenchant ~= 1 or IsShiftKeyDown()) then
+                local possibles = ns.GetDisenchantPossibles(equipLoc, quality, itemLevel)
+                if possibles then
+                    for i, info in ipairs(possibles) do
+                        local name, _, quality = GetItemInfo(info.id)
+                        if name then
+                            local r, g, b = GetItemQualityColor(quality)
+
+                            local count
+                            if info.min == info.max then
+                                if info.min == 1 then
+                                    count = ''
+                                else
+                                    count = info.min
+                                end
+                            else
+                                count = format('%d-%d', info.min, info.max)
+                            end
+
+                            local textLeft = format('  |cff%02x%02x%02x%s|r %s', r * 255, g * 255, b * 255, name, count)
+                            local textRight = format('%.1f%%', info.rate * 100)
+
+                            tip:AddDoubleLine(textLeft, textRight, 1, 0.82, 0, nil, 1, 0.82, 0)
+                        end
+                    end
+                end
+            end
         end
     end
 

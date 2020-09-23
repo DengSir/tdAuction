@@ -134,6 +134,11 @@ function Addon:SetupOptionFrame()
                 price = toggle(L['Merchant price']),
                 auctionPrice = toggle(L['Auction price']),
                 disenchantPrice = toggle(L['Disenchant price']),
+                showDisenchant = drop(L['Show disenchant info']) {
+                    {name = L['Nerver'], value = false},
+                    {name = L['Pressed SHIFT'], value = 1},
+                    {name = L['Always'], value = 2},
+                },
                 shiftSingle = drop(L['When pressed SHIFT, to dislay ...']) {
                     {name = L['Total price'], value = false},
                     {name = L['Single price'], value = true},

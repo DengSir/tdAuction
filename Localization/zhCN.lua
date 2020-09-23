@@ -25,6 +25,11 @@ L['Time'] = '时间'
 L['Bid price'] = '竞标价'
 L['Unit price'] = '一口单价'
 
+L['Show disenchant info'] = '显示分解详情'
+L['Nerver'] = '从不显示'
+L['Pressed SHIFT'] = '按下SHIFT时显示'
+L['Always'] = '始终显示'
+
 L['Full scan'] = '完整扫描'
 L['Start scan'] = '开始扫描'
 L['Next available time:'] = '下次可用时间：'

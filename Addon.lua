@@ -27,6 +27,7 @@ local DEFAULT_PROFILE = { --
         auctionPrice = true,
         disenchantPrice = true,
         shiftSingle = false,
+        showDisenchant = false,
     },
     sell = {
         stackSize = 0,
