@@ -10,6 +10,9 @@ local L = ns.L
 
 local Addon = ns.Addon
 
+local AceConfigRegistry = LibStub('AceConfigRegistry-3.0')
+local AceConfigDialog = LibStub('AceConfigDialog-3.0')
+
 function Addon:SetupOptionFrame()
     local order = 0
     local function orderGen()
@@ -40,6 +43,16 @@ function Addon:SetupOptionFrame()
     local function inline(name)
         return function(args)
             return {type = 'group', name = name, inline = true, order = orderGen(), args = args}
+        end
+    end
+
+    local function treeTitle(name)
+        return {type = 'group', name = '|cffffd100' .. name .. '|r', order = orderGen(), args = {}, disabled = true}
+    end
+
+    local function treeItem(name)
+        return function(args)
+            return {type = 'group', name = '  |cffffffff' .. name .. '|r', order = orderGen(), args = args}
         end
     end
 
@@ -85,10 +98,12 @@ function Addon:SetupOptionFrame()
             return setConfig(paths, value)
         end,
         args = {
-            buy = inline(BROWSE) { --
+            buyTitle = treeTitle(BROWSE),
+            buy = treeItem(BROWSE) { --
                 quickBuy = toggle(L['Enable ALT-CTRL click to buyout']),
             },
-            sell = inline(AUCTIONS) {
+            sellTitle = treeTitle(AUCTIONS),
+            sell = treeItem(AUCTIONS) {
                 autoOpenPriceList = toggle(L['Auto open price list']),
                 scanFull = toggle(L['Scan full']),
                 altSell = toggle(L['Enable ALT to sell']),
@@ -114,11 +129,12 @@ function Addon:SetupOptionFrame()
                 merchantRatio = range(L['When no price, use merchant price multiply by'], 1, 100, 0.1),
                 bidRatio = range(L['Start price discount'], 0, 1, 0.01),
             },
-            tooltip = inline(L['Tooltip']) {
+            tooltipTitle = treeTitle(L['Tooltip']),
+            tooltip = treeItem(L['Tooltip']) {
                 price = toggle(L['Merchant price']),
                 auctionPrice = toggle(L['Auction price']),
-                decomposePrice = toggle(L['Decompose price']),
-                shiftSingle = drop(L['When pressed SHIFT, to dislay']) {
+                disenchantPrice = toggle(L['Disenchant price']),
+                shiftSingle = drop(L['When pressed SHIFT, to dislay ...']) {
                     {name = L['Total price'], value = false},
                     {name = L['Single price'], value = true},
                 },
@@ -126,8 +142,10 @@ function Addon:SetupOptionFrame()
         },
     }
 
-    local AceConfigRegistry = LibStub('AceConfigRegistry-3.0')
-    local AceConfigDialog = LibStub('AceConfigDialog-3.0')
     AceConfigRegistry:RegisterOptionsTable('tdAuction', options)
     AceConfigDialog:AddToBlizOptions('tdAuction', 'tdAuction')
+end
+
+function Addon:OpenOptionFrame()
+    AceConfigDialog:Open('tdAuction')
 end

@@ -64,6 +64,7 @@ ComboBox.GetValue = UIDropDownMenu_GetSelectedValue
 
 hooksecurefunc('UIDropDownMenu_SetSelectedValue', function(obj, value)
     if obj and obj.GetType and obj:GetType() == ComboBox then
+        obj.selectedValue = nil
         obj:SetValue(value)
     end
 end)

@@ -182,7 +182,7 @@ function Sell:OnSellItemUpdate()
         local durationNoDeposit = ns.profile.sell.durationNoDeposit
 
         local deposit = GetAuctionDeposit(duration, 1, 1, stackSize, numStacks)
-        if durationNoDeposit ~= 0 and deposit == 0 then
+        if durationNoDeposit and deposit == 0 then
             self:SetDuration(durationNoDeposit)
         else
             self:SetDuration(duration)

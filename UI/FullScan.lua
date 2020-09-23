@@ -22,7 +22,6 @@ function FullScan:Constructor()
     end)
 
     self.HeaderText:SetText(L['Full scan'])
-    self.OpenButton:SetText(L['Full scan'])
     self.ExecButton:SetText(L['Start scan'])
 
     self.statusUpdates = { --

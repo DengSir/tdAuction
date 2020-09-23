@@ -3,8 +3,7 @@
     <Include file="Localization\Localization.xml" />
     <Script file="Addon.lua" />
     <Script file="API.lua" />
-    <Script file="SellOutput.lua" />
-    <Script file="Option.lua" />
+    <Script file="Data.lua" />
 
     <Script file="Query\Querier.lua" />
     <Script file="Query\Scaner.lua" />
@@ -19,4 +18,6 @@
     <Script file="UI\Browse.lua" />
     <Script file="UI\Sell.lua" />
     <Script file="UI\Tooltip.lua" />
+    <Script file="UI\SellOutput.lua" />
+    <Script file="UI\Option.lua" />
 </Ui>

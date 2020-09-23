@@ -9,9 +9,11 @@ local ns = select(2, ...)
 ---@type Addon
 local Addon = LibStub('AceAddon-3.0'):NewAddon('tdAuction', 'LibClass-2.0', 'AceEvent-3.0')
 
+local L = LibStub('AceLocale-3.0'):GetLocale('tdAuction')
+
 ns.Addon = Addon
 ns.UI = {}
-ns.L = LibStub('AceLocale-3.0'):GetLocale('tdAuction')
+ns.L = L
 
 ---@class GLOBAL
 local DEFAULT_GLOBAL = { --
@@ -23,7 +25,7 @@ local DEFAULT_PROFILE = { --
     tooltip = { --
         price = true,
         auctionPrice = true,
-        decomposePrice = true,
+        disenchantPrice = true,
         shiftSingle = false,
     },
     sell = {
@@ -186,7 +188,17 @@ function Addon:SetupBackground()
 end
 
 function Addon:SetupUI()
-    ns.UI.FullScan:Bind(CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionFullScanFrameTemplate'))
-    ns.UI.Browse:Bind(AuctionFrameBrowse)
-    ns.UI.Sell:Bind(AuctionFrameAuctions)
+    self.FullScan = ns.UI.FullScan:Bind(CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionFullScanFrameTemplate'))
+    self.Browse = ns.UI.Browse:Bind(AuctionFrameBrowse)
+    self.Sell = ns.UI.Sell:Bind(AuctionFrameAuctions)
+    self.Features = CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionFeaturesFrameTemplate')
+
+    self.Features.FullScanButton:SetText(L['Full scan'])
+    self.Features.FullScanButton:SetScript('OnClick', function()
+        self.FullScan:Show()
+    end)
+
+    self.Features.OptionButton:SetScript('OnClick', function()
+        self:OpenOptionFrame()
+    end)
 end

@@ -6,6 +6,8 @@
 ---@type ns
 local ns = select(2, ...)
 
+local L = ns.L
+
 local BUTTON_HEIGHT = 18
 
 local Browse = ns.Addon:NewClass('UI.Browse', 'Frame')
@@ -21,6 +23,7 @@ function Browse:Constructor()
     self:SetupSortButtons()
     self:SetupScrollFrame()
     self:SetupEventsAndHooks()
+    self:SaveSorts()
 end
 
 function Browse:LayoutBlizzard()
@@ -136,18 +139,18 @@ function Browse:SetupSortButtons()
     self.sortButtons = {}
 
     local headers = {
-        {text = NAME, width = 147, relative = 'left', sortColumn = 'quality', reverse = nil},
-        {text = REQ_LEVEL_ABBR, width = 30, relative = 'left', sortColumn = 'level', reverse = true},
-        {text = 'Time', width = 60, relative = 'left', sortColumn = 'duration', reverse = true},
-        {text = AUCTION_CREATOR, width = nil, relative = 'middle', sortColumn = 'seller', reverse = true},
-        {text = 'Bid', width = 96, relative = 'right', sortColumn = 'bid', reverse = true},
-        {text = BUYOUT, width = 96, relative = 'right', sortColumn = 'buyout', reverse = true},
-        {text = 'Unit price', width = 96, relative = 'right', sortColumn = 'unitprice', reverse = true},
+        {width = 147, relative = 'left', reverse = false, sortColumn = 'quality', text = NAME},
+        {width = 30, relative = 'left', reverse = true, sortColumn = 'level', text = REQ_LEVEL_ABBR},
+        {width = 60, relative = 'left', reverse = true, sortColumn = 'duration', text = L['Time']},
+        {width = nil, relative = 'middle', reverse = true, sortColumn = 'seller', text = AUCTION_CREATOR},
+        {width = 96, relative = 'right', reverse = true, sortColumn = 'bid', text = L['Bid price']},
+        {width = 96, relative = 'right', reverse = true, sortColumn = 'buyout', text = BUYOUT},
+        {width = 96, relative = 'right', reverse = true, sortColumn = 'unitprice', text = L['Unit price']},
     }
 
     local function OnClick(button)
         AuctionFrame_OnClickSortColumn('list', button.sortColumn)
-        -- self:SaveSort()
+        self:SaveSorts()
     end
 
     for i, info in pairs(headers) do
@@ -219,6 +222,7 @@ function Browse:SetupEventsAndHooks()
     end)
 
     self:HookScript('OnShow', function()
+        self:RestoreSorts()
         self:UpdateAll()
     end)
 
@@ -449,5 +453,29 @@ function Browse:PatchVisible(method)
                 return m(self)
             end
         end
+    end
+end
+
+function Browse:SaveSorts()
+    local sorts = {}
+    local i = 1
+    while true do
+        local column, reverse = GetAuctionSort('list', i)
+        if not column then
+            break
+        end
+        tinsert(sorts, 1, {column = column, reverse = reverse})
+
+        i = i + 1
+    end
+
+    self.sorts = sorts
+end
+
+function Browse:RestoreSorts()
+    SortAuctionClearSort('list')
+
+    for i, v in ipairs(self.sorts) do
+        SortAuctionSetSort('list', v.column, v.reverse)
     end
 end

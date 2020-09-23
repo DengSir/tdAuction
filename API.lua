@@ -136,3 +136,45 @@ do
                                                 _G['ITEM_QUALITY' .. quality .. '_DESC'])
     end
 end
+
+local function GetDisenchantPossibles(key, quality, itemLevel)
+    local classData = ns.DISENCHANT_POSSIBLES[key]
+    local qualityData = classData and classData[quality]
+    if not qualityData then
+        return
+    end
+
+    for _, info in ipairs(qualityData) do
+        if not info.level or itemLevel <= info.level then
+            return info.possibles
+        end
+    end
+end
+
+function ns.GetDisenchantPrice(equipLoc, quality, itemLevel)
+    if not itemLevel or itemLevel == 0 then
+        return
+    end
+
+    local disenchantKey = ns.DISENCHANT_KEYS[equipLoc]
+    if not disenchantKey then
+        return
+    end
+
+    local possibles = GetDisenchantPossibles(disenchantKey, quality, itemLevel)
+    if not possibles then
+        return
+    end
+
+    local total = 0
+    for _, v in ipairs(possibles) do
+        local count = (v.min + v.max) / 2
+        local price = ns.prices[v.id .. ':0']
+        if not price then
+            return
+        end
+
+        total = total + price * count * v.rate
+    end
+    return total
+end

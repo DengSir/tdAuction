@@ -1,5 +1,21 @@
 <Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
+    <Frame name="tdAuctionFeaturesFrameTemplate" virtual="true">
+        <Frames>
+            <Button parentKey="FullScanButton" inherits="UIPanelButtonTemplate">
+                <Size x="80" y="20" />
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="AuctionFrame" x="70" y="-14" />
+                </Anchors>
+            </Button>
+            <Button parentKey="OptionButton" inherits="UIPanelButtonTemplate" text="OPTIONS">
+                <Size x="80" y="20" />
+                <Anchors>
+                    <Anchor point="LEFT" relativeKey="$parent.FullScanButton" relativePoint="RIGHT" />
+                </Anchors>
+            </Button>
+        </Frames>
+    </Frame>
     <Frame name="tdAuctionFullScanFrameTemplate" hidden="true" virtual="true">
         <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
             <BackgroundInsets left="11" right="11" top="12" bottom="10"/>
@@ -53,21 +69,6 @@
                 <Scripts>
                     <OnClick>
                         self:GetParent():Start()
-                    </OnClick>
-                </Scripts>
-            </Button>
-            <Button parentKey="OpenButton" inherits="UIPanelButtonTemplate">
-                <Size x="80" y="20" />
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="AuctionFrame" x="70" y="-14" />
-                </Anchors>
-                <Scripts>
-                    <OnLoad>
-                        self.panel = self:GetParent()
-                        self:SetParent(AuctionFrame)
-                    </OnLoad>
-                    <OnClick>
-                        self.panel:SetShown(not self.panel:IsShown())
                     </OnClick>
                 </Scripts>
             </Button>
@@ -526,6 +527,4 @@
             <Color r="1" g="1" b="1" a="0.3" />
         </HighlightTexture>
     </Button>
-
-
 </Ui>

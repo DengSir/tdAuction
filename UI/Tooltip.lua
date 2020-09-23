@@ -63,7 +63,7 @@ local INVALID_EQUIP_LOC = { --
 
 local PREFIX_VENDO = L.TOOLTIP_PREFIX_VENDO
 local PREFIX_AUCTION = L.TOOLTIP_PREFIX_AUCTION
-local PREFIX_DECOMPOSE = L.TOOLTIP_PREFIX_DECOMPOSE
+local PREFIX_DISENCHANT = L.TOOLTIP_PREFIX_DISENCHANT
 
 local function AddPrice(tip, prefix, unitPrice, count)
     count = max(1, count)
@@ -93,8 +93,12 @@ local function OnTooltipItem(tip, link, count)
         end
     end
 
-    if ns.profile.tooltip.decomposePrice then
-
+    if ns.profile.tooltip.disenchantPrice then
+        local _, _, quality, itemLevel, _, _, _, _, equipLoc = GetItemInfo(link)
+        local price = ns.GetDisenchantPrice(equipLoc, quality, itemLevel)
+        if price then
+            AddPrice(tip, PREFIX_DISENCHANT, price, count)
+        end
     end
 
     tip:Show()
