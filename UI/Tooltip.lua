@@ -65,10 +65,18 @@ local PREFIX_VENDO = L.TOOLTIP_PREFIX_VENDO
 local PREFIX_AUCTION = L.TOOLTIP_PREFIX_AUCTION
 local PREFIX_DISENCHANT = L.TOOLTIP_PREFIX_DISENCHANT
 
+local function ShowSingle()
+    if ns.profile.tooltip.shiftSingle then
+        return IsShiftKeyDown()
+    else
+        return not IsShiftKeyDown()
+    end
+end
+
 local function AddPrice(tip, prefix, unitPrice, count)
     count = max(1, count)
 
-    if count == 1 or (not not IsShiftKeyDown() == not ns.profile.tooltip.shiftSingle) then
+    if count == 1 or ShowSingle() then
         tip:AddDoubleLine(prefix, GetMoneyString(unitPrice), 0, 1, 0.5, 1, 1, 1)
     else
         tip:AddDoubleLine(format('%s |cffaaaaffx%d|r', prefix, count), GetMoneyString(unitPrice * count), 0, 1, 0.5, 1,
