@@ -27,7 +27,7 @@ local DEFAULT_PROFILE = { --
         auctionPrice = true,
         disenchantPrice = true,
         shiftSingle = true,
-        showDisenchant = false,
+        showDisenchant = 1,
     },
     sell = {
         stackSize = 0,
@@ -62,7 +62,7 @@ function Addon:OnClassCreated(class, name)
 end
 
 function Addon:SetupDatabase()
-    ns.db = LibStub('AceDB-3.0'):New('TDDB_AUCTION', {global = DEFAULT_GLOBAL, profile = DEFAULT_PROFILE})
+    ns.db = LibStub('AceDB-3.0'):New('TDDB_AUCTION', {global = DEFAULT_GLOBAL, profile = DEFAULT_PROFILE}, true)
 
     ns.global = ns.db.global
     ns.profile = ns.db.profile
