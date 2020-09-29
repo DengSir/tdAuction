@@ -162,7 +162,7 @@ function Addon:SetupBackground()
                 local val = select(i, ...)
                 if val then
                     local obj = _G['AuctionFrame' .. key]
-                    local texture = [[Interface\AddOns\tdUI\Media\AuctionFrame\UI-AuctionFrame-]] .. val .. '-' .. key
+                    local texture = [[Interface\AddOns\tdAuction\Media\UI-AuctionFrame-]] .. val .. '-' .. key
                     BGS[i] = BGS[i] or {}
                     BGS[i][obj] = texture
                 end
