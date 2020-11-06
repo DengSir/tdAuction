@@ -5,7 +5,9 @@ end
 
 L['Enable ALT-CTRL click to buyout'] = '开启ALT-CTRL点击一口价购买'
 L['Auto open price list'] = '自动打开价格列表'
-L['Scan full'] = '扫描所有'
+L['Scan price mode'] = '扫描价格模式'
+L['Scan all'] = '扫描所有'
+L['Scan one page'] = '扫描一页'
 L['Enable ALT to sell'] = '开启ALT出售'
 L['Default stack size'] = '默认堆叠数量'
 L['Full'] = '满'

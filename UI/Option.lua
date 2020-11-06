@@ -104,9 +104,12 @@ function Addon:SetupOptionFrame()
             },
             sellTitle = treeTitle(AUCTIONS),
             sell = treeItem(AUCTIONS) {
-                autoOpenPriceList = toggle(L['Auto open price list']),
-                scanFull = toggle(L['Scan full']),
                 altSell = toggle(L['Enable ALT to sell']),
+                autoOpenPriceList = toggle(L['Auto open price list']),
+                scanFull = drop(L['Scan price mode']) {
+                    {name = L['Scan all'], value = true},
+                    {name = L['Scan one page'], value = false},
+                },
                 stackSize = drop(L['Default stack size']) { --
                     {name = L['Full'], value = 0},
                     {name = '1', value = 1},
