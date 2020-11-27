@@ -75,7 +75,7 @@ end
 
 function FullScaner:ProcessAuction(index)
     local itemKey, count, price, quality = Scaner.ProcessAuction(self, index)
-    if itemKey then
+    if itemKey and quality > ITEM_QUALITY_POOR then
         self.cache[itemKey] = quality
     end
 end

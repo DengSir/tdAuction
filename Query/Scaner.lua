@@ -17,6 +17,8 @@ local GetNumAuctionItems = GetNumAuctionItems
 local GetAuctionItemLink = GetAuctionItemLink
 local GetAuctionItemInfo = GetAuctionItemInfo
 
+local ITEM_QUALITY_POOR = Enum.ItemQuality.Poor
+
 ---@type Scaner
 local Scaner = ns.Addon:NewClass('Scaner')
 
@@ -122,10 +124,12 @@ function Scaner:ProcessAuction(index)
         local unitPrice = floor(buyoutPrice / count)
         local itemKey = ns.ParseItemKey(link)
 
-        if not db[itemKey] then
-            db[itemKey] = unitPrice
-        else
-            db[itemKey] = min(db[itemKey], unitPrice)
+        if quality > ITEM_QUALITY_POOR then
+            if not db[itemKey] then
+                db[itemKey] = unitPrice
+            else
+                db[itemKey] = min(db[itemKey], unitPrice)
+            end
         end
         return itemKey, count, unitPrice, quality, owner
     end
