@@ -36,24 +36,27 @@ function BrowseScaner:OnStart()
 end
 
 function BrowseScaner:OnDone()
-    local db = {}
-    local page = 0
+    local sortType, sortRev = GetAuctionSort('list', 1)
+    if sortType == 'unitprice' and not sortRev then
+        local db = {}
+        local page = 0
 
-    while true do
-        local prices = self.db[page]
-        if not prices then
-            break
-        end
-
-        for itemKey, price in pairs(prices) do
-            if not db[itemKey] then
-                db[itemKey] = price
-            else
-                db[itemKey] = min(db[itemKey], price)
+        while true do
+            local prices = self.db[page]
+            if not prices then
+                break
             end
-        end
-        page = page + 1
-    end
 
-    self:SavePrices(db)
+            for itemKey, price in pairs(prices) do
+                if not db[itemKey] then
+                    db[itemKey] = price
+                else
+                    db[itemKey] = min(db[itemKey], price)
+                end
+            end
+            page = page + 1
+        end
+
+        self:SavePrices(db)
+    end
 end
