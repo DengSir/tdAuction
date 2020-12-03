@@ -367,7 +367,7 @@ function Browse:UpdateSelected()
         requiredBid = bidAmount + minIncrement
     end
 
-    MoneyInputFrame_SetCopper(self.BidPrice, requiredBid)
+    ns.SetMoneyFrame(self.BidPrice, requiredBid)
 
     if not highBidder and not isMine and money >= requiredBid and requiredBid <= MAXIMUM_BID_PRICE then
         self.BidButton:Enable()

@@ -188,8 +188,8 @@ function Sell:OnSellItemUpdate()
             self:SetDuration(duration)
         end
 
-        MoneyInputFrame_SetCopper(StartPrice, 0)
-        MoneyInputFrame_SetCopper(BuyoutPrice, 0)
+        ns.SetMoneyFrame(self.StartPrice, 0)
+        ns.SetMoneyFrame(self.BuyoutPrice, 0)
 
         local link = ns.GetAuctionSellItemLink()
         self.scaner:Query({text = link})
@@ -300,8 +300,8 @@ function Sell:SetPrice(price)
         price = price * self.StackSizeEntry:GetNumber()
     end
 
-    MoneyInputFrame_SetCopper(self.BuyoutPrice, price)
-    MoneyInputFrame_SetCopper(self.StartPrice, max(1, price * bidRatio))
+    ns.SetMoneyFrame(self.BuyoutPrice, price)
+    ns.SetMoneyFrame(self.StartPrice, max(1, price * bidRatio))
 end
 
 function Sell:SetDuration(duration)

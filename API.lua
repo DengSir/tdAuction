@@ -180,3 +180,18 @@ function ns.GetDisenchantPrice(equipLoc, quality, itemLevel)
     end
     return total
 end
+
+local function CheckMoney(editBox)
+    local value = editBox:GetNumber()
+    if value == 0 then
+        editBox:SetText('')
+        return true
+    end
+end
+
+function ns.SetMoneyFrame(moneyFrame, money)
+    MoneyInputFrame_SetCopper(moneyFrame, floor(money))
+
+    local name = moneyFrame:GetName()
+    return CheckMoney(_G[name .. 'Gold']) and CheckMoney(_G[name .. 'Silver']) and CheckMoney(_G[name .. 'Copper'])
+end
