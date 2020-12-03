@@ -88,6 +88,10 @@ function Addon:SetupOptionFrame()
         return {type = 'range', order = orderGen(), name = name, width = 'double', min = min, max = max, step = step}
     end
 
+    local function execute(name, confirm)
+        return {type = 'execute', order = orderGen(), name = name, confirm = not not confirm, confirmText = confirm}
+    end
+
     local options = {
         type = 'group',
         name = 'tdAuction',
@@ -98,11 +102,10 @@ function Addon:SetupOptionFrame()
             return setConfig(paths, value)
         end,
         args = {
-            buyTitle = treeTitle(BROWSE),
+            sellTitle = treeTitle(AUCTIONS),
             buy = treeItem(BROWSE) { --
                 quickBuy = toggle(L['Enable ALT-CTRL click to buyout']),
             },
-            sellTitle = treeTitle(AUCTIONS),
             sell = treeItem(AUCTIONS) {
                 altSell = toggle(L['Enable ALT to sell']),
                 autoOpenPriceList = toggle(L['Auto open price list']),
@@ -131,6 +134,11 @@ function Addon:SetupOptionFrame()
                 },
                 merchantRatio = range(L['When no price, use merchant price multiply by'], 1, 100, 0.1),
                 bidRatio = range(L['Start price discount'], 0, 1, 0.01),
+            },
+            db = treeItem(L['Database']) {
+                clear = execute(L['Clear database'], L['You are sure to clear the database'], function()
+                    return wipe(ns.prices)
+                end),
             },
             tooltipTitle = treeTitle(L['Tooltip']),
             tooltip = treeItem(L['Tooltip']) {

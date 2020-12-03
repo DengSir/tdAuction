@@ -129,6 +129,12 @@ function Sell:SetupEventsAndHooks()
         end
     end)
 
+    AuctionsStackSizeEntry:HookScript('OnTextChanged', function(_, text)
+        if self.priceType ~= 1 and self.price then
+            self:SetPrice(self.price)
+        end
+    end)
+
     self:HookScript('OnShow', self.OnSellItemUpdate)
 end
 
@@ -136,6 +142,8 @@ function Sell:OnSellItemUpdate()
     if not self:IsVisible() then
         return
     end
+
+    self.price = nil
 
     local name, texture, count, quality, canUse, price, pricePerUnit, stackCount, totalCount, itemId =
         GetAuctionSellItemInfo()
@@ -294,6 +302,8 @@ function Sell:SetPrice(price)
     if not price then
         return
     end
+
+    self.price = price
 
     local bidRatio = ns.profile.sell.bidRatio
     if self.priceType ~= 1 then
