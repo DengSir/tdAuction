@@ -88,8 +88,15 @@ function Addon:SetupOptionFrame()
         return {type = 'range', order = orderGen(), name = name, width = 'double', min = min, max = max, step = step}
     end
 
-    local function execute(name, confirm)
-        return {type = 'execute', order = orderGen(), name = name, confirm = not not confirm, confirmText = confirm}
+    local function execute(name, confirm, func)
+        return {
+            type = 'execute',
+            order = orderGen(),
+            name = name,
+            confirm = not not confirm,
+            confirmText = confirm,
+            func = func,
+        }
     end
 
     local options = {
