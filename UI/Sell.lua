@@ -135,7 +135,24 @@ function Sell:SetupEventsAndHooks()
         end
     end)
 
+    self:HookScript('OnEvent', function(self, event, ...)
+        if event == 'AUCTION_MULTISELL_UPDATE' then
+            local n, m = ...
+            if n == m then
+                self:OnMultiSellDone()
+            end
+        elseif event == 'AUCTION_MULTISELL_FAILURE' then
+            self:OnMultiSellDone()
+        end
+    end)
+
     self:HookScript('OnShow', self.OnSellItemUpdate)
+end
+
+function Sell:OnMultiSellDone()
+    C_Timer.After(2, function()
+        GetOwnerAuctionItems()
+    end)
 end
 
 function Sell:OnSellItemUpdate()
