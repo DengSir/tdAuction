@@ -33,7 +33,7 @@ function BrowseItem:OnClick()
         end
     else
         if GetCVarBool('auctionDisplayOnCharacter') then
-            DressUpLink(link)
+            DressUpItemLink(link)
         end
 
         SetSelectedAuctionItem('list', self.id)
