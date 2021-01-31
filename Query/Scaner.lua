@@ -10,14 +10,23 @@ local pairs = pairs
 local min, floor = math.min, math.floor
 local tinsert, tremove = table.insert, table.remove
 
-local debugprofilestop = debugprofilestop
-local debugprofilestart = debugprofilestart
-
 local GetNumAuctionItems = GetNumAuctionItems
 local GetAuctionItemLink = GetAuctionItemLink
 local GetAuctionItemInfo = GetAuctionItemInfo
 
 local ITEM_QUALITY_POOR = Enum.ItemQuality.Poor
+
+local profilereset = (function()
+    local debugprofilestop = debugprofilestop
+
+    local tick = 0
+    return function()
+        local t = debugprofilestop()
+        local diff = t - tick
+        tick = t
+        return diff
+    end
+end)()
 
 ---@type Scaner
 local Scaner = ns.Addon:NewClass('Scaner')
@@ -28,14 +37,13 @@ function Scaner:Query(params)
 end
 
 function Scaner:Threshold()
-    if debugprofilestop() > 16 then
-        debugprofilestart()
+    if profilereset() > 16 then
         return true
     end
 end
 
 function Scaner:Continue()
-    debugprofilestart()
+    profilereset()
     return self:OnContinue()
 end
 
