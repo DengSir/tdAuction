@@ -20,6 +20,11 @@
   },
   "homepage": "https://github.com/DengSir/tdAuction#readme",
   "wow": {
-    "name": "tdAuction"
+    "name": "tdAuction",
+    "curse_id": 442222,
+    "localizations": {
+      "enUS": "Localization/enUS.lua",
+      "zhCN": "Localization/zhCN.lua"
+    }
   }
 }
