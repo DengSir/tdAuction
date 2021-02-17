@@ -32,8 +32,13 @@ end)()
 local Scaner = ns.Addon:NewClass('Scaner')
 
 function Scaner:Query(params)
+    self.canceled = nil
     self.params = params
     ns.Querier:Query(params, self)
+end
+
+function Scaner:Cancel()
+    self.canceled = true
 end
 
 function Scaner:Threshold()

@@ -34,8 +34,7 @@ function Querier:OnInitialize()
 
     hooksecurefunc('QueryAuctionItems', function()
         if not self.ourQuery then
-            self.updater:Hide()
-            self.scaner = nil
+            self:Cancel()
         end
     end)
 
@@ -44,11 +43,14 @@ end
 
 function Querier:AUCTION_HOUSE_CLOSED()
     self.queryAllDisabled = nil
-    self.scaner = nil
-    self.updater:Hide()
+    self:Cancel()
 end
 
 function Querier:OnIdle()
+    if not self.scaner or self.scaner.canceled then
+        self:Cancel()
+        return
+    end
     local method = self.statusProcess[self.status]
     if method then
         method(self)
@@ -147,5 +149,10 @@ function Querier:Running()
     end
 
     self.scaner:Done()
+    self.updater:Hide()
+end
+
+function Querier:Cancel()
+    self.scaner = nil
     self.updater:Hide()
 end

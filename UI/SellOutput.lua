@@ -38,7 +38,7 @@ function SellOutput:OnPostAuction(_, price, _, stackSize, numStacks)
 end
 
 function SellOutput:CHAT_MSG_SYSTEM(_, msg)
-    if msg == ERR_AUCTION_STARTED then
+    if msg == ERR_AUCTION_STARTED and self.item then
         self.sellStacks = self.sellStacks + 1
 
         if self.failure or self.sellStacks == self.numStacks then

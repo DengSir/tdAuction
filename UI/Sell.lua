@@ -169,6 +169,7 @@ function Sell:OnSellItemUpdate()
     self.PriceListButton:Hide()
     self.PriceSetText:Hide()
     self.DurationDropDown:Hide()
+    self.PriceReading:Hide()
 
     if C_WowTokenPublic.IsAuctionableWowToken(itemId) then
         return
@@ -225,7 +226,13 @@ function Sell:OnSellItemUpdate()
 end
 
 function Sell:OnItemPriceScanDone()
+    self.PriceReading:Hide()
+
     local link = ns.GetAuctionSellItemLink()
+    if not link then
+        self.scaner:Cancel()
+        return
+    end
     local itemKey = ns.ParseItemKey(link)
     local price = ns.prices[itemKey]
     local items = self.scaner:GetResponseItems()
@@ -263,7 +270,6 @@ function Sell:OnItemPriceScanDone()
     self.items = items
     self:SetPrice(price)
     self:UpdatePriceList()
-    self.PriceReading:Hide()
     self.PriceSetText:Show()
 
     if errText then
