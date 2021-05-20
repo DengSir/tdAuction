@@ -120,9 +120,35 @@ ns.DISENCHANT_POSSIBLES = {
                     {min = 2, max = 5, rate = 0.22, id = 16204},
                     {min = 1, max = 1, rate = 0.03, id = 14344},
                 },
+                -- @bcc@
+                level = 65,
+            },
+            {
+                possibles = {
+                    {min = 1, max = 3, rate = 0.75, id = 22447},
+                    {min = 1, max = 3, rate = 0.22, id = 22445},
+                    {min = 1, max = 1, rate = 0.03, id = 22448},
+                },
+                level = 79,
+            },
+            {
+                possibles = {
+                    {min = 2, max = 3, rate = 0.75, id = 22447},
+                    {min = 2, max = 3, rate = 0.22, id = 22445},
+                    {min = 1, max = 1, rate = 0.03, id = 22448},
+                },
+                level = 99,
+            },
+            {
+                possibles = {
+                    {min = 1, max = 2, rate = 0.75, id = 22446},
+                    {min = 2, max = 5, rate = 0.22, id = 22445},
+                    {min = 1, max = 1, rate = 0.03, id = 22449},
+                },
+                -- @end-bcc@
             },
         },
-        [Enum.ItemQuality.Superior] = {
+        [Enum.ItemQuality.Superior or Enum.ItemQuality.Rare] = {
             {possibles = {{min = 1, max = 1, rate = 1, id = 10978}}, level = 25},
             {possibles = {{min = 1, max = 1, rate = 1, id = 11084}}, level = 30},
             {possibles = {{min = 1, max = 1, rate = 1, id = 11138}}, level = 35},
@@ -135,6 +161,22 @@ ns.DISENCHANT_POSSIBLES = {
                     {min = 1, max = 1, rate = 0.995, id = 14344},
                     {min = 1, max = 1, rate = 0.005, id = 20725},
                 },
+                -- @bcc@
+                level = 65,
+            },
+            {
+                possibles = { --
+                    {min = 1, max = 1, rate = .995, id = 22448},
+                    {min = 1, max = 1, rate = .005, id = 20725},
+                },
+                level = 99,
+            },
+            {
+                possibles = { --
+                    {min = 1, max = 1, rate = .995, id = 22449},
+                    {min = 1, max = 1, rate = .005, id = 22450},
+                },
+                -- @end-bcc@
             },
         },
         [Enum.ItemQuality.Epic] = {
@@ -142,7 +184,33 @@ ns.DISENCHANT_POSSIBLES = {
             {possibles = {{min = 2, max = 4, rate = 1, id = 11178}}, level = 50},
             {possibles = {{min = 2, max = 4, rate = 1, id = 14343}}, level = 55},
             {possibles = {{min = 1, max = 2, rate = 1, id = 20725}}, level = 60},
-            {possibles = {{min = 1, max = 2, rate = 1, id = 20725}}},
+            {
+                possibles = { --
+                    {min = 1, max = 2, rate = 1, id = 20725},
+                },
+                -- @bcc@
+                level = 75,
+            },
+            {
+                possibles = { --
+                    {min = 2, max = 2, rate = 0.67, id = 20725},
+                    {min = 1, max = 1, rate = 0.33, id = 20725},
+                },
+                level = 80,
+            },
+            {
+                possibles = { --
+                    {min = 1, max = 2, rate = 1, id = 22450},
+                },
+                level = 100,
+            },
+            {
+                possibles = { --
+                    {min = 2, max = 2, rate = 0.67, id = 22450},
+                    {min = 1, max = 1, rate = 0.33, id = 22450},
+                },
+                -- @end-bcc@
+            },
         },
     },
     Armor = {
@@ -232,9 +300,35 @@ ns.DISENCHANT_POSSIBLES = {
                     {min = 2, max = 3, rate = 0.2, id = 16203},
                     {min = 1, max = 1, rate = 0.05, id = 14344},
                 },
+                -- @bcc@
+                level = 65,
+            },
+            {
+                possibles = {
+                    {min = 1, max = 3, rate = 0.75, id = 22445},
+                    {min = 1, max = 3, rate = 0.22, id = 22447},
+                    {min = 1, max = 1, rate = 0.03, id = 22448},
+                },
+                level = 79,
+            },
+            {
+                possibles = {
+                    {min = 2, max = 3, rate = 0.75, id = 22445},
+                    {min = 2, max = 3, rate = 0.22, id = 22447},
+                    {min = 1, max = 1, rate = 0.03, id = 22448},
+                },
+                level = 99,
+            },
+            {
+                possibles = {
+                    {min = 2, max = 5, rate = 0.75, id = 22445},
+                    {min = 1, max = 2, rate = 0.22, id = 22446},
+                    {min = 1, max = 1, rate = 0.03, id = 22449},
+                },
+                -- @end-bcc@
             },
         },
-        [Enum.ItemQuality.Superior] = {
+        [Enum.ItemQuality.Superior or Enum.ItemQuality.Rare] = {
             {possibles = {{min = 1, max = 1, rate = 1, id = 10978}}, level = 25},
             {possibles = {{min = 1, max = 1, rate = 1, id = 11084}}, level = 30},
             {possibles = {{min = 1, max = 1, rate = 1, id = 11138}}, level = 35},
@@ -247,6 +341,22 @@ ns.DISENCHANT_POSSIBLES = {
                     {min = 1, max = 1, rate = 0.995, id = 14344},
                     {min = 1, max = 1, rate = 0.005, id = 20725},
                 },
+                -- @bcc@
+                level = 65,
+            },
+            {
+                possibles = { --
+                    {min = 1, max = 1, rate = .995, id = 22448},
+                    {min = 1, max = 1, rate = .005, id = 20725},
+                },
+                level = 99,
+            },
+            {
+                possibles = { --
+                    {min = 1, max = 1, rate = .995, id = 22449},
+                    {min = 1, max = 1, rate = .005, id = 22450},
+                },
+                -- @end-bcc@
             },
         },
         [Enum.ItemQuality.Epic] = {
@@ -254,7 +364,33 @@ ns.DISENCHANT_POSSIBLES = {
             {possibles = {{min = 2, max = 4, rate = 1, id = 11178}}, level = 50},
             {possibles = {{min = 2, max = 4, rate = 1, id = 14343}}, level = 55},
             {possibles = {{min = 1, max = 1, rate = 1, id = 20725}}, level = 60},
-            {possibles = {{min = 1, max = 2, rate = 1, id = 20725}}},
+            {
+                possibles = { --
+                    {min = 1, max = 2, rate = 1, id = 20725},
+                },
+                -- @bcc@
+                level = 75,
+            },
+            {
+                possibles = { --
+                    {min = 2, max = 2, rate = 0.5, id = 20725},
+                    {min = 1, max = 1, rate = 0.5, id = 20725},
+                },
+                level = 80,
+            },
+            {
+                possibles = { --
+                    {min = 1, max = 2, rate = 1, id = 22450},
+                },
+                level = 100,
+            },
+            {
+                possibles = { --
+                    {min = 2, max = 2, rate = 0.67, id = 22450},
+                    {min = 1, max = 1, rate = 0.33, id = 22450},
+                },
+                -- @end-bcc@
+            },
         },
     },
 }

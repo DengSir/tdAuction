@@ -17,7 +17,7 @@
         </Frames>
     </Frame>
     <Frame name="tdAuctionFullScanFrameTemplate" hidden="true" virtual="true">
-        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true" build="classic">
             <BackgroundInsets left="11" right="11" top="12" bottom="10"/>
             <TileSize val="32"/>
             <EdgeSize val="32"/>
@@ -96,6 +96,12 @@
             </Layer>
         </Layers>
         <Scripts>
+            <OnLoad build="!classic">
+                Mixin(self, BackdropTemplateMixin)
+                self:OnBackdropLoaded()
+                self:SetScript('OnSizeChanged', self.OnSizeChanged)
+                self:SetBackdrop(BACKDROP_DIALOG_32_32)
+            </OnLoad>
             <OnShow>
                 self:SetFrameLevel(self:GetParent():GetFrameLevel() + 100)
                 self.Blocker:SetFrameLevel(self:GetFrameLevel() - 1)
@@ -416,7 +422,7 @@
                 </Scripts>
             </Frame>
             <Frame parentKey="PriceList" enableMouse="true" hidden="true">
-                <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background-Dark" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+                <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background-Dark" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true" build="classic">
                     <BackgroundInsets left="11" right="11" top="12" bottom="10"/>
                     <TileSize val="32"/>
                     <EdgeSize val="32"/>
@@ -485,6 +491,12 @@
                     </ScrollFrame>
                 </Frames>
                 <Scripts>
+                    <OnLoad build="!classic">
+                        Mixin(self, BackdropTemplateMixin)
+                        self:OnBackdropLoaded()
+                        self:SetScript('OnSizeChanged', self.OnSizeChanged)
+                        self:SetBackdrop(BACKDROP_DIALOG_32_32)
+                    </OnLoad>
                     <OnHide>
                         self:Hide()
                     </OnHide>
