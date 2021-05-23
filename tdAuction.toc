@@ -1,4 +1,7 @@
+#@debug@
 ## Interface: 11305
+#@end-debug@
+#@project-interface@
 ## Title: tdAuction
 ## Author: Dencer
 ## Version: @project-version@
