@@ -12,12 +12,23 @@ local NONE = GRAY_FONT_COLOR:WrapTextInColorCode(NONE)
 local DURATION_TEXT = { --
     [1] = RED_FONT_COLOR:WrapTextInColorCode('< 30m'),
     [2] = YELLOW_FONT_COLOR:WrapTextInColorCode('30m-2h'),
-    [3] = GREEN_FONT_COLOR:WrapTextInColorCode('2-8h'),
-    [4] = GRAY_FONT_COLOR:WrapTextInColorCode('> 8h'),
+    [3] = GREEN_FONT_COLOR:WrapTextInColorCode('2-12h'),
+    [4] = GRAY_FONT_COLOR:WrapTextInColorCode('> 12h'),
 }
 
 function BrowseItem:Constructor()
     self:SetScript('OnClick', self.OnClick)
+end
+
+function BrowseItem:OnEnter()
+    GameTooltip:SetOwner(self.Enter, 'ANCHOR_RIGHT')
+    GameTooltip:SetAuctionItem('list', self.id)
+    GameTooltip_ShowCompareItem()
+    if IsModifiedClick('DRESSUP') then
+        ShowInspectCursor()
+    else
+        ResetCursor()
+    end
 end
 
 function BrowseItem:OnClick()
@@ -44,8 +55,8 @@ end
 
 function BrowseItem:Update(id)
     local name, texture, count, quality, canUse, level, levelColHeader, minBid, minIncrement, buyoutPrice, bidAmount,
-          highBidder, bidderFullName, owner, ownerFullName, saleStatus, itemId, hasAllInfo =
-        GetAuctionItemInfo('list', id)
+          highBidder, bidderFullName, owner, ownerFullName, saleStatus, itemId, hasAllInfo = GetAuctionItemInfo('list',
+                                                                                                                id)
     local duration = GetAuctionItemTimeLeft('list', id)
     local selectedId = GetSelectedAuctionItem('list')
 
@@ -79,9 +90,20 @@ function BrowseItem:Update(id)
     self.Time:SetText(DURATION_TEXT[duration])
     self.Seller:SetText(owner)
 
-    local bid = ns.gsc(bidAmount == 0 and minBid or bidAmount)
+    local displayedPrice, requiredBid
+    if bidAmount == 0 then
+        displayedPrice = minBid
+        requiredBid = minBid
+    else
+        displayedPrice = bidAmount
+        requiredBid = bidAmount + minIncrement
+    end
 
-    self.Bid:SetText(bid)
+    if requiredBid >= MAXIMUM_BID_PRICE then
+        buyoutPrice = requiredBid
+    end
+
+    self.Bid:SetText(ns.gsc(displayedPrice))
 
     if highBidder then
         self.Bid:SetTextColor(0, 1, 0)

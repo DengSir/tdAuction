@@ -77,9 +77,9 @@ function Sell:LayoutBlizzard()
 
     ns.UI.ComboBox:Bind(self.DurationDropDown)
     self.DurationDropDown:SetItems{
-        {text = '2 ' .. HOURS, value = 1},
-        {text = '8 ' .. HOURS, value = 2},
-        {text = '24 ' .. HOURS, value = 3},
+        {text = AUCTION_DURATION_ONE, value = 1},
+        {text = AUCTION_DURATION_TWO, value = 2},
+        {text = AUCTION_DURATION_THREE, value = 3},
     }
     self.DurationDropDown:SetCallback('OnValueChanged', function(_, value)
         self:SetDuration(value)

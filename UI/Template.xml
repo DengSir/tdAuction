@@ -127,7 +127,7 @@
                     <OnEnter>
                         local parent = self:GetParent()
                         parent:LockHighlight()
-                        AuctionFrameItem_OnEnter(self, 'list', parent.id)
+                        parent:OnEnter()
                     </OnEnter>
                     <OnLeave>
                         local parent = self:GetParent()
@@ -137,7 +137,7 @@
                     </OnLeave>
                     <OnUpdate>
                         if GameTooltip:IsOwned(self) then
-                            AuctionFrameItem_OnEnter(self, 'list', self:GetParent().id)
+                            self:GetParent():OnEnter()
                         end
                     </OnUpdate>
                 </Scripts>
