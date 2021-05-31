@@ -45,6 +45,7 @@ L['Start scan'] = true
 L['Next available time:'] = true
 L['in about %s'] = true
 L['Full scaning, elapsed time: %s'] = true
+L['Processing data, elapsed time: %s'] = true
 L['Now'] = true
 L['Unknown'] = true
 L['New'] = true
