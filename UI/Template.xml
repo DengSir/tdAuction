@@ -124,7 +124,7 @@
             </Layer>
         </Layers>
         <Scripts>
-            <OnLoad build="!classic">
+            <OnLoad build="non-classic">
                 Mixin(self, BackdropTemplateMixin)
                 self:OnBackdropLoaded()
                 self:SetScript('OnSizeChanged', self.OnSizeChanged)
@@ -519,7 +519,7 @@
                     </ScrollFrame>
                 </Frames>
                 <Scripts>
-                    <OnLoad build="!classic">
+                    <OnLoad build="non-classic">
                         Mixin(self, BackdropTemplateMixin)
                         self:OnBackdropLoaded()
                         self:SetScript('OnSizeChanged', self.OnSizeChanged)
