@@ -36,7 +36,7 @@ L['Bid price'] = true
 L['Unit price'] = true
 
 L['Show disenchant info'] = true
-L['Nerver'] = true
+L['Nerver'] = 'Never'
 L['Pressed SHIFT'] = true
 L['Always'] = true
 
@@ -60,7 +60,7 @@ L['Choose other price'] = true
 
 L['Start auction:'] = true
 
-L.TOOLTIP_PREFIX_VENDO = 'Vendo'
+L.TOOLTIP_PREFIX_VENDO = 'Vendor'
 L.TOOLTIP_PREFIX_AUCTION = 'Auction'
 L.TOOLTIP_PREFIX_DISENCHANT = 'Disenchant'
 -- @end-import@
