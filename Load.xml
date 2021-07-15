@@ -22,4 +22,5 @@
     <Script file="UI\Tooltip.lua" />
     <Script file="UI\SellOutput.lua" />
     <Script file="UI\Option.lua" />
+    <Script file="UI\ElvUI.lua" />
 </Ui>
