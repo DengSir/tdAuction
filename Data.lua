@@ -166,15 +166,15 @@ ns.DISENCHANT_POSSIBLES = {
             },
             {
                 possibles = { --
-                    {min = 1, max = 1, rate = .995, id = 22448},
-                    {min = 1, max = 1, rate = .005, id = 20725},
+                    {min = 1, max = 1, rate = 0.995, id = 22448},
+                    {min = 1, max = 1, rate = 0.005, id = 20725},
                 },
                 level = 99,
             },
             {
                 possibles = { --
-                    {min = 1, max = 1, rate = .995, id = 22449},
-                    {min = 1, max = 1, rate = .005, id = 22450},
+                    {min = 1, max = 1, rate = 0.995, id = 22449},
+                    {min = 1, max = 1, rate = 0.005, id = 22450},
                 },
                 -- @end-bcc@
             },
@@ -183,31 +183,25 @@ ns.DISENCHANT_POSSIBLES = {
             {possibles = {{min = 2, max = 4, rate = 1, id = 11177}}, level = 45},
             {possibles = {{min = 2, max = 4, rate = 1, id = 11178}}, level = 50},
             {possibles = {{min = 2, max = 4, rate = 1, id = 14343}}, level = 55},
-            {possibles = {{min = 1, max = 2, rate = 1, id = 20725}}, level = 60},
+            {possibles = {{min = 1, max = 1, rate = 1, id = 20725}}, level = 60},
             {
                 possibles = { --
-                    {min = 1, max = 2, rate = 1, id = 20725},
+                    {min = 2, max = 2, rate = 0.667, id = 20725},
+                    {min = 1, max = 1, rate = 0.333, id = 20725},
                 },
                 -- @bcc@
-                level = 75,
-            },
-            {
-                possibles = { --
-                    {min = 2, max = 2, rate = 0.67, id = 20725},
-                    {min = 1, max = 1, rate = 0.33, id = 20725},
-                },
-                level = 80,
+                level = 94,
             },
             {
                 possibles = { --
                     {min = 1, max = 2, rate = 1, id = 22450},
                 },
-                level = 100,
+                level = 104,
             },
             {
                 possibles = { --
-                    {min = 2, max = 2, rate = 0.67, id = 22450},
-                    {min = 1, max = 1, rate = 0.33, id = 22450},
+                    {min = 2, max = 2, rate = 0.667, id = 22450},
+                    {min = 1, max = 1, rate = 0.333, id = 22450},
                 },
                 -- @end-bcc@
             },
@@ -346,15 +340,15 @@ ns.DISENCHANT_POSSIBLES = {
             },
             {
                 possibles = { --
-                    {min = 1, max = 1, rate = .995, id = 22448},
-                    {min = 1, max = 1, rate = .005, id = 20725},
+                    {min = 1, max = 1, rate = 0.995, id = 22448},
+                    {min = 1, max = 1, rate = 0.005, id = 20725},
                 },
                 level = 99,
             },
             {
                 possibles = { --
-                    {min = 1, max = 1, rate = .995, id = 22449},
-                    {min = 1, max = 1, rate = .005, id = 22450},
+                    {min = 1, max = 1, rate = 0.995, id = 22449},
+                    {min = 1, max = 1, rate = 0.005, id = 22450},
                 },
                 -- @end-bcc@
             },
@@ -386,8 +380,8 @@ ns.DISENCHANT_POSSIBLES = {
             },
             {
                 possibles = { --
-                    {min = 2, max = 2, rate = 0.67, id = 22450},
-                    {min = 1, max = 1, rate = 0.33, id = 22450},
+                    {min = 2, max = 2, rate = 0.667, id = 22450},
+                    {min = 1, max = 1, rate = 0.333, id = 22450},
                 },
                 -- @end-bcc@
             },
