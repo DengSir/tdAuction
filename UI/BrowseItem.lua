@@ -67,11 +67,11 @@ function BrowseItem:Update(id)
     self.Selected:SetShown(selectedId == id)
 
     if count > 1 then
-        self.Name:SetText(format('|cffffd100%dx|r %s', count, name))
+        self.Name.Text:SetText(format('|cffffd100%dx|r %s', count, name))
     else
-        self.Name:SetText(name)
+        self.Name.Text:SetText(name)
     end
-    self.Name:SetTextColor(ns.rgb(GetItemQualityColor(quality)))
+    self.Name.Text:SetTextColor(ns.rgb(GetItemQualityColor(quality)))
 
     self.Icon:SetTexture(texture)
     if canUse then
@@ -80,15 +80,15 @@ function BrowseItem:Update(id)
         self.Icon:SetVertexColor(1, 0, 0)
     end
 
-    self.Level:SetText(level)
+    self.Level.Text:SetText(level)
     if UnitLevel('player') >= level then
-        self.Level:SetTextColor(1, 1, 1)
+        self.Level.Text:SetTextColor(1, 1, 1)
     else
-        self.Level:SetTextColor(1, 0, 0)
+        self.Level.Text:SetTextColor(1, 0, 0)
     end
 
-    self.Time:SetText(DURATION_TEXT[duration])
-    self.Seller:SetText(owner)
+    self.Time.Text:SetText(DURATION_TEXT[duration])
+    self.Seller.Text:SetText(owner)
 
     local displayedPrice, requiredBid
     if bidAmount == 0 then
@@ -103,21 +103,21 @@ function BrowseItem:Update(id)
         buyoutPrice = requiredBid
     end
 
-    self.Bid:SetText(ns.gsc(displayedPrice))
+    self.Bid.Text:SetText(ns.gsc(displayedPrice))
 
     if highBidder then
-        self.Bid:SetTextColor(0, 1, 0)
+        self.Bid.Text:SetTextColor(0, 1, 0)
     elseif bidAmount ~= 0 then
-        self.Bid:SetTextColor(1, 0, 0)
+        self.Bid.Text:SetTextColor(1, 0, 0)
     else
-        self.Bid:SetTextColor(1, 1, 1)
+        self.Bid.Text:SetTextColor(1, 1, 1)
     end
 
     if buyoutPrice == 0 then
-        self.Buyout:SetText(NONE)
-        self.UnitPrice:SetText(NONE)
+        self.Buyout.Text:SetText(NONE)
+        self.UnitPrice.Text:SetText(NONE)
     else
-        self.Buyout:SetText(ns.gsc(buyoutPrice))
-        self.UnitPrice:SetText(ns.gsc(buyoutPrice / count))
+        self.Buyout.Text:SetText(ns.gsc(buyoutPrice))
+        self.UnitPrice.Text:SetText(ns.gsc(buyoutPrice / count))
     end
 end

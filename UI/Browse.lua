@@ -6,6 +6,8 @@
 ---@type ns
 local ns = select(2, ...)
 
+local ripairs = ipairs_reverse or ripairs
+
 local L = ns.L
 
 local BUTTON_HEIGHT = 18
@@ -22,6 +24,7 @@ function Browse:Constructor()
     self:LayoutBlizzard()
     self:SetupSortButtons()
     self:SetupScrollFrame()
+    self:UpdateColumns()
     self:SetupEventsAndHooks()
     self:SaveSorts()
 end
@@ -143,7 +146,6 @@ function Browse:LayoutBlizzard()
 end
 
 function Browse:SetupScrollFrame()
-
     self.ScrollFrame.update = function()
         return self:UpdateItems()
     end
@@ -156,15 +158,14 @@ end
 
 function Browse:SetupSortButtons()
     self.sortButtons = {}
-
-    local headers = {
-        {width = 147, relative = 'left', reverse = false, sortColumn = 'quality', text = NAME},
-        {width = 30, relative = 'left', reverse = true, sortColumn = 'level', text = REQ_LEVEL_ABBR},
-        {width = 60, relative = 'left', reverse = true, sortColumn = 'duration', text = L['Time']},
-        {width = nil, relative = 'middle', reverse = true, sortColumn = 'seller', text = AUCTION_CREATOR},
-        {width = 96, relative = 'right', reverse = true, sortColumn = 'bid', text = L['Bid price']},
-        {width = 96, relative = 'right', reverse = true, sortColumn = 'buyout', text = BUYOUT},
-        {width = 96, relative = 'right', reverse = true, sortColumn = 'unitprice', text = L['Unit price']},
+    self.headers = {
+        {key = 'Name', reverse = false, sortColumn = 'quality', text = NAME},
+        {key = 'Level', reverse = true, hiddenable = true, sortColumn = 'level', text = REQ_LEVEL_ABBR},
+        {key = 'Time', reverse = true, hiddenable = true, sortColumn = 'duration', text = L['Time']},
+        {key = 'Seller', reverse = true, hiddenable = true, sortColumn = 'seller', text = AUCTION_CREATOR},
+        {key = 'Bid', reverse = true, sortColumn = 'bid', text = L['Bid price']},
+        {key = 'Buyout', reverse = true, sortColumn = 'buyout', text = BUYOUT},
+        {key = 'UnitPrice', reverse = true, sortColumn = 'unitprice', text = L['Unit price']},
     }
 
     local function OnClick(button)
@@ -172,8 +173,9 @@ function Browse:SetupSortButtons()
         self:SaveSorts()
     end
 
-    for i, info in pairs(headers) do
-        local button = CreateFrame('Button', nil, self.SortButtonFrame, 'tdAuctionSortButtonTemplate')
+    for _, info in pairs(self.headers) do
+        local button = self.SortButtonFrame[info.key]
+        button.key = info.key
         button.reverse = not not info.reverse
         button.sortColumn = info.sortColumn
         button:SetScript('OnClick', OnClick)
@@ -184,23 +186,72 @@ function Browse:SetupSortButtons()
         tinsert(self.sortButtons, button)
     end
 
-    for i, button in ipairs(self.sortButtons) do
-        local info = headers[i]
+    self.columnsMenu = {{text = L['Toggle column'], isTitle = true, notCheckable = true}, ns.MENU_SEPARATOR}
 
-        if info.relative == 'left' or info.relative == 'middle' then
-            if i == 1 then
-                button:SetPoint('LEFT')
-            else
-                button:SetPoint('LEFT', self.sortButtons[i - 1], 'RIGHT')
-            end
+    for _, info in ipairs(self.headers) do
+        if info.hiddenable then
+            local key = info.key
+            tinsert(self.columnsMenu, {
+                text = info.text,
+                isNotRadio = true,
+                keepShownOnClick = true,
+                checked = function()
+                    return not ns.profile.buy.hiddenColumns[key]
+                end,
+                func = function()
+                    ns.profile.buy.hiddenColumns[key] = not ns.profile.buy.hiddenColumns[key]
+                    self:UpdateColumns()
+                end,
+            })
         end
+    end
 
-        if info.relative == 'right' or info.relative == 'middle' then
-            if i == #self.sortButtons then
-                button:SetPoint('RIGHT')
-            else
-                button:SetPoint('RIGHT', self.sortButtons[i + 1], 'LEFT')
+    tinsert(self.columnsMenu, ns.MENU_SEPARATOR)
+    tinsert(self.columnsMenu, {text = CANCEL, notCheckable = true})
+
+    self.BuyFrame.ColumnOption:SetScript('OnClick', function(button)
+        return ns.EasyMenu(self.columnsMenu, button, 0, 0, 'MENU')
+    end)
+end
+
+function Browse:GenColumnMenu()
+    local list = {}
+    for _, info in ipairs(self.headers) do
+        if info.hiddenable then
+            tinsert(list, {
+                text = info.text,
+                isNotRadio = true,
+                checked = not ns.profile.buy.hiddenColumns[info.key],
+                func = function()
+                    ns.profile.buy.hiddenColumns[info.key] = not ns.profile.buy.hiddenColumns[info.key]
+                    self:UpdateColumns()
+                end,
+            })
+        end
+    end
+    return list
+end
+
+function Browse:UpdateColumns()
+    self:ApplyItem(self.SortButtonFrame)
+
+    for _, item in ipairs(self.ScrollFrame.buttons) do
+        self:ApplyItem(item)
+    end
+end
+
+function Browse:ApplyItem(frame)
+    local prevItem
+    for _, info in ripairs(self.headers) do
+        local hidden = ns.profile.buy.hiddenColumns[info.key]
+        local item = frame[info.key]
+        item:SetShown(not hidden)
+
+        if not hidden then
+            if prevItem then
+                item:SetPoint('RIGHT', prevItem, 'LEFT')
             end
+            prevItem = item
         end
     end
 end

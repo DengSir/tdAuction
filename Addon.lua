@@ -39,7 +39,10 @@ local DEFAULT_PROFILE = { --
         bidRatio = 0.95,
         merchantRatio = 5,
     },
-    buy = {quickBuy = true},
+    buy = { --
+        quickBuy = true,
+        hiddenColumns = {Level = true, Time = true, Seller = true},
+    },
 }
 
 function Addon:OnInitialize()

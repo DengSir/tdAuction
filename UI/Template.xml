@@ -140,6 +140,91 @@
         </Scripts>
     </Frame>
 
+    <Frame name="tdAuctionItemTextTemplate" virtual="true">
+        <Size y="18" />
+        <!--Scripts>
+            <OnLoad>
+                self:SetMouseClickEnabled(false)
+            </OnLoad>
+            <OnEnter>
+                if self.Text:GetStringWidth() > self:GetWidth() then
+                    GameTooltip:SetOwner(self, 'ANCHOR_TOP')
+                    GameTooltip:SetText(self.Text:GetText())
+                    GameTooltip:Show()
+                end
+                self:GetParent():LockHighlight()
+            </OnEnter>
+            <OnLeave>
+                if GameTooltip:IsOwned(self) then
+                    GameTooltip:Hide()
+                end
+                self:GetParent():UnlockHighlight()
+            </OnLeave>
+        </Scripts-->
+    </Frame>
+
+    <Frame name="tdAuctionItemTextLeftTemplate" inherits="tdAuctionItemTextTemplate" virtual="true">
+        <Layers>
+            <Layer level="ARTWORK">
+                <FontString parentKey="Text" inherits="GameFontHighlightSmallLeft">
+                    <Anchors>
+                        <Anchor point="LEFT" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+    </Frame>
+
+    <Frame name="tdAuctionItemTextLeftElideTemplate" inherits="tdAuctionItemTextTemplate" virtual="true">
+        <Layers>
+            <Layer level="ARTWORK">
+                <FontString parentKey="Text" inherits="GameFontHighlightSmallLeft" wordwrap="false">
+                    <Anchors>
+                        <Anchor point="LEFT" />
+                        <Anchor point="RIGHT" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+    </Frame>
+
+    <Frame name="tdAuctionItemTextCenterTemplate" inherits="tdAuctionItemTextTemplate" virtual="true">
+        <Layers>
+            <Layer level="ARTWORK">
+                <FontString parentKey="Text" inherits="GameFontHighlightSmall">
+                    <Anchors>
+                        <Anchor point="CENTER" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+    </Frame>
+
+    <Frame name="tdAuctionItemTextCenterElideTemplate" inherits="tdAuctionItemTextTemplate" virtual="true">
+        <Layers>
+            <Layer level="ARTWORK">
+                <FontString parentKey="Text" inherits="GameFontHighlightSmall" wordwrap="false">
+                    <Anchors>
+                        <Anchor point="LEFT" />
+                        <Anchor point="Right" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+    </Frame>
+
+    <Frame name="tdAuctionItemTextRightTemplate" inherits="tdAuctionItemTextTemplate" virtual="true">
+        <Layers>
+            <Layer level="ARTWORK">
+                <FontString parentKey="Text" inherits="GameFontHighlightSmallRight">
+                    <Anchors>
+                        <Anchor point="RIGHT" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+    </Frame>
+
     <Button name="tdAuctionBrowseItemTemplate" virtual="true">
         <Size x="1" y="18" />
         <Frames>
@@ -179,45 +264,6 @@
                         <Anchor point="LEFT"/>
                     </Anchors>
                 </Texture>
-                <FontString parentKey="Name" inherits="GameFontHighlightSmallLeft" wordWrap="false">
-                    <Size x="142"/>
-                    <Anchors>
-                        <Anchor point="LEFT" relativePoint="LEFT" x="20" y="0" />
-                    </Anchors>
-                </FontString>
-                <FontString parentKey="Level" inherits="GameFontHighlightSmall">
-                    <Anchors>
-                        <Anchor point="CENTER" relativePoint="LEFT" x="175" y="0" />
-                    </Anchors>
-                </FontString>
-                <FontString parentKey="Time" inherits="GameFontHighlightSmall">
-                    <Anchors>
-                        <Anchor point="CENTER" relativePoint="LEFT" x="220" y="0" />
-                    </Anchors>
-                </FontString>
-                <FontString parentKey="Seller" inherits="GameFontHighlightSmall" wordWrap="false">
-                    <Size x="73"/>
-                    <Anchors>
-                        <Anchor point="LEFT" relativePoint="LEFT" x="250" y="0" />
-                        <Anchor point="RIGHT" x="-291" y="0" />
-                    </Anchors>
-                </FontString>
-
-                <FontString parentKey="UnitPrice" inherits="GameFontHighlightSmallRight">
-                    <Anchors>
-                        <Anchor point="RIGHT" x="-3" y="0" />
-                    </Anchors>
-                </FontString>
-                <FontString parentKey="Buyout" inherits="GameFontHighlightSmallRight">
-                    <Anchors>
-                        <Anchor point="RIGHT" x="-99" y="0" />
-                    </Anchors>
-                </FontString>
-                <FontString parentKey="Bid" inherits="GameFontHighlightSmallRight">
-                    <Anchors>
-                        <Anchor point="RIGHT" x="-195" y="0" />
-                    </Anchors>
-                </FontString>
             </Layer>
             <Layer level="BACKGROUND">
                 <Texture parentKey="Selected" hidden="true" setAllPoints="true">
@@ -233,6 +279,51 @@
                 </Texture>
             </Layer>
         </Layers>
+        <Frames>
+            <Frame parentKey="UnitPrice" inherits="tdAuctionItemTextRightTemplate">
+                <Size x="95" y="18" />
+                <Anchors>
+                    <Anchor point="RIGHT" x="-3" y="0" />
+                </Anchors>
+            </Frame>
+            <Frame parentKey="Buyout" inherits="tdAuctionItemTextRightTemplate">
+                <Size x="95" y="18" />
+                <Anchors>
+                    <Anchor point="RIGHT" relativeKey="$parent.UnitPrice" relativePoint="LEFT" />
+                </Anchors>
+            </Frame>
+            <Frame parentKey="Bid" inherits="tdAuctionItemTextRightTemplate">
+                <Size x="95" y="18" />
+                <Anchors>
+                    <Anchor point="RIGHT" relativeKey="$parent.Buyout" relativePoint="LEFT" />
+                </Anchors>
+            </Frame>
+            <Frame parentKey="Seller" inherits="tdAuctionItemTextCenterElideTemplate">
+                <Size x="95" y="18" />
+                <Anchors>
+                    <Anchor point="RIGHT" relativeKey="$parent.Bid" relativePoint="LEFT" />
+                    <Anchor point="LEFT" x="247" y="0" />
+                </Anchors>
+            </Frame>
+            <Frame parentKey="Time" inherits="tdAuctionItemTextCenterTemplate">
+                <Size x="60" y="19" />
+                <Anchors>
+                    <Anchor point="RIGHT" relativeKey="$parent.Seller" relativePoint="LEFT" />
+                </Anchors>
+            </Frame>
+            <Frame parentKey="Level" inherits="tdAuctionItemTextCenterTemplate">
+                <Size x="30" y="19" />
+                <Anchors>
+                    <Anchor point="RIGHT" relativeKey="$parent.Time" relativePoint="LEFT" />
+                </Anchors>
+            </Frame>
+            <Frame parentKey="Name" inherits="tdAuctionItemTextLeftElideTemplate">
+                <Anchors>
+                    <Anchor point="RIGHT" relativeKey="$parent.Level" relativePoint="LEFT" />
+                    <Anchor point="LEFT" x="20" y="0" />
+                </Anchors>
+            </Frame>
+        </Frames>
         <Scripts>
             <OnLoad>
                 self:SetHighlightTexture(self.Highlight)
@@ -320,12 +411,68 @@
                 </Frames>
             </ScrollFrame>
             <Frame parentKey="SortButtonFrame">
-                <Size x="595" y="19" />
+                <Size y="19" />
                 <Anchors>
                     <Anchor point="BOTTOMLEFT" relativeKey="$parent.ScrollFrame" relativePoint="TOPLEFT" x="12" y="3" />
                     <Anchor point="BOTTOMRIGHT" relativeKey="$parent.ScrollFrame" relativePoint="TOPRIGHT" x="-2" y="3" />
                 </Anchors>
+                <Frames>
+                    <Button parentKey="UnitPrice" inherits="tdAuctionSortButtonTemplate">
+                        <Size x="96" y="19" />
+                        <Anchors>
+                            <Anchor point="RIGHT" />
+                        </Anchors>
+                    </Button>
+                    <Button parentKey="Buyout" inherits="tdAuctionSortButtonTemplate">
+                        <Size x="96" y="19" />
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeKey="$parent.UnitPrice" relativePoint="LEFT" />
+                        </Anchors>
+                    </Button>
+                    <Button parentKey="Bid" inherits="tdAuctionSortButtonTemplate">
+                        <Size x="96" y="19" />
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeKey="$parent.Buyout" relativePoint="LEFT" />
+                        </Anchors>
+                    </Button>
+                    <Button parentKey="Seller" inherits="tdAuctionSortButtonTemplate">
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeKey="$parent.Bid" relativePoint="LEFT" />
+                            <Anchor point="LEFT" x="237" y="0" />
+                        </Anchors>
+                    </Button>
+                    <Button parentKey="Time" inherits="tdAuctionSortButtonTemplate">
+                        <Size x="60" y="19" />
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeKey="$parent.Seller" relativePoint="LEFT" />
+                        </Anchors>
+                    </Button>
+                    <Button parentKey="Level" inherits="tdAuctionSortButtonTemplate">
+                        <Size x="30" y="19" />
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeKey="$parent.Time" relativePoint="LEFT" />
+                        </Anchors>
+                    </Button>
+                    <Button parentKey="Name" inherits="tdAuctionSortButtonTemplate">
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeKey="$parent.Level" relativePoint="LEFT" />
+                            <Anchor point="LEFT" />
+                        </Anchors>
+                    </Button>
+                </Frames>
             </Frame>
+            <Button parentKey="ColumnOption">
+                <Size x="16" y="16" />
+                <Anchors>
+                    <Anchor point="RIGHT" relativeKey="$parent.SortButtonFrame" relativePoint="LEFT" x="-3" y="0"/>
+                </Anchors>
+                <NormalTexture file="Interface\GossipFrame\BinderGossipIcon" setAllPoints="true" />
+                <HighlightTexture file="Interface\GossipFrame\BinderGossipIcon" setAllPoints="true" alphaMode="ADD" />
+                <Scripts>
+                    <OnClick>
+                    </OnClick>
+                </Scripts>
+            </Button>
         </Frames>
         <Layers>
             <Layer level="ARTWORK">

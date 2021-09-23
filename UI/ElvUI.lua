@@ -45,6 +45,8 @@ hook(ns.Addon, 'SetupUI', function(o, self)
             for _, button in ipairs(Browse.BuyFrame.ScrollFrame.buttons) do
                 S:HandleIcon(button.Icon)
             end
+
+            Browse:UpdateSortButtons()
         end
 
         local Features = ns.Addon.Features

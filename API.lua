@@ -207,3 +207,38 @@ function ns.SetMoneyFrame(moneyFrame, money)
     local name = moneyFrame:GetName()
     return CheckMoney(_G[name .. 'Gold']) and CheckMoney(_G[name .. 'Silver']) and CheckMoney(_G[name .. 'Copper'])
 end
+
+function ns.EasyMenu(menuList, anchor, x, y, displayMode, autoHideDelay)
+    local dropdown = tdEasyMenuFrame or CreateFrame('Frame', 'tdEasyMenuFrame', UIParent, 'UIDropDownMenuTemplate')
+    dropdown.initialize = EasyMenu_Initialize
+    dropdown.displayMode = displayMode or nil
+
+    ToggleDropDownMenu(1, nil, dropdown, anchor, x, y, menuList, nil, autoHideDelay)
+end
+
+ns.MENU_SEPARATOR = {
+    text = '',
+    hasArrow = false,
+    dist = 0,
+    isTitle = true,
+    isUninteractable = true,
+    notCheckable = true,
+    iconOnly = true,
+    icon = [[Interface\Common\UI-TooltipDivider-Transparent]],
+    tCoordLeft = 0,
+    tCoordRight = 1,
+    tCoordTop = 0,
+    tCoordBottom = 1,
+    tSizeX = 0,
+    tSizeY = 8,
+    tFitDropDownSizeX = true,
+    iconInfo = {
+        tCoordLeft = 0,
+        tCoordRight = 1,
+        tCoordTop = 0,
+        tCoordBottom = 1,
+        tSizeX = 0,
+        tSizeY = 8,
+        tFitDropDownSizeX = true,
+    },
+}
