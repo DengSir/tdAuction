@@ -363,14 +363,7 @@ ns.DISENCHANT_POSSIBLES = {
                     {min = 1, max = 2, rate = 1, id = 20725},
                 },
                 -- @bcc@
-                level = 75,
-            },
-            {
-                possibles = { --
-                    {min = 2, max = 2, rate = 0.5, id = 20725},
-                    {min = 1, max = 1, rate = 0.5, id = 20725},
-                },
-                level = 80,
+                level = 94,
             },
             {
                 possibles = { --
