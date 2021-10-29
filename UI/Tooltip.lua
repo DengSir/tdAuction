@@ -249,6 +249,29 @@ function TipMethods:SetAction(action)
     return OnTooltipSetItem(self, link, GetItemCount(link))
 end
 
+function TipMethods:SetGuildBankItem(tab, slot)
+    return OnTooltipSetItem(self, GetGuildBankItemLink(tab, slot), select(2, GetGuildBankItemInfo(tab, slot)))
+end
+
+function TipMethods:SetMerchantCostItem(index, item)
+    local _, count, link = GetMerchantItemCostItem(index, item)
+    return OnTooltipSetItem(self, link, count)
+end
+
+function TipMethods:SetExistingSocketGem(index, toDestroy)
+    local link
+    if toDestroy then
+        link = GetExistingSocketLink(index)
+    else
+        link = GetNewSocketLink(index)
+    end
+    return OnTooltipSetItem(self, link, 1)
+end
+
+function TipMethods:SetSocketGem(id)
+    return OnTooltipSetItem(self, GetNewSocketLink(id), 1)
+end
+
 local function HookTip(tip)
     for k, v in pairs(TipMethods) do
         hooksecurefunc(tip, k, v)
@@ -256,6 +279,7 @@ local function HookTip(tip)
 
     if tip.shoppingTooltips then
         for _, v in ipairs(tip.shoppingTooltips) do
+            HookTip(v)
             hooksecurefunc(v, 'SetCompareItem', OnCompareItem)
         end
     end
