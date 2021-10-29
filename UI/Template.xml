@@ -16,12 +16,7 @@
             </Button>
         </Frames>
     </Frame>
-    <Frame name="tdAuctionFullScanFrameTemplate" hidden="true" virtual="true">
-        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true" build="classic">
-            <BackgroundInsets left="11" right="11" top="12" bottom="10"/>
-            <TileSize val="32"/>
-            <EdgeSize val="32"/>
-        </Backdrop>
+    <Frame name="tdAuctionFullScanFrameTemplate" hidden="true" inherits="BackdropTemplate" virtual="true">
         <Size x="600" y="300" />
         <Anchors>
             <Anchor point="CENTER" />
@@ -124,10 +119,7 @@
             </Layer>
         </Layers>
         <Scripts>
-            <OnLoad build="non-classic">
-                Mixin(self, BackdropTemplateMixin)
-                self:OnBackdropLoaded()
-                self:SetScript('OnSizeChanged', self.OnSizeChanged)
+            <OnLoad>
                 self:SetBackdrop(BACKDROP_DIALOG_32_32)
             </OnLoad>
             <OnShow>
@@ -596,12 +588,7 @@
                     </OnHide>
                 </Scripts>
             </Frame>
-            <Frame parentKey="PriceList" enableMouse="true" hidden="true">
-                <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background-Dark" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true" build="classic">
-                    <BackgroundInsets left="11" right="11" top="12" bottom="10"/>
-                    <TileSize val="32"/>
-                    <EdgeSize val="32"/>
-                </Backdrop>
+            <Frame parentKey="PriceList" enableMouse="true" inherits="BackdropTemplate" hidden="true">
                 <Size x="210" y="239"/>
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeKey="$parent.PriceReading" relativePoint="TOPRIGHT" x="0" y="11" />
@@ -666,10 +653,7 @@
                     </ScrollFrame>
                 </Frames>
                 <Scripts>
-                    <OnLoad build="non-classic">
-                        Mixin(self, BackdropTemplateMixin)
-                        self:OnBackdropLoaded()
-                        self:SetScript('OnSizeChanged', self.OnSizeChanged)
+                    <OnLoad>
                         self:SetBackdrop(BACKDROP_DIALOG_32_32)
                     </OnLoad>
                     <OnHide>
