@@ -145,7 +145,7 @@ function Scaner:ProcessAuction(index)
     local link = GetAuctionItemLink('list', index)
     local db = self:GetDB()
 
-    if buyoutPrice and buyoutPrice > 0 then
+    if db and buyoutPrice and buyoutPrice > 0 then
         local unitPrice = floor(buyoutPrice / count)
         local itemKey = ns.ParseItemKey(link)
 

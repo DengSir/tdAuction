@@ -23,40 +23,49 @@ function BrowseScaner:Query(params)
 end
 
 function BrowseScaner:GetDB()
-    return self.db[self.params.page]
+    return self:IsCanSavePrice() and self.db[self.params.page]
 end
 
 function BrowseScaner:OnResponse()
     Scaner.OnResponse(self)
-    self.db[self.params.page] = {}
+
+    if self:IsCanSavePrice() then
+        self.db[self.params.page] = {}
+    end
 end
 
 function BrowseScaner:OnStart()
     self.pending = ns.Pending:New()
 end
 
-function BrowseScaner:OnDone()
+function BrowseScaner:IsCanSavePrice()
     local sortType, sortRev = GetAuctionSort('list', 1)
-    if sortType == 'unitprice' and not sortRev then
-        local db = {}
-        local page = 0
+    return sortType == 'unitprice' and not sortRev
+end
 
-        while true do
-            local prices = self.db[page]
-            if not prices then
-                break
-            end
+function BrowseScaner:OnDone()
+    if not self:IsCanSavePrice() then
+        return
+    end
 
-            for itemKey, price in pairs(prices) do
-                if not db[itemKey] then
-                    db[itemKey] = price
-                else
-                    db[itemKey] = min(db[itemKey], price)
-                end
-            end
-            page = page + 1
+    local db = {}
+    local page = 0
+
+    while true do
+        local prices = self.db[page]
+        if not prices then
+            break
         end
 
-        self:SavePrices(db)
+        for itemKey, price in pairs(prices) do
+            if not db[itemKey] then
+                db[itemKey] = price
+            else
+                db[itemKey] = min(db[itemKey], price)
+            end
+        end
+        page = page + 1
     end
+
+    self:SavePrices(db)
 end

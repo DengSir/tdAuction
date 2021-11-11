@@ -59,6 +59,7 @@ L['Use history price'] = true
 L['Choose other price'] = true
 
 L['Start auction:'] = true
+L['Toggle column'] = true
 
 L.TOOLTIP_PREFIX_VENDO = 'Vendor'
 L.TOOLTIP_PREFIX_AUCTION = 'Auction'

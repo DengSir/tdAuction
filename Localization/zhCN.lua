@@ -55,6 +55,7 @@ L['Use history price'] = '使用历史价格'
 L['Choose other price'] = '选择其它价格'
 
 L['Start auction:'] = '开始拍卖：'
+L['Toggle column'] = '切换列'
 
 L.TOOLTIP_PREFIX_VENDO = '售价'
 L.TOOLTIP_PREFIX_AUCTION = '拍卖'
