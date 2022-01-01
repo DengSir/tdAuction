@@ -30,6 +30,7 @@ function Browse:Constructor()
 end
 
 function Browse:LayoutBlizzard()
+    ---@type tdAuctionBrowseBuyFrameTemplate
     self.BuyFrame = CreateFrame('Frame', nil, self, 'tdAuctionBrowseBuyFrameTemplate')
     self.Name = BrowseName
     self.SearchButton = BrowseSearchButton
@@ -48,6 +49,7 @@ function Browse:LayoutBlizzard()
     self.ResetButton = self.BuyFrame.ResetButton
     self.SortButtonFrame = self.BuyFrame.SortButtonFrame
 
+    ---@type UICheckButtonTemplate
     self.ExactCheckButton = CreateFrame('CheckButton', nil, self, 'UICheckButtonTemplate')
     self.ExactCheckButton:SetSize(24, 24)
     self.ExactCheckButton:SetPoint('TOPLEFT', self.Name, 'BOTTOMLEFT', -10, -1)

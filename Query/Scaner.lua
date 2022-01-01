@@ -29,7 +29,7 @@ do
     end
 end
 
----@type Scaner
+---@class Scaner: Object
 local Scaner = ns.Addon:NewClass('Scaner')
 
 function Scaner:Query(params)

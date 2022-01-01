@@ -13,7 +13,7 @@ local GetMoneyString = GetMoneyString
 
 local ERR_AUCTION_STARTED = ERR_AUCTION_STARTED
 
----@type SellOutput
+---@class SellOutput: AceAddon-3.0, AceEvent-3.0, AceHook-3.0
 local SellOutput = ns.Addon:NewModule('SellOutput', 'AceEvent-3.0', 'AceHook-3.0')
 
 function SellOutput:OnInitialize()
@@ -35,6 +35,7 @@ function SellOutput:OnPostAuction(_, price, _, stackSize, numStacks)
     self.stackSize = stackSize
     self.numStacks = numStacks
     self.price = price
+    self.failure = nil
 end
 
 function SellOutput:CHAT_MSG_SYSTEM(_, msg)
@@ -65,4 +66,5 @@ function SellOutput:Done()
     self.stackSize = nil
     self.numStacks = nil
     self.price = nil
+    self.failure = nil
 end

@@ -3,7 +3,7 @@
 -- @Link   : https://dengsir.github.io
 -- @Date   : 9/18/2020, 2:24:41 PM
 --
----@type ns
+---@class ns
 local ns = select(2, ...)
 
 local Hider

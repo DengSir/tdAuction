@@ -17,7 +17,7 @@ local SortAuctionSetSort = SortAuctionSetSort
 
 local Scaner = ns.Scaner
 
----@type PriceScaner
+---@class PriceScaner: Scaner
 local PriceScaner = ns.Addon:NewClass('PriceScaner', Scaner)
 
 function PriceScaner:Query(params)

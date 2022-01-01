@@ -8,6 +8,7 @@ local ns = select(2, ...)
 
 local L = ns.L
 
+---@class Addon
 local Addon = ns.Addon
 
 local AceConfigRegistry = LibStub('AceConfigRegistry-3.0')

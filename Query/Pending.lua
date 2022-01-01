@@ -6,6 +6,7 @@
 ---@type ns
 local ns = select(2, ...)
 
+---@class Pending: Object
 local Pending = ns.Addon:NewClass('Pending')
 
 function Pending:Constructor()

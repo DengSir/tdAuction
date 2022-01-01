@@ -12,7 +12,7 @@ local min = math.min
 local L = ns.L
 local Scaner = ns.Scaner
 
----@type BrowseScaner
+---@class BrowseScaner: Scaner
 local BrowseScaner = ns.Addon:NewClass('BrowseScaner', ns.Scaner)
 
 function BrowseScaner:Query(params)

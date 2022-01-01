@@ -21,7 +21,7 @@ local tinsert, tconcat = table.insert, table.concat
 
 local GetItemQualityColor = GetItemQualityColor
 
----@type FullScaner
+---@class FullScaner: Scaner
 local FullScaner = ns.Addon:NewClass('FullScaner', Scaner)
 
 function FullScaner:Constructor()

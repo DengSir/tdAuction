@@ -17,7 +17,7 @@ local STATUS_PENDING = 1
 local STATUS_WAITRESP = 2
 local STATUS_RUNNING = 3
 
----@type Querier
+---@class Querier: AceAddon-3.0, AceEvent-3.0
 local Querier = ns.Addon:NewModule('Querier', 'AceEvent-3.0')
 
 function Querier:OnInitialize()

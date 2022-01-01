@@ -27,6 +27,7 @@ function Sell:LayoutBlizzard()
     t:SetTexture([[Interface\AuctionFrame\UI-AuctionFrame-ItemSlot]])
     t:SetTexCoord(0.15625, 0.83203125, 0.171875, 0.796875)
 
+    ---@type tdAuctionSellFrameTemplate
     self.SellFrame = CreateFrame('Frame', nil, self, 'tdAuctionSellFrameTemplate')
     self.StartPrice = StartPrice
     self.BuyoutPrice = BuyoutPrice

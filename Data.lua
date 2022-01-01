@@ -3,7 +3,7 @@
 -- @Link   : https://dengsir.github.io
 -- @Date   : 9/23/2020, 1:01:44 PM
 --
----@type ns
+---@class ns
 local ns = select(2, ...)
 
 ns.DISENCHANT_KEYS = {

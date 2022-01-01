@@ -3,10 +3,18 @@
 -- @Link   : https://dengsir.github.io
 -- @Date   : 9/16/2020, 6:21:49 PM
 --
----@type ns
+---@class ns
+-- class
+---@field Pending Pending
+---@field Scaner Scaner
+---@field BrowseScaner BrowseScaner
+---@field FullScaner FullScaner
+---@field PriceScaner PriceScaner
+-- module
+---@field Querier Querier
 local ns = select(2, ...)
 
----@type Addon
+---@class Addon: AceAddon-3.0, LibClass-2.0, AceEvent-3.0
 local Addon = LibStub('AceAddon-3.0'):NewAddon('tdAuction', 'LibClass-2.0', 'AceEvent-3.0')
 
 local L = LibStub('AceLocale-3.0'):GetLocale('tdAuction')
@@ -195,6 +203,7 @@ function Addon:SetupUI()
     self.FullScan = ns.UI.FullScan:Bind(CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionFullScanFrameTemplate'))
     self.Browse = ns.UI.Browse:Bind(AuctionFrameBrowse)
     self.Sell = ns.UI.Sell:Bind(AuctionFrameAuctions)
+    ---@type tdAuctionFeaturesFrameTemplate
     self.Features = CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionFeaturesFrameTemplate')
 
     self.Features.FullScanButton:SetText(L['Full scan'])

@@ -13,7 +13,7 @@ local STATUS_QUERY = 2
 local STATUS_SCAN = 3
 local STATUS_DONE = 4
 
----@type FullScan
+---@class UI.FullScan: Frame, tdAuctionFullScanFrameTemplate
 local FullScan = ns.Addon:NewClass('UI.FullScan', 'Frame')
 
 function FullScan:Constructor()
