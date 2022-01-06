@@ -1,6 +1,4 @@
 {
-    "Lua.diagnostics.disable": [
-        "undefined-global",
-        "redundant-parameter"
-    ]
+  "Lua.diagnostics.disable": ["redundant-parameter", "undefined-global"],
+  "Lua.workspace.ignoreDir": [".vscode", "Libs/Ace*", "ElvUI.lua"]
 }

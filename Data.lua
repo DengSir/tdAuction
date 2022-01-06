@@ -30,11 +30,14 @@ ns.DISENCHANT_KEYS = {
     INVTYPE_WEAPONOFFHAND = 'Weapon',
     INVTYPE_RANGED = 'Weapon',
     INVTYPE_RANGEDRIGHT = 'Weapon',
+    -- @bcc@
+    INVTYPE_THROWN = 'Weapon',
+    -- @end-bcc@
 }
 
 ns.DISENCHANT_POSSIBLES = {
     Weapon = {
-        [Enum.ItemQuality.Good] = {
+        [Enum.ItemQuality.Good or Enum.ItemQuality.Uncommon] = {
             {
                 possibles = { --
                     {min = 1, max = 2, rate = 0.8, id = 10938},
@@ -208,7 +211,7 @@ ns.DISENCHANT_POSSIBLES = {
         },
     },
     Armor = {
-        [Enum.ItemQuality.Good] = {
+        [Enum.ItemQuality.Good or Enum.ItemQuality.Uncommon] = {
             {
                 possibles = { --
                     {min = 1, max = 2, rate = 0.8, id = 10940},
