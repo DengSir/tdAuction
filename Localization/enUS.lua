@@ -61,6 +61,10 @@ L['Choose other price'] = true
 L['Start auction:'] = true
 L['Toggle column'] = true
 
+L['Auction price time style'] = true
+L['Date'] = true
+L['Time different'] = true
+
 L.TOOLTIP_PREFIX_VENDO = 'Vendor'
 L.TOOLTIP_PREFIX_AUCTION = 'Auction'
 L.TOOLTIP_PREFIX_DISENCHANT = 'Disenchant'

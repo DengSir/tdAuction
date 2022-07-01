@@ -57,6 +57,10 @@ L['Choose other price'] = '选择其它价格'
 L['Start auction:'] = '开始拍卖：'
 L['Toggle column'] = '切换列'
 
+L['Auction price time style'] = '拍卖价格时间样式'
+L['Date'] = '日期'
+L['Time different'] = '时间差'
+
 L.TOOLTIP_PREFIX_VENDO = '售价'
 L.TOOLTIP_PREFIX_AUCTION = '拍卖'
 L.TOOLTIP_PREFIX_DISENCHANT = '分解'

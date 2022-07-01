@@ -190,7 +190,7 @@ function Addon:SetupOptionFrame()
                 price = toggle(L['Merchant price']),
                 auctionPrice = toggle(L['Auction price']),
                 _auctionPrice = child(L['Auction price']) { --
-                    updateTime = drop('Auction price style') {
+                    updateTime = drop(L['Auction price time style']) {
                         {name = CLOSE, value = false},
                         {name = L['Date'], value = 'date'},
                         {name = L['Time different'], value = 'timediff'},
