@@ -1,3 +1,13 @@
+## [1.0.10](https://github.com/DengSir/tdAuction/compare/v1.0.9...v1.0.10) (2022-07-01)
+
+
+### Features
+
+* add auction price update time ([2aaf03d](https://github.com/DengSir/tdAuction/commit/2aaf03d781d8d5983530c65423a03d73aeab0e61))
+* disenchant for thrown ([04bd870](https://github.com/DengSir/tdAuction/commit/04bd870c1f0fdad5cf96ec743e54220f4da0c29c))
+
+
+
 ## [1.0.9](https://github.com/DengSir/tdAuction/compare/v1.0.8...v1.0.9) (2021-12-24)
 
 
