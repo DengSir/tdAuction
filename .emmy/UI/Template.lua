@@ -1,3 +1,4 @@
+---@meta
 ---@class __tdAuctionFeaturesFrameTemplate_FullScanButton : UIPanelButtonTemplate , Button
 
 ---@class __tdAuctionFeaturesFrameTemplate_OptionButton : UIPanelButtonTemplate , Button
@@ -48,12 +49,33 @@ local tdAuctionItemTextCenterElideTemplate = {}
 ---@field Text FontString
 local tdAuctionItemTextRightTemplate = {}
 
+---@class __tdAuctionBrowseItemTemplate_UnitPrice : tdAuctionItemTextRightTemplate , Frame
+
+---@class __tdAuctionBrowseItemTemplate_Buyout : tdAuctionItemTextRightTemplate , Frame
+
+---@class __tdAuctionBrowseItemTemplate_Bid : tdAuctionItemTextRightTemplate , Frame
+
+---@class __tdAuctionBrowseItemTemplate_Seller : tdAuctionItemTextCenterElideTemplate , Frame
+
+---@class __tdAuctionBrowseItemTemplate_Time : tdAuctionItemTextCenterTemplate , Frame
+
+---@class __tdAuctionBrowseItemTemplate_Level : tdAuctionItemTextCenterTemplate , Frame
+
+---@class __tdAuctionBrowseItemTemplate_Name : tdAuctionItemTextLeftElideTemplate , Frame
+
 ---@class tdAuctionBrowseItemTemplate : Button
 ---@field Icon Texture
 ---@field Selected Texture
 ---@field Highlight Texture
 ---@field Bg Texture
 ---@field Enter Button
+---@field UnitPrice __tdAuctionBrowseItemTemplate_UnitPrice
+---@field Buyout __tdAuctionBrowseItemTemplate_Buyout
+---@field Bid __tdAuctionBrowseItemTemplate_Bid
+---@field Seller __tdAuctionBrowseItemTemplate_Seller
+---@field Time __tdAuctionBrowseItemTemplate_Time
+---@field Level __tdAuctionBrowseItemTemplate_Level
+---@field Name __tdAuctionBrowseItemTemplate_Name
 local tdAuctionBrowseItemTemplate = {}
 
 ---@class tdAuctionSortButtonTemplate : Button

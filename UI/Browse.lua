@@ -12,6 +12,7 @@ local L = ns.L
 
 local BUTTON_HEIGHT = 18
 
+---@class UI.Browse: Object, Frame
 local Browse = ns.Addon:NewClass('UI.Browse', 'Frame')
 
 function Browse:Constructor()

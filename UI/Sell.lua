@@ -37,6 +37,7 @@ function Sell:LayoutBlizzard()
     self.NumStacksEntry = AuctionsNumStacksEntry
     self.StackSizeMaxButton = AuctionsStackSizeMaxButton
     self.NumStacksMaxButton = AuctionsNumStacksMaxButton
+    ---@type UI.ComboBox
     self.DurationDropDown = self.SellFrame.DurationDropDown
     self.PriceReading = self.SellFrame.PriceReading
     self.PriceList = self.SellFrame.PriceList

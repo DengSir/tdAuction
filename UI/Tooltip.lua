@@ -73,15 +73,28 @@ local function ShowSingle()
     end
 end
 
-local function AddPrice(tip, prefix, unitPrice, count)
+local function AddPrice(tip, prefix, unitPrice, count, t)
     count = max(1, count)
 
-    if count == 1 or ShowSingle() then
-        tip:AddDoubleLine(prefix, GetMoneyString(unitPrice), 0, 1, 0.5, 1, 1, 1)
-    else
-        tip:AddDoubleLine(format('%s |cffaaaaffx%d|r', prefix, count), GetMoneyString(unitPrice * count), 0, 1, 0.5, 1,
-                          1, 1)
+    local price = unitPrice
+
+    if count > 1 and not ShowSingle() then
+        prefix = format('%s |cffaaaaffx%d|r', prefix, count)
+        price = unitPrice * count
     end
+
+    local ut = ns.profile.tooltip.updateTime
+    if ut and t and t > 0 then
+        local updateText
+        if ut == 'timediff' then
+            updateText = FriendsFrame_GetLastOnline(time() - t, true)
+        elseif ut == 'date' then
+            updateText = date(nil, t)
+        end
+        prefix = format('%s |cffffd100(%s)|r', prefix, updateText)
+    end
+
+    tip:AddDoubleLine(prefix, GetMoneyString(price), 0, 1, 0.5, 1, 1, 1)
 end
 
 ---@param tip GameTooltip
@@ -95,9 +108,9 @@ local function OnTooltipItem(tip, link, count)
 
     if ns.profile.tooltip.auctionPrice then
         local itemKey = ns.ParseItemKey(link)
-        local price = itemKey and ns.prices[itemKey]
-        if price then
-            AddPrice(tip, PREFIX_AUCTION, price, count)
+        local priceInfo = itemKey and ns.rawPrices[itemKey]
+        if priceInfo then
+            AddPrice(tip, PREFIX_AUCTION, priceInfo[1], count, priceInfo[2])
         end
     end
 

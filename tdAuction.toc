@@ -5,6 +5,6 @@
 ## Title: tdAuction
 ## Author: Dencer
 ## Version: @project-version@
-## SavedVariables: TDDB_AUCTION
+## SavedVariables: TDDB_AUCTION, TDDB_AUCTION_NEW
 
 Load.xml

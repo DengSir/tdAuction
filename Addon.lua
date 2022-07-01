@@ -20,6 +20,9 @@ local Addon = LibStub('AceAddon-3.0'):NewAddon('tdAuction', 'LibClass-2.0', 'Ace
 local L = LibStub('AceLocale-3.0'):GetLocale('tdAuction')
 
 ns.Addon = Addon
+---@class UI
+---@field Browse UI.Browse
+---@field BrowseItem UI.BrowseItem
 ns.UI = {}
 ns.L = L
 
@@ -33,6 +36,7 @@ local DEFAULT_PROFILE = { --
     tooltip = { --
         price = true,
         auctionPrice = true,
+        updateTime = 'timediff',
         disenchantPrice = true,
         shiftSingle = true,
         showDisenchant = 1,
@@ -73,14 +77,46 @@ function Addon:OnClassCreated(class, name)
 end
 
 function Addon:SetupDatabase()
-    ns.db = LibStub('AceDB-3.0'):New('TDDB_AUCTION', {global = DEFAULT_GLOBAL, profile = DEFAULT_PROFILE}, true)
+    _G.TDDB_AUCTION_NEW = _G.TDDB_AUCTION_NEW or _G.TDDB_AUCTION
 
+    ns.db = LibStub('AceDB-3.0'):New('TDDB_AUCTION_NEW', {global = DEFAULT_GLOBAL, profile = DEFAULT_PROFILE}, true)
+
+    ---@type GLOBAL
     ns.global = ns.db.global
+    ---@type PROFILE
     ns.profile = ns.db.profile
 
     local realm = GetRealmName()
     ns.global.prices[realm] = ns.global.prices[realm] or {}
-    ns.prices = ns.global.prices[realm]
+
+    local prices = ns.global.prices[realm]
+    ns.rawPrices = prices
+
+    if not prices.version or type(prices.version) ~= 'number' or prices.version < 0 then
+        prices.version = 1
+
+        for k, v in pairs(prices) do
+            if type(v) ~= 'table' then
+                prices[k] = {v, 0}
+            end
+        end
+    end
+
+    ns.prices = setmetatable({}, {
+        __index = function(_, k)
+            local info = prices[k]
+            return info and info[1]
+        end,
+        __newindex = function(_, k, v)
+            prices[k] = {v, time()}
+        end,
+    })
+
+    -- compat
+    ns.db:RegisterCallback('OnDatabaseShutdown', function()
+        _G.TDDB_AUCTION = nil
+    end)
+    _G.TDDB_AUCTION = {global = {prices = {[realm] = ns.prices}}}
 end
 
 function Addon:SetupBlizzardUI()

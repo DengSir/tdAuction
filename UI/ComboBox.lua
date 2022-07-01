@@ -6,7 +6,7 @@
 ---@type ns
 local ns = select(2, ...)
 
----@class UI.ComboBox: UIDropDownMenuTemplate
+---@class UI.ComboBox: Object, UIDropDownMenuTemplate
 local ComboBox = ns.Addon:NewClass('UI.ComboBox', 'Frame')
 
 local function ButtonOnClick(self)

@@ -219,6 +219,29 @@
 
     <Button name="tdAuctionBrowseItemTemplate" virtual="true">
         <Size x="1" y="18" />
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture parentKey="Icon">
+                    <Size x="18" y="18" />
+                    <Anchors>
+                        <Anchor point="LEFT"/>
+                    </Anchors>
+                </Texture>
+            </Layer>
+            <Layer level="BACKGROUND">
+                <Texture parentKey="Selected" hidden="true" setAllPoints="true">
+                    <Color r="0" g="1" b="1" a="0.3" />
+                </Texture>
+                <Texture parentKey="Highlight" setAllPoints="true">
+                    <Color r="1" g="0.81" b="0" a="0.3" />
+                </Texture>
+            </Layer>
+            <Layer level="BACKGROUND" textureSubLevel="-1">
+                <Texture parentKey="Bg" hidden="true" setAllPoints="true">
+                    <Color r="1" g="1" b="1" a="0.1" />
+                </Texture>
+            </Layer>
+        </Layers>
         <Frames>
             <Button parentKey="Enter">
                 <Size x="18" y="18" />
@@ -247,31 +270,6 @@
                     </OnUpdate>
                 </Scripts>
             </Button>
-        </Frames>
-        <Layers>
-            <Layer level="ARTWORK">
-                <Texture parentKey="Icon">
-                    <Size x="18" y="18" />
-                    <Anchors>
-                        <Anchor point="LEFT"/>
-                    </Anchors>
-                </Texture>
-            </Layer>
-            <Layer level="BACKGROUND">
-                <Texture parentKey="Selected" hidden="true" setAllPoints="true">
-                    <Color r="0" g="1" b="1" a="0.3" />
-                </Texture>
-                <Texture parentKey="Highlight" setAllPoints="true">
-                    <Color r="1" g="0.81" b="0" a="0.3" />
-                </Texture>
-            </Layer>
-            <Layer level="BACKGROUND" textureSubLevel="-1">
-                <Texture parentKey="Bg" hidden="true" setAllPoints="true">
-                    <Color r="1" g="1" b="1" a="0.1" />
-                </Texture>
-            </Layer>
-        </Layers>
-        <Frames>
             <Frame parentKey="UnitPrice" inherits="tdAuctionItemTextRightTemplate">
                 <Size x="95" y="18" />
                 <Anchors>

@@ -6,6 +6,7 @@
 ---@type ns
 local ns = select(2, ...)
 
+---@class UI.BrowseItem: Object, Button, tdAuctionBrowseItemTemplate
 local BrowseItem = ns.Addon:NewClass('UI.BrowseItem', 'Button')
 
 local NONE = GRAY_FONT_COLOR:WrapTextInColorCode(NONE)

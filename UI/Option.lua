@@ -21,10 +21,16 @@ function Addon:SetupOptionFrame()
         return order
     end
 
+    local function isValidPath(path)
+        return path:sub(1, 1) ~= '_'
+    end
+
     local function getConfig(paths)
         local d = ns.profile
         for i, v in ipairs(paths) do
-            d = d[v]
+            if isValidPath(v) then
+                d = d[v]
+            end
         end
         return d
     end
@@ -34,7 +40,9 @@ function Addon:SetupOptionFrame()
         local n = #paths
         for i, v in ipairs(paths) do
             if i < n then
-                d = d[v]
+                if isValidPath(v) then
+                    d = d[v]
+                end
             else
                 d[v] = value
             end
@@ -44,6 +52,27 @@ function Addon:SetupOptionFrame()
     local function inline(name)
         return function(args)
             return {type = 'group', name = name, inline = true, order = orderGen(), args = args}
+        end
+    end
+
+    local function disabled(paths)
+        local d = ns.profile
+        for _, v in ipairs(paths) do
+            if type(d) ~= 'table' then
+                break
+            end
+            if isValidPath(v) then
+                d = d[v]
+            else
+                d = d[v:sub(2)]
+            end
+        end
+        return not d
+    end
+
+    local function child(name)
+        return function(args)
+            return {type = 'group', name = name, inline = true, order = orderGen(), args = args, disabled = disabled}
         end
     end
 
@@ -82,7 +111,15 @@ function Addon:SetupOptionFrame()
     end
 
     local function toggle(name)
-        return {type = 'toggle', name = name, width = 'double', order = orderGen()}
+        return {
+            type = 'toggle',
+            name = name,
+            width = 'double',
+            order = orderGen(),
+            hidden = function()
+                return false
+            end,
+        }
     end
 
     local function range(name, min, max, step)
@@ -145,18 +182,27 @@ function Addon:SetupOptionFrame()
             },
             db = treeItem(L['Database']) {
                 clear = execute(L['Clear database'], L['You are sure to clear the database'], function()
-                    return wipe(ns.prices)
+                    return wipe(ns.rawPrices)
                 end),
             },
             tooltipTitle = treeTitle(L['Tooltip']),
             tooltip = treeItem(L['Tooltip']) {
                 price = toggle(L['Merchant price']),
                 auctionPrice = toggle(L['Auction price']),
+                _auctionPrice = child(L['Auction price']) { --
+                    updateTime = drop('Auction price style') {
+                        {name = CLOSE, value = false},
+                        {name = L['Date'], value = 'date'},
+                        {name = L['Time different'], value = 'timediff'},
+                    },
+                },
                 disenchantPrice = toggle(L['Disenchant price']),
-                showDisenchant = drop(L['Show disenchant info']) {
-                    {name = L['Nerver'], value = false},
-                    {name = L['Pressed SHIFT'], value = 1},
-                    {name = L['Always'], value = 2},
+                _disenchantPrice = child(L['Disenchant price']) {
+                    showDisenchant = drop(L['Show disenchant info']) {
+                        {name = L['Nerver'], value = false},
+                        {name = L['Pressed SHIFT'], value = 1},
+                        {name = L['Always'], value = 2},
+                    },
                 },
                 shiftSingle = drop(L['When pressed SHIFT, to dislay ...']) {
                     {name = L['Total price'], value = false},

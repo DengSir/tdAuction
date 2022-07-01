@@ -54,9 +54,16 @@ end
 
 function SellOutput:AUCTION_MULTISELL_FAILURE()
     self.failure = true
+
+    C_Timer.After(1, function()
+        self:Done()
+    end)
 end
 
 function SellOutput:Done()
+    if not self.item then
+        return
+    end
     SendSystemMessage(L['Start auction:'] ..
                           format(' %sx%d (%s)', self.item, self.sellStacks * self.stackSize,
                                  GetMoneyString(self.price * self.sellStacks)))
