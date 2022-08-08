@@ -62,7 +62,8 @@ function ns.ParseItemLink(link)
     if not link then
         return
     end
-    local itemId, enchantId, suffixId, uniqueId = link:match('item:(%d*):(%-?%d*):%-?%d*:%-?%d*:%-?%d*:%-?%d*:(%-?%d*):(%-?%d*)')
+    local itemId, enchantId, suffixId, uniqueId = link:match(
+                                                      'item:(%d*):(%-?%d*):%-?%d*:%-?%d*:%-?%d*:%-?%d*:(%-?%d*):(%-?%d*)')
     if not itemId then
         return
     end
@@ -243,9 +244,9 @@ ns.MENU_SEPARATOR = {
     },
 }
 
--- @bcc@
+-- @build>2@
 ns.SELL_HOURS = {[1] = AUCTION_DURATION_ONE, [2] = AUCTION_DURATION_TWO, [3] = AUCTION_DURATION_THREE}
--- @end-bcc@
+-- @end-build>2@
 -- @classic@
 ns.SELL_HOURS = {[1] = '2' .. HOURS, [2] = '8' .. HOURS, [3] = '24' .. HOURS}
 -- @end-classic@

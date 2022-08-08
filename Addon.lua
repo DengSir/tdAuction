@@ -26,6 +26,10 @@ ns.Addon = Addon
 ns.UI = {}
 ns.L = L
 
+---@class DATABASE
+---@field profile PROFILE
+---@field global GLOBAL
+
 ---@class GLOBAL
 local DEFAULT_GLOBAL = { --
     prices = {},
@@ -79,11 +83,10 @@ end
 function Addon:SetupDatabase()
     _G.TDDB_AUCTION_NEW = _G.TDDB_AUCTION_NEW or _G.TDDB_AUCTION
 
+    ---@type AceDB-3.0 | DATABASE
     ns.db = LibStub('AceDB-3.0'):New('TDDB_AUCTION_NEW', {global = DEFAULT_GLOBAL, profile = DEFAULT_PROFILE}, true)
 
-    ---@type GLOBAL
     ns.global = ns.db.global
-    ---@type PROFILE
     ns.profile = ns.db.profile
 
     local realm = GetRealmName()

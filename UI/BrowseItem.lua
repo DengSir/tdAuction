@@ -10,22 +10,22 @@ local ns = select(2, ...)
 local BrowseItem = ns.Addon:NewClass('UI.BrowseItem', 'Button')
 
 local NONE = GRAY_FONT_COLOR:WrapTextInColorCode(NONE)
---@bcc@
+-- @build>2@
 local DURATION_TEXT = { --
     [1] = RED_FONT_COLOR:WrapTextInColorCode('< 30m'),
     [2] = YELLOW_FONT_COLOR:WrapTextInColorCode('30m-2h'),
     [3] = GREEN_FONT_COLOR:WrapTextInColorCode('2-12h'),
     [4] = GRAY_FONT_COLOR:WrapTextInColorCode('> 12h'),
 }
---@end-bcc@
---@classic@
+-- @end-build>2@
+-- @classic@
 local DURATION_TEXT = { --
-[1] = RED_FONT_COLOR:WrapTextInColorCode('< 30m'),
-[2] = YELLOW_FONT_COLOR:WrapTextInColorCode('30m-2h'),
-[3] = GREEN_FONT_COLOR:WrapTextInColorCode('2-8h'),
-[4] = GRAY_FONT_COLOR:WrapTextInColorCode('> 8h'),
+    [1] = RED_FONT_COLOR:WrapTextInColorCode('< 30m'),
+    [2] = YELLOW_FONT_COLOR:WrapTextInColorCode('30m-2h'),
+    [3] = GREEN_FONT_COLOR:WrapTextInColorCode('2-8h'),
+    [4] = GRAY_FONT_COLOR:WrapTextInColorCode('> 8h'),
 }
---@end-classic@
+-- @end-classic@
 
 function BrowseItem:Constructor()
     self:SetScript('OnClick', self.OnClick)

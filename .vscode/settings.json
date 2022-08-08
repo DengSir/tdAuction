@@ -2,7 +2,9 @@
   "Lua.diagnostics.disable": [
     "redundant-parameter",
     "undefined-global",
-    "missing-parameter"
+    "missing-parameter",
+    "assign-type-mismatch"
   ],
+  "Lua.runtime.version": "Lua 5.1",
   "Lua.workspace.ignoreDir": [".vscode", "Libs/Ace*", "ElvUI.lua"]
 }
