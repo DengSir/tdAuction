@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/DengSir/tdAuction/compare/v1.0.10...v1.1.0) (2022-08-12)
+
+
+### Features
+
+* wlk ([07eff68](https://github.com/DengSir/tdAuction/commit/07eff6894f39e9d3cac75d847ef48abb37a99707))
+
+
+
 ## [1.0.10](https://github.com/DengSir/tdAuction/compare/v1.0.9...v1.0.10) (2022-07-01)
 
 
