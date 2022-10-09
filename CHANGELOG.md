@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/DengSir/tdAuction/compare/v1.1.0...v1.1.1) (2022-10-09)
+
+
+### Features
+
+* 达拉然拍卖行记录结果 ([edfbf4f](https://github.com/DengSir/tdAuction/commit/edfbf4f2cb6cb3a79c0c11ddbf04b98ac8e078eb))
+
+
+
 # [1.1.0](https://github.com/DengSir/tdAuction/compare/v1.0.10...v1.1.0) (2022-08-12)
 
 
