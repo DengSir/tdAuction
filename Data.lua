@@ -368,7 +368,7 @@ ns.DISENCHANT_POSSIBLES = {
             },
             {
                 possibles = {
-                    {min = 1, max = 3, rate = 0.75, id = 34504},
+                    {min = 1, max = 3, rate = 0.75, id = 34054},
                     {min = 1, max = 2, rate = 0.22, id = 34056},
                     {min = 1, max = 1, rate = 0.03, id = 34053},
                 },

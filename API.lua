@@ -120,6 +120,8 @@ local VALID_NPCS = {
     [17628] = true,
     [17629] = true,
     [18761] = true,
+    -- 达拉然
+    [35594] = true,
 }
 
 local function NpcId()

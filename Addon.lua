@@ -245,6 +245,27 @@ function Addon:SetupUI()
     ---@type tdAuctionFeaturesFrameTemplate
     self.Features = CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionFeaturesFrameTemplate')
 
+    self.Features:SetScript('OnShow', function()
+        self.Features.FullScanButton:SetEnabled(ns.IsValidNpc())
+    end)
+
+    self.Features.FullScanButton:SetScript('OnEnter', function(button)
+        if button:IsEnabled() then
+            return
+        end
+
+        GameTooltip:SetOwner(button, 'ANCHOR_RIGHT')
+        GameTooltip:SetText(L.TOOLTIP_FULLSCAN_DISABLED:format(UnitName('npc')), nil, nil, nil, nil, true)
+        GameTooltip:Show()
+    end)
+    self.Features.FullScanButton:SetScript('OnLeave', function(button)
+        if button:IsEnabled() then
+            return
+        end
+        GameTooltip:Hide()
+    end)
+    self.Features.FullScanButton:SetMotionScriptsWhileDisabled(true)
+
     self.Features.FullScanButton:SetText(L['Full scan'])
     self.Features.FullScanButton:SetScript('OnClick', function()
         self.FullScan:Show()

@@ -68,5 +68,6 @@ L['Time different'] = true
 L.TOOLTIP_PREFIX_VENDO = 'Vendor'
 L.TOOLTIP_PREFIX_AUCTION = 'Auction'
 L.TOOLTIP_PREFIX_DISENCHANT = 'Disenchant'
+L.TOOLTIP_FULLSCAN_DISABLED = [[An unknown NPC (%s), tdAuction cannot determine whether the auction house is neutral or not.]]
 -- @end-import@
 -- @end-debug@
