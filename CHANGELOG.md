@@ -1,3 +1,12 @@
+## [1.1.2](https://github.com/DengSir/tdAuction/compare/v1.1.1...v1.1.2) (2022-10-19)
+
+
+### Features
+
+* cd for sell ([2cc0c52](https://github.com/DengSir/tdAuction/commit/2cc0c52521b4683fcd3cfde4755ea2a616771406))
+
+
+
 ## [1.1.1](https://github.com/DengSir/tdAuction/compare/v1.1.0...v1.1.1) (2022-10-09)
 
 
