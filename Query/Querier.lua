@@ -8,7 +8,6 @@ local ns = select(2, ...)
 
 local floor, max = math.floor, math.max
 
-local QueryAuctionItems = QueryAuctionItems
 local GetNumAuctionItems = GetNumAuctionItems
 local CanSendAuctionQuery = CanSendAuctionQuery
 local GetItemInfo = GetItemInfo

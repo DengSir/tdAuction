@@ -16,6 +16,18 @@ function Sell:Constructor()
         self:OnItemPriceScanDone()
     end)
 
+    self.validater = CreateFrame('Frame', nil, self)
+    self.validater:Hide()
+    self.validater:SetScript('OnUpdate', function()
+        AuctionsFrameAuctions_ValidateAuction()
+
+        if not CanSendAuctionQuery('list') then
+            AuctionsCreateAuctionButton:Disable()
+        else
+            self.validater:Hide()
+        end
+    end)
+
     self:LayoutBlizzard()
     self:SetupEventsAndHooks()
 end
@@ -114,6 +126,10 @@ function Sell:SetupEventsAndHooks()
 
     AuctionsBlockFrame:HookScript('OnShow', function()
         self.PriceList:Hide()
+    end)
+
+    hooksecurefunc('QueryAuctionItems', function()
+        self.validater:Show()
     end)
 
     hooksecurefunc('ContainerFrameItemButton_OnModifiedClick', function(button)
