@@ -7,6 +7,8 @@
 local ns = select(2, ...)
 
 local L = ns.L
+local GetContainerItemInfo = GetContainerItemInfo or C_Container.GetContainerItemInfo
+local PickupContainerItem = PickupContainerItem or C_Container.PickupContainerItem
 
 local Sell = ns.Addon:NewClass('UI.Sell', 'Frame')
 

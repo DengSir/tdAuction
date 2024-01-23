@@ -12,11 +12,23 @@ function ns.hide(obj)
         Hider = CreateFrame('Frame')
         Hider:Hide()
     end
+    if not obj then
+        -- @debug@
+        error('Invalid obj', 2)
+        -- @end-debug@
+        return
+    end
     obj:Hide()
     obj:SetParent(Hider)
 end
 
 function ns.point(obj, ...)
+    if not obj then
+        -- @debug@
+        error('Invalid obj', 2)
+        -- @end-debug@
+        return
+    end
     obj:ClearAllPoints()
     obj:SetPoint(...)
 end
@@ -122,6 +134,7 @@ local VALID_NPCS = {
     [18761] = true,
     -- 达拉然
     [35594] = true,
+    [35607] = true,
 }
 
 local function NpcId()

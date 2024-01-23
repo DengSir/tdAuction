@@ -70,10 +70,22 @@ function Browse:LayoutBlizzard()
     local hide = ns.hide
     local point = ns.point
     local function text(obj, text)
+        if not obj then
+            -- @debug@
+            error('Invalid obj', 2)
+            -- @end-debug@
+            return
+        end
         obj:SetFontObject('GameFontHighlightSmall')
         obj:SetText(text)
     end
     local function parent(obj)
+        if not obj then
+            -- @debug@
+            error('Invalid obj', 2)
+            -- @end-debug@
+            return
+        end
         obj:SetParent(self.BuyFrame)
         obj:Show()
         obj.Hide = nop
@@ -88,8 +100,6 @@ function Browse:LayoutBlizzard()
     hide(BrowseHighBidderSort)
     hide(BrowseCurrentBidSort)
     hide(BrowseScrollFrame)
-    hide(BrowseIsUsableText)
-    hide(BrowseShowOnCharacterText)
     -- @classic@
     hide(BrowseTabText)
     -- @end-classic@
@@ -97,7 +107,7 @@ function Browse:LayoutBlizzard()
 
     text(ShowOnPlayerCheckButtonText, DISPLAY_ON_CHARACTER)
     text(IsUsableCheckButtonText, USABLE_ITEMS)
-    text(self.ExactCheckButton.text, AH_EXACT_MATCH)
+    text(self.ExactCheckButton.Text or self.ExactCheckButton.text, AH_EXACT_MATCH)
 
     local labels = {BrowseLevelText, BrowseNameText, BrowseDropDownName}
     local height = 0
