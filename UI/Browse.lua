@@ -104,6 +104,7 @@ function Browse:LayoutBlizzard()
     hide(BrowseTabText)
     -- @end-classic@
     hide(BrowseNoResultsText)
+    hide(BrowsePriceOptionsButtonFrame)
 
     text(ShowOnPlayerCheckButtonText, DISPLAY_ON_CHARACTER)
     text(IsUsableCheckButtonText, USABLE_ITEMS)
@@ -182,7 +183,12 @@ function Browse:SetupSortButtons()
     }
 
     local function OnClick(button)
-        AuctionFrame_OnClickSortColumn('list', button.sortColumn)
+        local s, r = GetAuctionSort('list',1)
+        local o = s and s == button.sortColumn and not r
+        SetCVar('auctionSortByUnitPrice', false)
+        SetCVar("auctionSortByBuyoutPrice", button.sortColumn ~= 'bid')
+        AuctionFrame_SetSort('list', button.sortColumn, o)
+        AuctionFrameBrowse_Search()
         self:SaveSorts()
     end
 
