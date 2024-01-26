@@ -182,13 +182,23 @@ function Browse:SetupSortButtons()
         {key = 'UnitPrice', reverse = true, sortColumn = 'unitprice', text = L['Unit price']},
     }
 
+    local function SortAuction(button)
+        local sortColumn, reverse = GetAuctionSort('list', 1)
+        local order = sortColumn and sortColumn == button.sortColumn and not reverse
+        SortAuctionClearSort('list')
+        for index, row in pairs(AuctionSort["list_"..button.sortColumn]) do
+            local sort = row.column
+            if order then
+                SortAuctionSetSort('list', sort, not row.reverse)
+            else
+                SortAuctionSetSort('list', sort, row.reverse)
+            end
+        end
+    end
+
     local function OnClick(button)
-        local s, r = GetAuctionSort('list',1)
-        local o = s and s == button.sortColumn and not r
-        SetCVar('auctionSortByUnitPrice', false)
-        SetCVar("auctionSortByBuyoutPrice", button.sortColumn ~= 'bid')
-        AuctionFrame_SetSort('list', button.sortColumn, o)
-        AuctionFrameBrowse_Search()
+        SortAuction(button)
+        self:RequestSearch()
         self:SaveSorts()
     end
 
