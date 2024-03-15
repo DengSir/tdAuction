@@ -100,9 +100,6 @@ function Browse:LayoutBlizzard()
     hide(BrowseHighBidderSort)
     hide(BrowseCurrentBidSort)
     hide(BrowseScrollFrame)
-    -- @classic@
-    hide(BrowseTabText)
-    -- @end-classic@
     hide(BrowseNoResultsText)
     hide(BrowsePriceOptionsButtonFrame)
 
