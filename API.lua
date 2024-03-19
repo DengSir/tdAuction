@@ -278,3 +278,5 @@ ns.SELL_HOURS = {[1] = AUCTION_DURATION_ONE, [2] = AUCTION_DURATION_TWO, [3] = A
 -- @classic@
 ns.SELL_HOURS = {[1] = '2' .. HOURS, [2] = '8' .. HOURS, [3] = '24' .. HOURS}
 -- @end-classic@
+
+ns.isZH = GetLocale() == 'zhCN' or GetLocale() == 'zhTW'

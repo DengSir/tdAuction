@@ -57,7 +57,7 @@ local DEFAULT_PROFILE = { --
     },
     buy = { --
         quickBuy = true,
-        hiddenColumns = {Seller = true},
+        hiddenColumns = {Seller = true, UnitBid = not ns.isZH or nil},
     },
 }
 
@@ -228,10 +228,10 @@ function Addon:SetupBackground()
             end
         end
 
-        T('TopLeft', 'Browse', 'Bid', 'Auction')
+        T('TopLeft', ns.isZH and 'Browse-zh' or 'Browse', 'Bid', 'Auction')
         T('Top', 'Browse', 'Auction', 'Auction')
         T('TopRight', 'Browse', 'Auction', 'Auction')
-        T('BotLeft', 'Browse', 'Bid', 'Auction')
+        T('BotLeft', ns.isZH and 'Browse-zh' or 'Browse', 'Bid', 'Auction')
         T('Bot', 'Auction', 'Auction', 'Auction')
         T('BotRight', 'Bid', 'Bid', 'Auction')
     end

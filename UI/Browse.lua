@@ -11,7 +11,9 @@ local ripairs = ipairs_reverse or ripairs
 local L = ns.L
 
 local BUTTON_HEIGHT = 18
-local FILTER_FRAME_SHORT = 48
+local FILTER_FRAME_SHORT = ns.isZH and 48 or 0
+local CONTROL_LABEL_SPACING = ns.isZH and 0 or -3
+
 local BUTTON_WIDTH_WITHSCROLL = 608 + FILTER_FRAME_SHORT
 local BUTTON_WIDTH_NOSCROLL = BUTTON_WIDTH_WITHSCROLL + 28
 local FRAME_WIDTH_WITHSCROLL = BUTTON_WIDTH_WITHSCROLL + 4
@@ -130,8 +132,9 @@ function Browse:LayoutBlizzard()
     point(BrowseLevelText, 'TOPLEFT', nameWidth + 90, -38)
     point(BrowseDropDownName, 'TOPLEFT', self, nameWidth + 170, -38)
 
-    point(self.Name, 'TOPLEFT', BrowseNameText, 'BOTTOMLEFT', 3, -3)
-    point(self.QualityDropDown, 'TOPLEFT', BrowseDropDownName, 'BOTTOMLEFT', -18, 3)
+    point(self.Name, 'TOPLEFT', BrowseNameText, 'BOTTOMLEFT', 3, -3 + CONTROL_LABEL_SPACING)
+    point(self.MinLevel, 'TOPLEFT', BrowseLevelText, 'BOTTOMLEFT', 0, -3 + CONTROL_LABEL_SPACING)
+    point(self.QualityDropDown, 'TOPLEFT', BrowseDropDownName, 'BOTTOMLEFT', -18, 3 + CONTROL_LABEL_SPACING)
     point(self.IsUsableCheckButton, 'TOPLEFT', nameWidth + 260, -38)
     point(ShowOnPlayerCheckButton, 'TOPLEFT', self.IsUsableCheckButton, 'BOTTOMLEFT', 0, 2)
 
@@ -143,23 +146,26 @@ function Browse:LayoutBlizzard()
     parent(self.SearchButton)
     parent(self.ResetButton)
 
-    local function SetWidth(button, width, our)
-        if our then
-            return
+    if ns.isZH then
+        local function SetWidth(button, width, our)
+            if our then
+                return
+            end
+            button:SetWidth(width - FILTER_FRAME_SHORT, true)
         end
-        button:SetWidth(width - FILTER_FRAME_SHORT, true)
+
+        for i = 1, 100 do
+            local button = _G['AuctionFilterButton' .. i]
+            if not button then
+                break
+            end
+            button:SetWidth(70)
+            hooksecurefunc(button, 'SetWidth', SetWidth)
+        end
+
+        point(BrowseFilterScrollFrame, 'TOPRIGHT', self, 'TOPLEFT', 158 - FILTER_FRAME_SHORT, -105)
     end
 
-    for i = 1, 100 do
-        local button = _G['AuctionFilterButton' .. i]
-        if not button then
-            break
-        end
-        button:SetWidth(70)
-        hooksecurefunc(button, 'SetWidth', SetWidth)
-    end
-
-    point(BrowseFilterScrollFrame, 'TOPRIGHT', self, 'TOPLEFT', 158 - FILTER_FRAME_SHORT, -105)
     point(self.ScrollFrame, 'TOPLEFT', self, 190 - FILTER_FRAME_SHORT, -104)
 
     ns.UI.ComboBox:Bind(self.QualityDropDown)
