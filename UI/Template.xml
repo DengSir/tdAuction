@@ -270,10 +270,16 @@
                     </OnUpdate>
                 </Scripts>
             </Button>
+            <Frame parentKey="ColumnAnchor">
+                <Size x="1" y="18" />
+                <Anchors>
+                    <Anchor point="LEFT" relativePoint="RIGHT" />
+                </Anchors>
+            </Frame>
             <Frame parentKey="UnitPrice" inherits="tdAuctionItemTextRightTemplate">
                 <Size x="95" y="18" />
                 <Anchors>
-                    <Anchor point="RIGHT" x="-3" y="0" />
+                    <Anchor point="RIGHT" relativeKey="$parent.ColumnAnchor" relativePoint="LEFT" />
                 </Anchors>
             </Frame>
             <Frame parentKey="Buyout" inherits="tdAuctionItemTextRightTemplate">
@@ -282,17 +288,22 @@
                     <Anchor point="RIGHT" relativeKey="$parent.UnitPrice" relativePoint="LEFT" />
                 </Anchors>
             </Frame>
-            <Frame parentKey="Bid" inherits="tdAuctionItemTextRightTemplate">
+            <Frame parentKey="UnitBid" inherits="tdAuctionItemTextRightTemplate">
                 <Size x="95" y="18" />
                 <Anchors>
                     <Anchor point="RIGHT" relativeKey="$parent.Buyout" relativePoint="LEFT" />
+                </Anchors>
+            </Frame>
+            <Frame parentKey="Bid" inherits="tdAuctionItemTextRightTemplate">
+                <Size x="95" y="18" />
+                <Anchors>
+                    <Anchor point="RIGHT" relativeKey="$parent.UnitBid" relativePoint="LEFT" />
                 </Anchors>
             </Frame>
             <Frame parentKey="Seller" inherits="tdAuctionItemTextCenterElideTemplate">
                 <Size x="95" y="18" />
                 <Anchors>
                     <Anchor point="RIGHT" relativeKey="$parent.Bid" relativePoint="LEFT" />
-                    <Anchor point="LEFT" x="247" y="0" />
                 </Anchors>
             </Frame>
             <Frame parentKey="Time" inherits="tdAuctionItemTextCenterTemplate">
@@ -377,9 +388,9 @@
         <Size y="19" />
         <Frames>
             <ScrollFrame parentKey="ScrollFrame" inherits="HybridScrollFrameTemplate" virtual="true">
-                <Size x="612" y="304" />
+                <Size x="1" y="304" />
                 <Anchors>
-                    <Anchor point="TOPLEFT" x="190" y="-104" />
+                    <Anchor point="TOPLEFT" x="0" y="-104" />
                 </Anchors>
                 <Frames>
                     <Slider parentKey="scrollBar" inherits="HybridScrollBarTemplate">
@@ -397,6 +408,12 @@
                     <Anchor point="BOTTOMRIGHT" relativeKey="$parent.ScrollFrame" relativePoint="TOPRIGHT" x="-2" y="3" />
                 </Anchors>
                 <Frames>
+                    <Frame parentKey="ColumnAnchor">
+                        <Size x="1" y="19" />
+                        <Anchors>
+                            <Anchor point="LEFT" relativePoint="RIGHT" />
+                        </Anchors>
+                    </Frame>
                     <Button parentKey="UnitPrice" inherits="tdAuctionSortButtonTemplate">
                         <Size x="96" y="19" />
                         <Anchors>
@@ -409,16 +426,23 @@
                             <Anchor point="RIGHT" relativeKey="$parent.UnitPrice" relativePoint="LEFT" />
                         </Anchors>
                     </Button>
-                    <Button parentKey="Bid" inherits="tdAuctionSortButtonTemplate">
+                    <Button parentKey="UnitBid" inherits="tdAuctionSortButtonTemplate">
                         <Size x="96" y="19" />
                         <Anchors>
                             <Anchor point="RIGHT" relativeKey="$parent.Buyout" relativePoint="LEFT" />
                         </Anchors>
                     </Button>
+                    <Button parentKey="Bid" inherits="tdAuctionSortButtonTemplate">
+                        <Size x="96" y="19" />
+                        <Anchors>
+                            <Anchor point="RIGHT" relativeKey="$parent.UnitBid" relativePoint="LEFT" />
+                        </Anchors>
+                    </Button>
                     <Button parentKey="Seller" inherits="tdAuctionSortButtonTemplate">
+                        <Size x="96" y="19" />
                         <Anchors>
                             <Anchor point="RIGHT" relativeKey="$parent.Bid" relativePoint="LEFT" />
-                            <Anchor point="LEFT" x="237" y="0" />
+                            <!-- <Anchor point="LEFT" x="237" y="0" /> -->
                         </Anchors>
                     </Button>
                     <Button parentKey="Time" inherits="tdAuctionSortButtonTemplate">
@@ -453,6 +477,12 @@
                     </OnClick>
                 </Scripts>
             </Button>
+            <CheckButton parentKey="ExactCheckButton" inherits="UICheckButtonTemplate">
+                <Size x="24" y="24" />
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="BrowseNameText" relativePoint="RIGHT" x="50" y="-1"/>
+                </Anchors>
+            </CheckButton>
         </Frames>
         <Layers>
             <Layer level="ARTWORK">

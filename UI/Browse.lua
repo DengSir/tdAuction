@@ -11,6 +11,11 @@ local ripairs = ipairs_reverse or ripairs
 local L = ns.L
 
 local BUTTON_HEIGHT = 18
+local FILTER_FRAME_SHORT = 48
+local BUTTON_WIDTH_WITHSCROLL = 608 + FILTER_FRAME_SHORT
+local BUTTON_WIDTH_NOSCROLL = BUTTON_WIDTH_WITHSCROLL + 28
+local FRAME_WIDTH_WITHSCROLL = BUTTON_WIDTH_WITHSCROLL + 4
+local FRAME_WIDTH_NOSCROLL = BUTTON_WIDTH_NOSCROLL + 4
 
 ---@class UI.Browse: Object, Frame
 local Browse = ns.Addon:NewClass('UI.Browse', 'Frame')
@@ -45,27 +50,18 @@ function Browse:LayoutBlizzard()
     self.SearchCountText = BrowseSearchCountText
     self.MinLevel = BrowseMinLevel
     self.MaxLevel = BrowseMaxLevel
+    self.ResetButton = BrowseResetButton
     self.ScrollFrame = self.BuyFrame.ScrollFrame
     self.NoResultsText = self.BuyFrame.NoResultsText
-    self.ResetButton = self.BuyFrame.ResetButton
     self.SortButtonFrame = self.BuyFrame.SortButtonFrame
+    self.ExactCheckButton = self.BuyFrame.ExactCheckButton
 
-    ---@type UICheckButtonTemplate
-    self.ExactCheckButton = CreateFrame('CheckButton', nil, self, 'UICheckButtonTemplate')
-    self.ExactCheckButton:SetSize(24, 24)
-    self.ExactCheckButton:SetPoint('TOPLEFT', self.Name, 'BOTTOMLEFT', -10, -1)
     self.ExactCheckButton:SetScript('OnClick', function()
         ns.profile.buy.exact = self.ExactCheckButton:GetChecked() or nil
     end)
     self.ExactCheckButton:SetChecked(ns.profile.buy.exact)
 
-    if not self.ResetButton then
-        self.ResetButton = BrowseResetButton
-        self.ResetButton:SetParent(self.BuyFrame)
-        self.ResetButton:ClearAllPoints()
-        self.ResetButton:SetPoint('TOPRIGHT', 67, -35)
-        self.ResetButton:SetSize(80, 22)
-    end
+    self.ResetButton:SetSize(80, 22)
 
     local hide = ns.hide
     local point = ns.point
@@ -123,6 +119,7 @@ function Browse:LayoutBlizzard()
 
     point(BrowseSearchDotsText, 'LEFT', self.NoResultsText, 'RIGHT')
 
+    point(self.ResetButton, 'TOPRIGHT', 67, -35)
     point(self.SearchButton, 'TOPRIGHT', self.ResetButton, 'TOPLEFT', -5, 0)
     point(self.PrevPageButton, 'TOPLEFT', 658, -53)
     point(self.NextPageButton, 'TOPRIGHT', 70, -53)
@@ -144,6 +141,25 @@ function Browse:LayoutBlizzard()
     parent(self.BuyoutButton)
     parent(self.SearchButton)
     parent(self.ResetButton)
+
+    local function SetWidth(button, width, our)
+        if our then
+            return
+        end
+        button:SetWidth(width - FILTER_FRAME_SHORT, true)
+    end
+
+    for i = 1, 100 do
+        local button = _G['AuctionFilterButton' .. i]
+        if not button then
+            break
+        end
+        button:SetWidth(70)
+        hooksecurefunc(button, 'SetWidth', SetWidth)
+    end
+
+    point(BrowseFilterScrollFrame, 'TOPRIGHT', self, 'TOPLEFT', 158 - FILTER_FRAME_SHORT, -105)
+    point(self.ScrollFrame, 'TOPLEFT', self, 190 - FILTER_FRAME_SHORT, -104)
 
     ns.UI.ComboBox:Bind(self.QualityDropDown)
     self.QualityDropDown:SetItems((function()
@@ -174,23 +190,16 @@ function Browse:SetupSortButtons()
         {key = 'Level', reverse = true, hiddenable = true, sortColumn = 'level', text = REQ_LEVEL_ABBR},
         {key = 'Time', reverse = true, hiddenable = true, sortColumn = 'duration', text = L['Time']},
         {key = 'Seller', reverse = true, hiddenable = true, sortColumn = 'seller', text = AUCTION_CREATOR},
-        {key = 'Bid', reverse = true, sortColumn = 'bid', text = L['Bid price']},
-        {key = 'Buyout', reverse = true, sortColumn = 'buyout', text = BUYOUT},
-        {key = 'UnitPrice', reverse = true, sortColumn = 'unitprice', text = L['Unit price']},
+        {key = 'Bid', reverse = true, hiddenable = true, sortColumn = 'bid', text = L['Bid price']},
+        {key = 'UnitBid', reverse = true, hiddenable = true, sortColumn = 'unitbid', text = L['Bid unit price']},
+        {key = 'Buyout', reverse = true, hiddenable = true, sortColumn = 'buyout', text = BUYOUT},
+        {key = 'UnitPrice', reverse = true, hiddenable = true, sortColumn = 'unitprice', text = L['Unit price']},
     }
 
     local function SortAuction(button)
         local sortColumn, reverse = GetAuctionSort('list', 1)
         local order = sortColumn and sortColumn == button.sortColumn and not reverse
-        SortAuctionClearSort('list')
-        for index, row in pairs(AuctionSort["list_"..button.sortColumn]) do
-            local sort = row.column
-            if order then
-                SortAuctionSetSort('list', sort, not row.reverse)
-            else
-                SortAuctionSetSort('list', sort, row.reverse)
-            end
-        end
+        ns.SetSort(button.sortColumn, order)
     end
 
     local function OnClick(button)
@@ -267,16 +276,14 @@ function Browse:UpdateColumns()
 end
 
 function Browse:ApplyItem(frame)
-    local prevItem
+    local prevItem = frame.ColumnAnchor
     for _, info in ripairs(self.headers) do
         local hidden = ns.profile.buy.hiddenColumns[info.key]
         local item = frame[info.key]
         item:SetShown(not hidden)
 
         if not hidden then
-            if prevItem then
-                item:SetPoint('RIGHT', prevItem, 'LEFT')
-            end
+            item:SetPoint('RIGHT', prevItem, 'LEFT')
             prevItem = item
         end
     end
@@ -374,12 +381,12 @@ function Browse:UpdateItems()
     if not shouldHide then
         num, total = GetNumAuctionItems('list')
         hasScrollBar = num * BUTTON_HEIGHT > scrollFrame:GetHeight()
-        buttonWidth = hasScrollBar and 608 or 630
+        buttonWidth = hasScrollBar and BUTTON_WIDTH_WITHSCROLL or BUTTON_WIDTH_NOSCROLL
         totalHeight = num * BUTTON_HEIGHT
     end
 
     if not self.isSearching then
-        self.ScrollFrame:SetWidth(hasScrollBar and 612 or 632)
+        self.ScrollFrame:SetWidth(hasScrollBar and FRAME_WIDTH_WITHSCROLL or FRAME_WIDTH_NOSCROLL)
     end
 
     for i, button in ipairs(scrollFrame.buttons) do

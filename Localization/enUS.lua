@@ -34,6 +34,7 @@ L['Single price'] = true
 L['Time'] = true
 L['Bid price'] = true
 L['Unit price'] = true
+L['Bid unit price'] = true
 
 L['Show disenchant info'] = true
 L['Nerver'] = 'Never'

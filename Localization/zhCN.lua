@@ -30,6 +30,7 @@ L['Single price'] = '单个价格'
 L['Time'] = '时间'
 L['Bid price'] = '竞标价'
 L['Unit price'] = '一口单价'
+L['Bid unit price'] = '竞标单价'
 
 L['Show disenchant info'] = '显示分解详情'
 L['Nerver'] = '从不显示'

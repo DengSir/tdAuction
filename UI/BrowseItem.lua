@@ -115,14 +115,20 @@ function BrowseItem:Update(id)
     end
 
     self.Bid.Text:SetText(ns.gsc(displayedPrice))
+    self.UnitBid.Text:SetText(ns.gsc(displayedPrice / count))
 
+    local r, g, b
     if highBidder then
-        self.Bid.Text:SetTextColor(0, 1, 0)
+        r, g, b = 0, 1, 0
     elseif bidAmount ~= 0 then
         self.Bid.Text:SetTextColor(1, 0, 0)
+        r, g, b = 1, 0, 0
     else
         self.Bid.Text:SetTextColor(1, 1, 1)
+        r, g, b = 1, 1, 1
     end
+    self.Bid.Text:SetTextColor(r, g, b)
+    self.UnitBid.Text:SetTextColor(r, g, b)
 
     if buyoutPrice == 0 then
         self.Buyout.Text:SetText(NONE)

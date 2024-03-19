@@ -57,7 +57,7 @@ local DEFAULT_PROFILE = { --
     },
     buy = { --
         quickBuy = true,
-        hiddenColumns = {Level = true, Time = true, Seller = true},
+        hiddenColumns = {Seller = true},
     },
 }
 
@@ -182,6 +182,15 @@ function Addon:SetupSort()
         {column = 'unitprice', reverse = false},
     }
 
+    AuctionSort['list_unitbid'] = {
+        {column = 'duration', reverse = false},
+        {column = 'quantity', reverse = true},
+        {column = 'name', reverse = false},
+        {column = 'level', reverse = true},
+        {column = 'quality', reverse = false},
+        {column = 'unitbid', reverse = false},
+    }
+
     AuctionSort['list_quality'] = {
         {column = 'duration', reverse = false},
         {column = 'unitprice', reverse = false},
@@ -201,7 +210,7 @@ function Addon:SetupSort()
         {column = 'buyout', reverse = false},
     }
 
-    AuctionFrame_SetSort('list', 'unitprice')
+    ns.SetSort('unitprice')
 end
 
 function Addon:SetupBackground()

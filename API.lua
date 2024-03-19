@@ -209,6 +209,19 @@ function ns.GetDisenchantPrice(equipLoc, quality, itemLevel)
     return total
 end
 
+function ns.SetSort(column, order)
+    SortAuctionClearSort('list')
+
+    for _, row in ipairs(AuctionSort['list_' .. column]) do
+        local sort = row.column
+        if order then
+            SortAuctionSetSort('list', sort, not row.reverse)
+        else
+            SortAuctionSetSort('list', sort, row.reverse)
+        end
+    end
+end
+
 local function CheckMoney(editBox)
     local value = editBox:GetNumber()
     if value == 0 then
