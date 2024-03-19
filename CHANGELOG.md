@@ -1,3 +1,14 @@
+## [1.1.6](https://github.com/DengSir/tdAuction/compare/v1.1.5...v1.1.6) (2024-03-19)
+
+
+### Features
+
+* Added unit bid price ([a6e6967](https://github.com/DengSir/tdAuction/commit/a6e6967a4a2b9a8d8a438f5b4392e5f02cb8196d))
+* Added unit bid price ([643751c](https://github.com/DengSir/tdAuction/commit/643751ccd1615ea62e5929a8927b91d9827ba93f))
+* support plus ([8a7550c](https://github.com/DengSir/tdAuction/commit/8a7550cb9f0d398053b196e2032132a5ded6762b))
+
+
+
 ## [1.1.5](https://github.com/DengSir/tdAuction/compare/v1.1.4...v1.1.5) (2024-01-26)
 
 
