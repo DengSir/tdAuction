@@ -60,6 +60,7 @@ function Browse:LayoutBlizzard()
         ns.profile.buy.exact = self.ExactCheckButton:GetChecked() or nil
     end)
     self.ExactCheckButton:SetChecked(ns.profile.buy.exact)
+    self.ExactCheckButton:SetParent(self)
 
     self.ResetButton:SetSize(80, 22)
 
