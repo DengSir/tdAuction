@@ -185,7 +185,8 @@ function TipMethods:SetBuybackItem(index)
 end
 
 function TipMethods:SetBagItem(bag, slot)
-    return OnTooltipSetItem(self, GetContainerItemLink(bag, slot), select(2, GetContainerItemInfo(bag, slot)))
+    local info, count = GetContainerItemInfo(bag, slot)
+    return OnTooltipSetItem(self, GetContainerItemLink(bag, slot), count or info.stackCount)
 end
 
 function TipMethods:SetAuctionItem(type, index)
