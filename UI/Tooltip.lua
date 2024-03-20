@@ -186,6 +186,9 @@ end
 
 function TipMethods:SetBagItem(bag, slot)
     local info, count = GetContainerItemInfo(bag, slot)
+    if not info then
+        return
+    end
     return OnTooltipSetItem(self, GetContainerItemLink(bag, slot), count or info.stackCount)
 end
 
