@@ -70,6 +70,7 @@ function BrowseItem:Update(id)
                                                                                                                 id)
     local duration = GetAuctionItemTimeLeft('list', id)
     local selectedId = GetSelectedAuctionItem('list')
+    local known = ns.IsKnown(itemId)
 
     self.id = id
     self:SetID(id)
@@ -82,17 +83,26 @@ function BrowseItem:Update(id)
     else
         self.Name.Text:SetText(name)
     end
-    self.Name.Text:SetTextColor(ns.rgb(GetItemQualityColor(quality)))
+    if known then
+        self.Name.Text:SetTextColor(0.5, 0.5, 0.5)
+    else
+        self.Name.Text:SetTextColor(ns.rgb(GetItemQualityColor(quality)))
+    end
 
     self.Icon:SetTexture(texture)
-    if canUse then
+    -- self.Icon:SetDesaturated(known)
+    if known then
+        self.Icon:SetVertexColor(0, 1, 0)
+    elseif canUse then
         self.Icon:SetVertexColor(1, 1, 1)
     else
         self.Icon:SetVertexColor(1, 0, 0)
     end
 
     self.Level.Text:SetText(level)
-    if UnitLevel('player') >= level then
+    if known then
+        self.Level.Text:SetTextColor(0.5, 0.5, 0.5)
+    elseif UnitLevel('player') >= level then
         self.Level.Text:SetTextColor(1, 1, 1)
     else
         self.Level.Text:SetTextColor(1, 0, 0)
