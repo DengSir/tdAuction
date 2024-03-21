@@ -1,3 +1,18 @@
+## [1.1.7](https://github.com/DengSir/tdAuction/compare/v1.1.6...v1.1.7) (2024-03-21)
+
+
+### Bug Fixes
+
+* tip count ([00298b5](https://github.com/DengSir/tdAuction/commit/00298b5d40a3575e41c4f89d6ecfe082be5bd1c4))
+* tooltip count ([9b801e1](https://github.com/DengSir/tdAuction/commit/9b801e1c1e6eba4cf89065b905047f6feccca133))
+
+
+### Features
+
+* 非zh不缩短filter菜单 ([8c7c42f](https://github.com/DengSir/tdAuction/commit/8c7c42f357c9e6fa2e2cc046a8de7549562ef4c4))
+
+
+
 ## [1.1.6](https://github.com/DengSir/tdAuction/compare/v1.1.5...v1.1.6) (2024-03-19)
 
 
