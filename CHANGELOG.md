@@ -1,3 +1,12 @@
+## [1.1.8](https://github.com/DengSir/tdAuction/compare/v1.1.7...v1.1.8) (2024-03-26)
+
+
+### Features
+
+* known items ([1d4aedd](https://github.com/DengSir/tdAuction/commit/1d4aeddd31e24165fb5c1b5383adb88a0b1b691a))
+
+
+
 ## [1.1.7](https://github.com/DengSir/tdAuction/compare/v1.1.6...v1.1.7) (2024-03-21)
 
 
