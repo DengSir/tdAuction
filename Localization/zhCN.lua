@@ -65,5 +65,9 @@ L['Time different'] = '时间差'
 L.TOOLTIP_PREFIX_VENDO = '售价'
 L.TOOLTIP_PREFIX_AUCTION = '拍卖'
 L.TOOLTIP_PREFIX_DISENCHANT = '分解'
-L.TOOLTIP_FULLSCAN_DISABLED = [[一个未知的NPC（%s），tdAuction不能确定该拍卖行是否是中立拍卖行。]]
+L.TOOLTIP_FULLSCAN_DISABLED =
+    [[一个未知的NPC（%s），tdAuction不能确定该拍卖行是否是中立拍卖行。]]
+
+-- @locale-fill@
+
 -- @end-import@
