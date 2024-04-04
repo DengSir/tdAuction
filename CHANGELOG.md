@@ -1,3 +1,19 @@
+## [1.1.9](https://github.com/DengSir/tdAuction/compare/v1.1.8...v1.1.9) (2024-04-04)
+
+
+### Bug Fixes
+
+* error ([7f0229d](https://github.com/DengSir/tdAuction/commit/7f0229de64f62915201181caa1581ad40bdf8f6f))
+
+
+### Features
+
+* actions add scan locale ([0b64d82](https://github.com/DengSir/tdAuction/commit/0b64d820f04abcca8875a94ffc37544bfb04c1c2))
+* add locale scan ([39f039a](https://github.com/DengSir/tdAuction/commit/39f039ae6ca6ac58640effd1fc47364eaeda9853))
+* update locale ([f5af721](https://github.com/DengSir/tdAuction/commit/f5af7215a54b571bf5215372cce2e156821943dc))
+
+
+
 ## [1.1.8](https://github.com/DengSir/tdAuction/compare/v1.1.7...v1.1.8) (2024-03-26)
 
 
