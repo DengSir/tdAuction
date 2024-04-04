@@ -263,7 +263,9 @@ end
 
 function TipMethods:SetAction(action)
     local link = select(2, self:GetItem())
-    return OnTooltipSetItem(self, link, GetItemCount(link))
+    if link then
+        return OnTooltipSetItem(self, link, GetItemCount(link))
+    end
 end
 
 function TipMethods:SetGuildBankItem(tab, slot)
