@@ -11,8 +11,8 @@ local ripairs = ipairs_reverse or ripairs
 local L = ns.L
 
 local BUTTON_HEIGHT = 18
-local FILTER_FRAME_SHORT = ns.isZH and 48 or 0
-local CONTROL_LABEL_SPACING = ns.isZH and 0 or -3
+local FILTER_FRAME_SHORT = ns.NARROW_FILTER and 48 or 0
+local CONTROL_LABEL_SPACING = ns.NARROW_FILTER and 0 or -3
 
 local BUTTON_WIDTH_WITHSCROLL = 608 + FILTER_FRAME_SHORT
 local BUTTON_WIDTH_NOSCROLL = BUTTON_WIDTH_WITHSCROLL + 28
@@ -146,7 +146,7 @@ function Browse:LayoutBlizzard()
     parent(self.SearchButton)
     parent(self.ResetButton)
 
-    if ns.isZH then
+    if ns.NARROW_FILTER then
         local function SetWidth(button, width, our)
             if our then
                 return

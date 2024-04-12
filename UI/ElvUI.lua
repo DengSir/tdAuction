@@ -37,7 +37,7 @@ hook(ns.Addon, 'SetupUI', function(o, self)
             point(Browse.NextPageButton, 'TOPRIGHT', 70, -58)
             point(Browse.SearchCountText, 'BOTTOMLEFT', 190, 12)
             point(BrowseBidPrice, 'BOTTOM', 115, 8)
-            point(BrowseBidText, 'RIGHT', BrowseBidPrice, 'LEFT', -5, 0)
+            -- point(BrowseBidText, 'RIGHT', BrowseBidPrice, 'LEFT', -5, 0)
 
             S:HandleScrollBar(Browse.BuyFrame.ScrollFrame.scrollBar)
             S:HandleCheckBox(Browse.ExactCheckButton)
