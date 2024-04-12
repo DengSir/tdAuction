@@ -1,7 +1,6 @@
 
 local L = LibStub('AceLocale-3.0'):NewLocale(..., 'esES')
 if not L then return end
-
 -- @locale:language=esES@
 L = L or {}
 --[[Translation missing --]]
@@ -115,6 +114,5 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["When pressed SHIFT, to dislay ..."] = "When pressed SHIFT, to dislay ..."--]] 
 --[[Translation missing --]]
---[[ L["You are sure to clear the database"] = "You are sure to clear the database"--]] 
-
+--[[ L["You are sure to clear the database"] = "You are sure to clear the database"--]]
 -- @end-locale@
