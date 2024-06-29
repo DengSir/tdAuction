@@ -1,13 +1,16 @@
-name: "Auto update 🌏"
+name: Auto update libs 🧀
 on:
   push:
     branches:
-      - "master"
+      - master
     tags-ignore:
       - "v*"
+    paths:
+      - Libs/Libs.xml
+      - .github/workflows/update-libs.yml
 
 jobs:
-  auto:
+  update-libs:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,17 +19,12 @@ jobs:
         with:
           submodules: true
 
-      - name: Update locales
-        uses: curse-action/locale@master
-        with:
-          token: ${{ secrets.CURSE_TOKEN }}
-
       - name: Update libs
         uses: curse-action/update@master
         with:
-          root: Libs
+          curse-forge-token: ${{ secrets.CURSE_FORGE_TOKEN }}
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
-          message: "chore: Update locale/libs files"
+          message: "chore: Update libs files"
