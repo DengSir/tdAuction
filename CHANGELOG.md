@@ -1,3 +1,13 @@
+## [1.1.11](https://github.com/DengSir/tdAuction/compare/v1.1.10...v1.1.11) (2024-06-29)
+
+
+### Features
+
+* options ([abaff6e](https://github.com/DengSir/tdAuction/commit/abaff6e070a606cf7a7abe9de8150d1157de6ddd))
+* support ElvUI ([b118643](https://github.com/DengSir/tdAuction/commit/b1186435aaa809eed436c2e4274e223b7633ea9d))
+
+
+
 ## [1.1.10](https://github.com/DengSir/tdAuction/compare/v1.1.9...v1.1.10) (2024-04-08)
 
 
