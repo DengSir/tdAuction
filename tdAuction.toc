@@ -1,8 +1,6 @@
-#@debug@
-## Interface: 11305
-#@end-debug@
-#@project-interface@
+## Interface: @project-interface@
 ## Title: tdAuction
+## IconTexture: Interface\Icons\INV_Misc_Coin_02
 ## Author: Dencer
 ## Version: @project-version@
 ## SavedVariables: TDDB_AUCTION, TDDB_AUCTION_NEW

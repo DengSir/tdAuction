@@ -12,4 +12,6 @@
 
     <Include file="LibClass-2.0\LibClass-2.0.xml"/>
     <Include file="LibTooltipExtra-1.0\LibTooltipExtra-1.0.xml"/>
+
+    <Script file="tdOptions\Options.lua" />
 </Ui>

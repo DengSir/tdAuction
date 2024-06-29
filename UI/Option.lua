@@ -3,16 +3,15 @@
 -- @Link   : https://dengsir.github.io
 -- @Date   : 9/22/2020, 10:47:50 AM
 --
----@type ns
-local ns = select(2, ...)
+---@type 'tdAuction', ns
+local ADDON, ns = ...
 
 local L = ns.L
 
 ---@class Addon
 local Addon = ns.Addon
 
-local AceConfigRegistry = LibStub('AceConfigRegistry-3.0')
-local AceConfigDialog = LibStub('AceConfigDialog-3.0')
+local tdOptions = LibStub('tdOptions')
 
 function Addon:SetupOptionFrame()
     local order = 0
@@ -212,10 +211,9 @@ function Addon:SetupOptionFrame()
         },
     }
 
-    AceConfigRegistry:RegisterOptionsTable('tdAuction', options)
-    AceConfigDialog:AddToBlizOptions('tdAuction', 'tdAuction')
+    tdOptions:Register('tdAuction', options)
 end
 
 function Addon:OpenOptionFrame()
-    AceConfigDialog:Open('tdAuction')
+    tdOptions:Open('tdAuction')
 end

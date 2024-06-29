@@ -212,6 +212,9 @@ function TipMethods:SetLootRollItem(slot)
 end
 
 function TipMethods:SetInventoryItem(unit, slot)
+    if unit == 'player' and slot > 19 then
+        return OnTooltipSetItem(self, GetInventoryItemLink(unit, slot), 1)
+    end
     return OnTooltipSetItem(self, GetInventoryItemLink(unit, slot), GetInventoryItemCount(unit, slot))
 end
 

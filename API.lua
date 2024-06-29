@@ -43,6 +43,10 @@ function ns.rgb(r, g, b)
     end
 end
 
+-- local COPPER_AMOUNT_TEXTURE = '%d |TInterface\\MoneyFrame\\UI-CopperIcon:20:20:-20:0|t'
+-- local SILVER_AMOUNT_TEXTURE = '%d |TInterface\\MoneyFrame\\UI-SilverIcon:20:20:-20:0|t'
+-- local GOLD_AMOUNT_TEXTURE = '%d |TInterface\\MoneyFrame\\UI-GoldIcon:20:20:-20:0|t'
+
 function ns.gsc(money)
     money = floor(money)
     local text = ''

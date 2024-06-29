@@ -4,3 +4,6 @@
 [submodule "Libs/LibTooltipExtra-1.0"]
 	path = Libs/LibTooltipExtra-1.0
 	url = https://github.com/DengSir/LibTooltipExtra-1.0.git
+[submodule "Libs/tdOptions"]
+	path = Libs/tdOptions
+	url = https://github.com/DengSir/tdOptions.git
