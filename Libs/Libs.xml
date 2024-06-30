@@ -11,7 +11,7 @@
     <Include remote="curse@Ace3" file="AceConfig-3.0\AceConfig-3.0.xml"/>
 
     <Include file="LibClass-2.0\LibClass-2.0.xml"/>
-    <Include file="LibTooltipExtra-1.0\LibTooltipExtra-1.0.xml"/>
+    <Include file="LibKnown-1.0\LibKnown-1.0.xml"/>
 
     <Script file="tdOptions\Options.lua" />
 </Ui>

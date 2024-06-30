@@ -5,8 +5,6 @@
     <Script file="Addon.lua" />
     <Script file="API.lua" />
     <Script file="Data.lua" />
-    <Script file="TipScaner.lua" />
-    <Script file="Known.lua" />
 
     <Script file="Query\Querier.lua" />
     <Script file="Query\Pending.lua" />

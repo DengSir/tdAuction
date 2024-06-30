@@ -6,6 +6,8 @@
 ---@type ns
 local ns = select(2, ...)
 
+local LibKnown = LibStub('LibKnown-1.0')
+
 ---@class UI.BrowseItem: Object, Button, tdAuctionBrowseItemTemplate
 local BrowseItem = ns.Addon:NewClass('UI.BrowseItem', 'Button')
 
@@ -70,7 +72,7 @@ function BrowseItem:Update(id)
                                                                                                                 id)
     local duration = GetAuctionItemTimeLeft('list', id)
     local selectedId = GetSelectedAuctionItem('list')
-    local known = ns.IsKnown(itemId)
+    local known = LibKnown:IsKnown(itemId)
 
     self.id = id
     self:SetID(id)

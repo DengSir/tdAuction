@@ -1,9 +1,12 @@
 [submodule "Libs/LibClass-2.0"]
 	path = Libs/LibClass-2.0
 	url = https://github.com/DengSir/LibClass-2.0.git
-[submodule "Libs/LibTooltipExtra-1.0"]
-	path = Libs/LibTooltipExtra-1.0
-	url = https://github.com/DengSir/LibTooltipExtra-1.0.git
 [submodule "Libs/tdOptions"]
 	path = Libs/tdOptions
 	url = https://github.com/DengSir/tdOptions.git
+[submodule "Libs/C_Everywhere"]
+	path = Libs/C_Everywhere
+	url = https://github.com/DengSir/C_Everywhere.git
+[submodule "Libs/LibKnown-1.0"]
+	path = Libs/LibKnown-1.0
+	url = https://github.com/DengSir/LibKnown-1.0.git
