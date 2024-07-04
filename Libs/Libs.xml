@@ -10,6 +10,8 @@
     <Include remote="curse@Ace3" file="AceGUI-3.0\AceGUI-3.0.xml"/>
     <Include remote="curse@Ace3" file="AceConfig-3.0\AceConfig-3.0.xml"/>
 
+    <Script file="C_Everywhere\C_Everywhere.lua" />
+
     <Include file="LibClass-2.0\LibClass-2.0.xml"/>
     <Include file="LibKnown-1.0\LibKnown-1.0.xml"/>
 
