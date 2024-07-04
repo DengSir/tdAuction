@@ -1,3 +1,12 @@
+## [1.1.13](https://github.com/DengSir/tdAuction/compare/v1.1.12...v1.1.13) (2024-07-04)
+
+
+### Bug Fixes
+
+* error ([5124b84](https://github.com/DengSir/tdAuction/commit/5124b84c45ae56584fa3170fc82e9f07f17fecb2))
+
+
+
 ## [1.1.12](https://github.com/DengSir/tdAuction/compare/v1.1.10...v1.1.12) (2024-06-30)
 
 
