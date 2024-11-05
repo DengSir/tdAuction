@@ -95,6 +95,26 @@
                 <BarTexture file="Interface\PaperDollInfoFrame\UI-Character-Skills-Bar"/>
                 <BarColor r="0.0" g="1.0" b="0.3"/>
             </StatusBar>
+            <Button parentKey="ExportButton" hidden="true" inherits="UIPanelButtonTemplate">
+                <Size x="120" y="22" />
+                <Anchors>
+                    <Anchor point="BOTTOM" x="0" y="20" />
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        self:GetParent():Export()
+                    </OnClick>
+                </Scripts>
+            </Button>
+            <ScrollFrame parentKey="ExportFrame" inherits="UIPanelInputScrollFrameTemplate">
+                <KeyValues>
+                    <KeyValue key="hideCharCount" value="true" type="boolean"/>
+                </KeyValues>
+                <Size x="286" y="155"/>
+                <Anchors>
+                    <Anchor point="TOP" relativeKey="$parent.ExecButton" relativePoint="BOTTOM" x="0" y="-10" />
+                </Anchors>
+            </ScrollFrame>
         </Frames>
         <Layers>
             <Layer level="ARTWORK">

@@ -33,6 +33,7 @@ function FullScan:Constructor()
 
     self.HeaderText:SetText(L['Full scan'])
     self.ExecButton:SetText(L['Start scan'])
+    self.ExportButton:SetText(L['Export'])
 
     self.statusUpdates = { --
         [STATUS_IDLE] = self.UpdateIdle,
@@ -47,6 +48,9 @@ end
 function FullScan:OnShow()
     self.status = STATUS_IDLE
     self.ProgressBar:Hide()
+    self.Text:Show()
+    self.ExportButton:Hide()
+    self.ExportFrame:Hide()
 end
 
 function FullScan:OnHide()
@@ -74,6 +78,7 @@ function FullScan:OnDone()
     self:UpdateReport()
     self.CloseButton:Enable()
     self.ProgressBar:Hide()
+    self.ExportButton:Show()
 end
 
 function FullScan:UpdateReport()
@@ -105,4 +110,13 @@ function FullScan:CanQuery()
     end
     local canQuery, canQueryAll = CanSendAuctionQuery('list')
     return canQuery and canQueryAll
+end
+
+function FullScan:Export()
+    local text = self.scaner:Export()
+    self.ExportFrame:Show()
+    self.Text:Hide()
+    self.ExportFrame.EditBox:SetText(text)
+    self.ExportFrame.EditBox:SetFocus()
+    self.ExportFrame.EditBox:HighlightText(0, -1)
 end

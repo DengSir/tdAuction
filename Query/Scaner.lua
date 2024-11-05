@@ -156,7 +156,7 @@ function Scaner:ProcessAuction(index)
                 db[itemKey] = min(db[itemKey], unitPrice)
             end
         end
-        return true, itemKey, count, unitPrice, quality, owner
+        return true, itemKey, count, unitPrice, quality, owner, itemId, name
     end
     return true
 end

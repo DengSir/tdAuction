@@ -19,8 +19,6 @@ local pairs = pairs
 local format = string.format
 local tinsert, tconcat = table.insert, table.concat
 
-local GetItemQualityColor = GetItemQualityColor
-
 ---@class FullScaner: Scaner
 local FullScaner = ns.Addon:NewClass('FullScaner', Scaner)
 
@@ -36,6 +34,7 @@ function FullScaner:OnStart()
     Scaner.OnStart(self)
 
     self.cache = {}
+    self.exports = {}
     self.report = nil
 end
 
@@ -74,9 +73,19 @@ function FullScaner:OnDone()
 end
 
 function FullScaner:ProcessAuction(index)
-    local ok, itemKey, count, price, quality = Scaner.ProcessAuction(self, index)
+    local ok, itemKey, count, price, quality, owner, itemId, name = Scaner.ProcessAuction(self, index)
     if itemKey and quality > ITEM_QUALITY_POOR then
         self.cache[itemKey] = quality
+    end
+
+    if itemId then
+        local export = self.exports[itemId] or {}
+        self.exports[itemId] = export
+
+        export.name = name
+        export.itemId = itemId
+        export.price = export.price and min(export.price, price) or price
+        export.count = (export.count or 0) + count
     end
 
     if ok then
@@ -90,4 +99,12 @@ function FullScaner:OnResponse()
     self.progress = 0
     self.total = self.index
     self:Fire('OnResponse')
+end
+
+function FullScaner:Export()
+    local sb = {L.EXPORT_HEADER}
+    for _, v in pairs(self.exports) do
+        tinsert(sb, format([[%d,"%s","","",%d]], v.price, v.name, v.count))
+    end
+    return tconcat(sb, '\n')
 end

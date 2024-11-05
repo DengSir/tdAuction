@@ -3,7 +3,7 @@ if not L then
     return
 end
 
--- @import@
+-- @import:language=zhCN@
 L['Enable ALT-CTRL click to buyout'] = '开启ALT-CTRL点击一口价购买'
 L['Auto open price list'] = '自动打开价格列表'
 L['Scan price mode'] = '扫描价格模式'
@@ -61,6 +61,7 @@ L['Toggle column'] = '切换列'
 L['Auction price time style'] = '拍卖价格时间样式'
 L['Date'] = '日期'
 L['Time different'] = '时间差'
+L.Export = '导出'
 
 L.TOOLTIP_PREFIX_VENDO = '售价'
 L.TOOLTIP_PREFIX_AUCTION = '拍卖'
@@ -68,6 +69,7 @@ L.TOOLTIP_PREFIX_DISENCHANT = '分解'
 L.TOOLTIP_FULLSCAN_DISABLED =
     [[一个未知的NPC（%s），tdAuction不能确定该拍卖行是否是中立拍卖行。]]
 
+L.EXPORT_HEADER = [["价格","名称","","","可购买"]]
 -- @locale-fill@
 
 -- @end-import@
