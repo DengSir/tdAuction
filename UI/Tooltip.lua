@@ -295,6 +295,8 @@ function TipMethods:SetSocketGem(id)
 end
 
 local function HookTip(tip)
+    tip:SetScript('OnTooltipAddMoney', nil)
+
     for k, v in pairs(TipMethods) do
         hooksecurefunc(tip, k, v)
     end
