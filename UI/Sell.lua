@@ -45,7 +45,7 @@ function Sell:LayoutBlizzard()
     self.SellFrame = CreateFrame('Frame', nil, self, 'tdAuctionSellFrameTemplate')
     self.StartPrice = StartPrice
     self.BuyoutPrice = BuyoutPrice
-    self.PriceDropDown = PriceDropDown
+    self.PriceDropDown = PriceDropDown or self.SellFrame.PriceDropdown
     self.ItemCount = AuctionsItemButtonCount
     self.StackSizeEntry = AuctionsStackSizeEntry
     self.NumStacksEntry = AuctionsNumStacksEntry
@@ -91,6 +91,40 @@ function Sell:LayoutBlizzard()
     self.PriceList.CountLabel:SetText(L['Count'])
     self.PriceList.PriceLabel:SetText(L['Price'])
 
+    self.priceType = 1
+
+    -- @non-wlk@
+    do
+        local function set(value)
+            self:SetDuration(value)
+        end
+        local function get(value)
+            return self.duration == value
+        end
+        self.DurationDropDown:SetupMenu(function(_, root)
+            root:CreateRadio(ns.SELL_HOURS[1], get, set, 1)
+            root:CreateRadio(ns.SELL_HOURS[2], get, set, 2)
+            root:CreateRadio(ns.SELL_HOURS[3], get, set, 3)
+        end)
+    end
+
+    do
+        local function set(value)
+            self.priceType = value
+        end
+        local function get(value)
+            return self.priceType == value
+        end
+        self.PriceDropDown:SetupMenu(function(_, root)
+            root:CreateRadio(AUCTION_PRICE_PER_ITEM, get, set, 1)
+            root:CreateRadio(AUCTION_PRICE_PER_STACK, get, set, 2)
+        end)
+
+        point(self.PriceDropDown, 'TOPRIGHT', self, 'TOPLEFT', 207, -192)
+    end
+    -- @end-non-wlk@
+
+    -- @wlk@
     ns.UI.ComboBox:Bind(self.DurationDropDown)
     self.DurationDropDown:SetItems{
         {text = ns.SELL_HOURS[1], value = 1},
@@ -101,8 +135,8 @@ function Sell:LayoutBlizzard()
         self:SetDuration(value)
     end)
 
-    self.priceType = 1
     self.DurationDropDown:SetValue(self.duration)
+    -- @end-wlk@
 
     HybridScrollFrame_CreateButtons(self.PriceList.ScrollFrame, 'tdAuctionPriceItemTemplate')
     self.PriceList.ScrollFrame.update = function()
@@ -359,6 +393,8 @@ end
 
 function Sell:SetDuration(duration)
     self.duration = duration
+    -- @wlk@
     self.DurationDropDown:SetValue(duration)
+    -- @end-wlk@
     UpdateDeposit()
 end

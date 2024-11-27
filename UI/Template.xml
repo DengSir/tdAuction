@@ -485,7 +485,7 @@
                     </Button>
                 </Frames>
             </Frame>
-            <Button parentKey="ColumnOption">
+            <Button parentKey="ColumnOption" build="wlk">
                 <Size x="16" y="16" />
                 <Anchors>
                     <Anchor point="RIGHT" relativeKey="$parent.SortButtonFrame" relativePoint="LEFT" x="-3" y="0"/>
@@ -497,6 +497,23 @@
                     </OnClick>
                 </Scripts>
             </Button>
+            <DropdownButton parentKey="ColumnOption" build="non-wlk">
+                <KeyValues>
+                    <KeyValue key="menuMixin" value="MenuStyle2Mixin" type="global"/>
+                </KeyValues>
+                <Size x="16" y="16" />
+                <Anchors>
+                    <Anchor point="RIGHT" relativeKey="$parent.SortButtonFrame" relativePoint="LEFT" x="-3" y="0"/>
+                </Anchors>
+                <NormalTexture file="Interface\GossipFrame\BinderGossipIcon" setAllPoints="true" />
+                <HighlightTexture file="Interface\GossipFrame\BinderGossipIcon" setAllPoints="true" alphaMode="ADD" />
+                <!-- <Scripts>
+                    <OnLoad method="OnLoad"/>
+                    <OnShow method="OnShow"/>
+                    <OnEnter method="OnEnter"/>
+                    <OnLeave method="OnLeave"/>
+                </Scripts> -->
+            </DropdownButton>
             <CheckButton parentKey="ExactCheckButton" inherits="UICheckButtonTemplate">
                 <Size x="24" y="24" />
                 <Anchors>
@@ -517,7 +534,7 @@
 
     <Frame name="tdAuctionSellFrameTemplate" setAllPoints="true" virtual="true">
         <Frames>
-            <Frame name="tdAuctionSellDurationDropDown" parentKey="DurationDropDown" inherits="UIDropDownMenuTemplate">
+            <Frame name="tdAuctionSellDurationDropDown" parentKey="DurationDropDown" inherits="UIDropDownMenuTemplate" build="wlk">
                 <Anchors>
                     <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" x="217" y="89"/>
                 </Anchors>
@@ -527,6 +544,15 @@
                     </OnLoad>
                 </Scripts>
             </Frame>
+            <DropdownButton parentKey="DurationDropDown" inherits="WowStyle1DropdownTemplate" build="non-wlk">
+                <Size x="80" y="24"/>
+                <Anchors>
+                    <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" x="207" y="89"/>
+                </Anchors>
+            </DropdownButton>
+            <DropdownButton parentKey="PriceDropdown" inherits="WowStyle1DropdownTemplate" build="non-wlk">
+                <Size x="80" y="24"/>
+            </DropdownButton>
             <Button parentKey="PriceListButton" hidden="true">
                 <Size x="26" y="26"/>
                 <Anchors>

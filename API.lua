@@ -242,11 +242,33 @@ function ns.SetMoneyFrame(moneyFrame, money)
 end
 
 function ns.EasyMenu(menuList, anchor, x, y, displayMode, autoHideDelay)
+    -- @wlk@
     local dropdown = tdEasyMenuFrame or CreateFrame('Frame', 'tdEasyMenuFrame', UIParent, 'UIDropDownMenuTemplate')
     dropdown.initialize = EasyMenu_Initialize
     dropdown.displayMode = displayMode or nil
 
     ToggleDropDownMenu(1, nil, dropdown, anchor, x, y, menuList, nil, autoHideDelay)
+    -- @end-wlk@
+
+    -- @classic@
+    MenuUtil.CreateContextMenu(anchor, function(_, root)
+        root:SetTag('tdAuction' .. anchor:GetDebugName())
+
+        for _, menu in ipairs(menuList) do
+            if menu.text == '' then
+                root:CreateDivider()
+            elseif menu.isTitle then
+                root:CreateTitle(menu.text)
+            elseif menu.notCheckable then
+                root:CreateButton(menu.text, menu.func or nop)
+            elseif menu.isNotRadio then
+                root:CreateCheckbox(menu.text, menu.checked, menu.func)
+            else
+                root:CreateRadio(menu.text, menu.func, menu.checked)
+            end
+        end
+    end)
+    -- @end-classic@
 end
 
 ns.MENU_SEPARATOR = {
