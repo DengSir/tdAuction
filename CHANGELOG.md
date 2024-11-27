@@ -1,3 +1,13 @@
+# [1.2.0](https://github.com/DengSir/tdAuction/compare/v1.1.13...v1.2.0) (2024-11-27)
+
+
+### Features
+
+* fullscan export ([90dc55c](https://github.com/DengSir/tdAuction/commit/90dc55c58b520c7a7ef823705392dce60760a522))
+* support Vanilla ([71f322f](https://github.com/DengSir/tdAuction/commit/71f322f6ac5db6c7890168b37ed7e20a0bd38f06))
+
+
+
 ## [1.1.13](https://github.com/DengSir/tdAuction/compare/v1.1.12...v1.1.13) (2024-07-04)
 
 
