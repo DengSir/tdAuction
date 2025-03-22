@@ -111,6 +111,7 @@ function Sell:LayoutBlizzard()
     do
         local function Set(value)
             self.priceType = value
+            self:UpdatePrice()
         end
         local function Get(value)
             return self.priceType == value
@@ -365,7 +366,14 @@ function Sell:SetPrice(price)
     end
 
     self.price = price
+    self:UpdatePrice()
+end
 
+function Sell:UpdatePrice()
+    local price = self.price
+    if not price then
+        return
+    end
     local bidRatio = ns.profile.sell.bidRatio
     if self.priceType ~= 1 then
         price = price * self.StackSizeEntry:GetNumber()
