@@ -1,5 +1,8 @@
 ## Interface: @project-interface@
-## Title: tdAuction
+## Title: |cff00fffftdAuction|r - Auction House Extra
+## Title-zhCN: |cff00fffftdAuction|r - 拍卖行增强
+## Notes: Auction House Extra, allows one-click buyout, selling auto price, etc.
+## Notes-zhCN: 拍卖行增强，允许一键一口价，上架自动填写价格等功能。
 ## IconTexture: Interface\Icons\INV_Misc_Coin_02
 ## Author: Dencer
 ## Version: @project-version@
