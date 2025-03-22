@@ -1,3 +1,12 @@
+## [1.2.2](https://github.com/DengSir/tdAuction/compare/v1.2.1...v1.2.2) (2025-03-22)
+
+
+### Bug Fixes
+
+* 修复设置价格方式时，不更新价格的问题 ([4290894](https://github.com/DengSir/tdAuction/commit/4290894eed883c87472e8cb15ea5a439c53a7c2c))
+
+
+
 ## [1.2.1](https://github.com/DengSir/tdAuction/compare/v1.2.0...v1.2.1) (2025-03-22)
 
 
