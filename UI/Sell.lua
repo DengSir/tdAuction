@@ -66,10 +66,9 @@ function Sell:LayoutBlizzard()
     hide(AuctionsLongAuctionButton)
 
     point(AuctionsItemButton, 'TOPLEFT', 30, -94)
-    point(AuctionsDurationText, 'LEFT', self.DurationDropDown, 'RIGHT', -192, 3)
+    point(AuctionsDurationText, 'LEFT', self.DurationDropDown, 'RIGHT', -182, 0)
     point(self.StartPrice, 'BOTTOMLEFT', 35, 196)
     point(self.BuyoutPrice, 'BOTTOMLEFT', self.StartPrice, 'BOTTOMLEFT', 0, -35)
-    point(self.PriceDropDown, 'TOPRIGHT', self, 'TOPLEFT', 217, -192)
 
     point(self.StackSizeMaxButton, 'LEFT', self.StackSizeEntry, 'RIGHT', 0, 1)
     point(self.NumStacksMaxButton, 'LEFT', self.NumStacksEntry, 'RIGHT', 0, 1)
@@ -93,50 +92,35 @@ function Sell:LayoutBlizzard()
 
     self.priceType = 1
 
-    -- @non-wlk@
     do
-        local function set(value)
+        local function Set(value)
             self:SetDuration(value)
         end
-        local function get(value)
+
+        local function Get(value)
             return self.duration == value
         end
+
         self.DurationDropDown:SetupMenu(function(_, root)
-            root:CreateRadio(ns.SELL_HOURS[1], get, set, 1)
-            root:CreateRadio(ns.SELL_HOURS[2], get, set, 2)
-            root:CreateRadio(ns.SELL_HOURS[3], get, set, 3)
+            for i, v in ipairs(ns.SELL_HOURS) do
+                root:CreateRadio(v, Get, Set, i)
+            end
         end)
     end
 
     do
-        local function set(value)
+        local function Set(value)
             self.priceType = value
         end
-        local function get(value)
+        local function Get(value)
             return self.priceType == value
         end
+
         self.PriceDropDown:SetupMenu(function(_, root)
-            root:CreateRadio(AUCTION_PRICE_PER_ITEM, get, set, 1)
-            root:CreateRadio(AUCTION_PRICE_PER_STACK, get, set, 2)
+            root:CreateRadio(AUCTION_PRICE_PER_ITEM, Get, Set, 1)
+            root:CreateRadio(AUCTION_PRICE_PER_STACK, Get, Set, 2)
         end)
-
-        point(self.PriceDropDown, 'TOPRIGHT', self, 'TOPLEFT', 207, -192)
     end
-    -- @end-non-wlk@
-
-    -- @wlk@
-    ns.UI.ComboBox:Bind(self.DurationDropDown)
-    self.DurationDropDown:SetItems{
-        {text = ns.SELL_HOURS[1], value = 1},
-        {text = ns.SELL_HOURS[2], value = 2},
-        {text = ns.SELL_HOURS[3], value = 3},
-    }
-    self.DurationDropDown:SetCallback('OnValueChanged', function(_, value)
-        self:SetDuration(value)
-    end)
-
-    self.DurationDropDown:SetValue(self.duration)
-    -- @end-wlk@
 
     HybridScrollFrame_CreateButtons(self.PriceList.ScrollFrame, 'tdAuctionPriceItemTemplate')
     self.PriceList.ScrollFrame.update = function()
@@ -393,8 +377,5 @@ end
 
 function Sell:SetDuration(duration)
     self.duration = duration
-    -- @wlk@
-    self.DurationDropDown:SetValue(duration)
-    -- @end-wlk@
     UpdateDeposit()
 end

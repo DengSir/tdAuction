@@ -14,7 +14,6 @@
     <Script file="Query\PriceScaner.lua" />
 
     <Include file="UI\Template.xml" />
-    <Script file="UI\ComboBox.lua" build="wlk" />
     <Script file="UI\FullScan.lua" />
     <Script file="UI\BrowseItem.lua" />
     <Script file="UI\Browse.lua" />

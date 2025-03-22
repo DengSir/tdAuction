@@ -485,19 +485,7 @@
                     </Button>
                 </Frames>
             </Frame>
-            <Button parentKey="ColumnOption" build="wlk">
-                <Size x="16" y="16" />
-                <Anchors>
-                    <Anchor point="RIGHT" relativeKey="$parent.SortButtonFrame" relativePoint="LEFT" x="-3" y="0"/>
-                </Anchors>
-                <NormalTexture file="Interface\GossipFrame\BinderGossipIcon" setAllPoints="true" />
-                <HighlightTexture file="Interface\GossipFrame\BinderGossipIcon" setAllPoints="true" alphaMode="ADD" />
-                <Scripts>
-                    <OnClick>
-                    </OnClick>
-                </Scripts>
-            </Button>
-            <DropdownButton parentKey="ColumnOption" build="non-wlk">
+            <DropdownButton parentKey="ColumnOption">
                 <KeyValues>
                     <KeyValue key="menuMixin" value="MenuStyle2Mixin" type="global"/>
                 </KeyValues>
@@ -534,24 +522,26 @@
 
     <Frame name="tdAuctionSellFrameTemplate" setAllPoints="true" virtual="true">
         <Frames>
-            <Frame name="tdAuctionSellDurationDropDown" parentKey="DurationDropDown" inherits="UIDropDownMenuTemplate" build="wlk">
+            <DropdownButton parentKey="DurationDropDown" inherits="WowStyle1DropdownTemplate">
+                <Size x="100" y="24"/>
                 <Anchors>
-                    <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" x="217" y="89"/>
-                </Anchors>
-                <Scripts>
-                    <OnLoad>
-                        UIDropDownMenu_SetWidth(self, 80)
-                    </OnLoad>
-                </Scripts>
-            </Frame>
-            <DropdownButton parentKey="DurationDropDown" inherits="WowStyle1DropdownTemplate" build="non-wlk">
-                <Size x="80" y="24"/>
-                <Anchors>
-                    <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" x="207" y="89"/>
+                    <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMLEFT" x="207" y="92"/>
                 </Anchors>
             </DropdownButton>
-            <DropdownButton parentKey="PriceDropdown" inherits="WowStyle1DropdownTemplate" build="non-wlk">
-                <Size x="80" y="24"/>
+            <DropdownButton parentKey="PriceDropdown" inherits="WowStyle1DropdownTemplate">
+                <Size x="100" y="24"/>
+                <Anchors>
+                    <Anchor point="TOPRIGHT" relativePoint="TOPLEFT" x="207" y="-192"/>
+                </Anchors>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <FontString inherits="GameFontHighlightSmall" text="AUCTION_PRICE">
+                            <Anchors>
+                                <Anchor point="LEFT" relativePoint="RIGHT" x="-182"/>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
             </DropdownButton>
             <Button parentKey="PriceListButton" hidden="true">
                 <Size x="26" y="26"/>

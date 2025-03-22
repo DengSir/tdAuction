@@ -105,6 +105,27 @@ function Addon:SetupDatabase()
         end
     end
 
+    local anyKey = 'TDDB_AUCTION_ANYACCOUNT'
+    local anyDb = _G[anyKey]
+    if anyDb then
+        local function getPrices(db)
+            return db.global.prices[realm]
+        end
+
+        for _, db in pairs(anyDb) do
+            local anyPrices = getPrices(db)
+            if anyPrices then
+                for k, v in pairs(anyPrices) do
+                    if type(v) == 'table' and (not prices[k] or v[2] > prices[k][2]) then
+                        prices[k] = v
+                    end
+                end
+            end
+        end
+
+        _G[anyKey] = nil
+    end
+
     ns.prices = setmetatable({}, {
         __index = function(_, k)
             local info = prices[k]

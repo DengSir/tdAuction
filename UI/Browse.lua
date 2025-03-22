@@ -121,21 +121,34 @@ function Browse:LayoutBlizzard()
     local nameWidth = 220
 
     self.Name:SetWidth(nameWidth)
-    -- @wlk@
-    UIDropDownMenu_SetWidth(self.QualityDropDown, 60)
-    ns.UI.ComboBox:Bind(self.QualityDropDown)
-    self.QualityDropDown:SetItems((function()
-        local items = {{text = ALL, value = -1}}
-        for i = Enum.ItemQuality.Poor, Enum.ItemQuality.Epic do
-            tinsert(items, {text = ns.ITEM_QUALITY_DESCS[i], value = i})
+
+    do
+        local function Get(index)
+            return self.qualityIndex == index;
         end
-        return items
-    end)())
-    self.QualityDropDown:SetValue(-1)
-    -- @end-wlk@
-    -- @classic@
-    -- self.QualityDropDown:SetWidth(60)
-    -- @end-classic@
+
+        local function Set(index)
+            self.qualityIndex = index;
+        end
+
+        -- 和Blizzard_AuctionUI.lua保持一致
+        local FILTER_ALL_INDEX = -1
+
+        self.qualityIndex = FILTER_ALL_INDEX
+
+        self.QualityDropDown:SetupMenu(function(_, root)
+            root:CreateRadio(ALL, Get, Set, FILTER_ALL_INDEX)
+
+            for i = Enum.ItemQuality.Poor, Enum.ItemQuality.Epic do
+                local name = ns.ITEM_QUALITY_DESCS[i]
+                if name then
+                    root:CreateRadio(name, Get, Set, i)
+                end
+            end
+        end)
+
+        self.QualityDropDown:SetWidth(100)
+    end
 
     point(BrowseSearchDotsText, 'LEFT', self.NoResultsText, 'RIGHT')
 
@@ -151,14 +164,8 @@ function Browse:LayoutBlizzard()
 
     point(self.Name, 'TOPLEFT', BrowseNameText, 'BOTTOMLEFT', 3, -3 + CONTROL_LABEL_SPACING)
     point(self.MinLevel, 'TOPLEFT', BrowseLevelText, 'BOTTOMLEFT', 0, -3 + CONTROL_LABEL_SPACING)
-    -- @wlk@
-    point(self.QualityDropDown, 'TOPLEFT', BrowseDropDownName, 'BOTTOMLEFT', -18, 3 + CONTROL_LABEL_SPACING)
-    point(self.IsUsableCheckButton, 'TOPLEFT', nameWidth + 260, -38)
-    -- @end-wlk@
-    -- @non-wlk@
     point(self.QualityDropDown, 'TOPLEFT', BrowseDropDownName, 'BOTTOMLEFT', -3, CONTROL_LABEL_SPACING)
     point(self.IsUsableCheckButton, 'TOPLEFT', nameWidth + 300, -38)
-    -- @end-non-wlk@
     point(ShowOnPlayerCheckButton, 'TOPLEFT', self.IsUsableCheckButton, 'BOTTOMLEFT', 0, 2)
 
     parent(self.PrevPageButton)
@@ -242,37 +249,6 @@ function Browse:SetupSortButtons()
         tinsert(self.sortButtons, button)
     end
 
-    -- @wlk@
-
-    self.columnsMenu = {{text = L['Toggle column'], isTitle = true, notCheckable = true}, ns.MENU_SEPARATOR}
-
-    for _, info in ipairs(self.headers) do
-        if info.hiddenable then
-            local key = info.key
-            tinsert(self.columnsMenu, {
-                text = info.text,
-                isNotRadio = true,
-                keepShownOnClick = true,
-                checked = function()
-                    return not ns.profile.buy.hiddenColumns[key]
-                end,
-                func = function()
-                    ns.profile.buy.hiddenColumns[key] = not ns.profile.buy.hiddenColumns[key]
-                    self:UpdateColumns()
-                end,
-            })
-        end
-    end
-
-    tinsert(self.columnsMenu, ns.MENU_SEPARATOR)
-    tinsert(self.columnsMenu, {text = CANCEL, notCheckable = true})
-
-    self.BuyFrame.ColumnOption:SetScript('OnClick', function(button)
-        return ns.EasyMenu(self.columnsMenu, button, 0, 0, 'MENU')
-    end)
-    -- @end-wlk@
-
-    -- @classic@
     local function get(key)
         return not ns.profile.buy.hiddenColumns[key]
     end
@@ -293,7 +269,6 @@ function Browse:SetupSortButtons()
         root:CreateDivider()
         root:CreateButton(CANCEL, nop)
     end)
-    -- @end-classic@
 end
 
 function Browse:GenColumnMenu()
@@ -567,12 +542,7 @@ function Browse:BuildSearchParams()
         maxLevel = self.MaxLevel:GetNumber(),
         filters = self:GetFilters(),
         usable = self.IsUsableCheckButton:GetChecked(),
-        -- @wlk@
-        quality = UIDropDownMenu_GetSelectedValue(self.QualityDropDown),
-        -- @end-wlk@
-        -- @classic@
         quality = self.qualityIndex,
-        -- @end-classic@
         exact = self.ExactCheckButton:GetChecked(),
     }
 
