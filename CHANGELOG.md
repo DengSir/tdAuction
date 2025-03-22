@@ -1,3 +1,12 @@
+## [1.2.1](https://github.com/DengSir/tdAuction/compare/v1.2.0...v1.2.1) (2025-03-22)
+
+
+### Features
+
+* support 3.4.4 ([920b04f](https://github.com/DengSir/tdAuction/commit/920b04ffe3a3a7f318d12b4205238d6ed1f548a9))
+
+
+
 # [1.2.0](https://github.com/DengSir/tdAuction/compare/v1.1.13...v1.2.0) (2024-11-27)
 
 
