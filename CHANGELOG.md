@@ -1,3 +1,12 @@
+## [1.2.3](https://github.com/DengSir/tdAuction/compare/v1.2.2...v1.2.3) (2025-03-25)
+
+
+### Bug Fixes
+
+* blizzard auction categories bug for 344 ([6cd9a3b](https://github.com/DengSir/tdAuction/commit/6cd9a3bfc864395ee443c97917a15b180051728e))
+
+
+
 ## [1.2.2](https://github.com/DengSir/tdAuction/compare/v1.2.1...v1.2.2) (2025-03-22)
 
 
