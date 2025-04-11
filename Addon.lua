@@ -177,23 +177,29 @@ function Addon:FixBugFor344()
         [AUCTION_CATEGORY_REAGENT] = Enum.ItemClass.Reagent,
         [AUCTION_CATEGORY_GEMS] = Enum.ItemClass.Gem,
         [AUCTION_CATEGORY_MISCELLANEOUS] = Enum.ItemClass.Miscellaneous,
-        [AUCTION_CATEGORY_QUEST_ITEMS] = Enum.ItemClass.Questitem,
+        -- [AUCTION_CATEGORY_QUEST_ITEMS] = Enum.ItemClass.Questitem,
     }
 
     local starts = {[Enum.ItemClass.Tradegoods] = 1}
 
     for _, obj in pairs(AuctionCategories) do
-        if not obj.filters then
+        if not obj.filters or not obj.filters[1] or not obj.filters[1].subClassID then
             local classId = categories[obj.name]
             if classId then
+                obj.filters = nil
+                -- @debug@
+                print('FixBugFor344', obj.name, classId)
+                -- @end-debug@
                 local subClassId = starts[classId] or 0
-                while true do
-                    local name = GetItemSubClassInfo(classId, subClassId)
-                    if not name then
-                        break
+                if subClassId >= 0 then
+                    while true do
+                        local name = GetItemSubClassInfo(classId, subClassId)
+                        if not name then
+                            break
+                        end
+                        obj:CreateSubCategoryAndFilter(classId, subClassId)
+                        subClassId = subClassId + 1
                     end
-                    obj:CreateSubCategoryAndFilter(classId, subClassId)
-                    subClassId = subClassId + 1
                 end
             end
         end
