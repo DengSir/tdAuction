@@ -1,3 +1,12 @@
+## [1.2.4](https://github.com/DengSir/tdAuction/compare/v1.2.3...v1.2.4) (2025-04-11)
+
+
+### Features
+
+* 暴雪修了一下分类，但没修好 ([e5744df](https://github.com/DengSir/tdAuction/commit/e5744dfd6b59bb39a0c2e2e95210d8d1b6117ebf))
+
+
+
 ## [1.2.3](https://github.com/DengSir/tdAuction/compare/v1.2.2...v1.2.3) (2025-03-25)
 
 
