@@ -157,7 +157,7 @@ function Addon:SetupBlizzardUI()
 end
 
 function Addon:OnAuctionLoaded()
-    self:FixBugFor344()
+    -- self:FixBugFor344()
     self:SetupSort()
     self:SetupBackground()
     self:SetupUI()
