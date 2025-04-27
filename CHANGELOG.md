@@ -1,3 +1,12 @@
+## [1.2.5](https://github.com/DengSir/tdAuction/compare/v1.2.4...v1.2.5) (2025-04-27)
+
+
+### Features
+
+* 暴雪修好了分类 ([97309ba](https://github.com/DengSir/tdAuction/commit/97309ba37637f4f01b15dbdc69266fb7f9d42ead))
+
+
+
 ## [1.2.4](https://github.com/DengSir/tdAuction/compare/v1.2.3...v1.2.4) (2025-04-11)
 
 
