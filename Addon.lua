@@ -157,30 +157,28 @@ function Addon:SetupBlizzardUI()
 end
 
 function Addon:OnAuctionLoaded()
-    -- self:FixBugFor344()
+    self:FixFilter()
     self:SetupSort()
     self:SetupBackground()
     self:SetupUI()
 end
 
-function Addon:FixBugFor344()
+function Addon:FixFilter()
     local categories = {
-        [AUCTION_CATEGORY_WEAPONS] = Enum.ItemClass.Weapon,
-        [AUCTION_CATEGORY_ARMOR] = Enum.ItemClass.Armor,
+        -- [AUCTION_CATEGORY_WEAPONS] = Enum.ItemClass.Weapon,
+        -- [AUCTION_CATEGORY_ARMOR] = Enum.ItemClass.Armor,
         [AUCTION_CATEGORY_CONTAINERS] = Enum.ItemClass.Container,
-        [AUCTION_CATEGORY_CONSUMABLES] = Enum.ItemClass.Consumable,
-        [AUCTION_CATEGORY_GLYPHS] = Enum.ItemClass.Glyph,
+        -- [AUCTION_CATEGORY_CONSUMABLES] = Enum.ItemClass.Consumable,
+        -- [AUCTION_CATEGORY_GLYPHS] = Enum.ItemClass.Glyph,
         [AUCTION_CATEGORY_TRADE_GOODS] = Enum.ItemClass.Tradegoods,
-        [AUCTION_CATEGORY_PROJECTILE] = Enum.ItemClass.Projectile,
-        [AUCTION_CATEGORY_QUIVER] = Enum.ItemClass.Quiver,
+        -- [AUCTION_CATEGORY_PROJECTILE] = Enum.ItemClass.Projectile,
+        -- [AUCTION_CATEGORY_QUIVER] = Enum.ItemClass.Quiver,
         [AUCTION_CATEGORY_RECIPES] = Enum.ItemClass.Recipe,
-        [AUCTION_CATEGORY_REAGENT] = Enum.ItemClass.Reagent,
-        [AUCTION_CATEGORY_GEMS] = Enum.ItemClass.Gem,
-        [AUCTION_CATEGORY_MISCELLANEOUS] = Enum.ItemClass.Miscellaneous,
+        -- [AUCTION_CATEGORY_REAGENT] = Enum.ItemClass.Reagent,
+        -- [AUCTION_CATEGORY_GEMS] = Enum.ItemClass.Gem,
+        -- [AUCTION_CATEGORY_MISCELLANEOUS] = Enum.ItemClass.Miscellaneous,
         -- [AUCTION_CATEGORY_QUEST_ITEMS] = Enum.ItemClass.Questitem,
     }
-
-    local starts = {[Enum.ItemClass.Tradegoods] = 1}
 
     for _, obj in pairs(AuctionCategories) do
         if not obj.filters or not obj.filters[1] or not obj.filters[1].subClassID then
@@ -188,18 +186,16 @@ function Addon:FixBugFor344()
             if classId then
                 obj.filters = nil
                 -- @debug@
-                print('FixBugFor344', obj.name, classId)
+                print('FixFilter', obj.name, classId)
                 -- @end-debug@
-                local subClassId = starts[classId] or 0
-                if subClassId >= 0 then
-                    while true do
-                        local name = GetItemSubClassInfo(classId, subClassId)
-                        if not name then
-                            break
-                        end
-                        obj:CreateSubCategoryAndFilter(classId, subClassId)
-                        subClassId = subClassId + 1
+                local subClassId = 0
+                while true do
+                    local name = GetItemSubClassInfo(classId, subClassId)
+                    if not name then
+                        break
                     end
+                    obj:CreateSubCategoryAndFilter(classId, subClassId)
+                    subClassId = subClassId + 1
                 end
             end
         end

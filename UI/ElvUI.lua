@@ -74,6 +74,7 @@ hook(ns.Addon, 'SetupUI', function(o, self)
 
             S:HandleCloseButton(FullScan.CloseButton, FullScan)
             S:HandleButton(FullScan.ExecButton)
+            S:HandleButton(FullScan.ExportButton)
         end
 
         local Sell = ns.Addon.Sell
@@ -83,6 +84,7 @@ hook(ns.Addon, 'SetupUI', function(o, self)
             AuctionsItemButton:StyleButton()
 
             S:HandleDropDownBox(Sell.DurationDropDown)
+            S:HandleDropDownBox(Sell.PriceDropdown)
             S:HandleNextPrevButton(Sell.PriceListButton, 'right', nil, true)
 
             Sell.PriceList:StripTextures()
