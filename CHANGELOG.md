@@ -1,3 +1,12 @@
+## [1.2.6](https://github.com/DengSir/tdAuction/compare/v1.2.5...v1.2.6) (2025-04-29)
+
+
+### Bug Fixes
+
+* for 11507 ([6ce82c1](https://github.com/DengSir/tdAuction/commit/6ce82c1520c09020a3d7ed3b2257768f0993b642))
+
+
+
 ## [1.2.5](https://github.com/DengSir/tdAuction/compare/v1.2.4...v1.2.5) (2025-04-27)
 
 
