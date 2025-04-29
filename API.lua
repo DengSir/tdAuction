@@ -6,6 +6,8 @@
 ---@class ns
 local ns = select(2, ...)
 
+ns.BUILD = GetBuildInfo()
+
 local Hider
 function ns.hide(obj)
     if not Hider then
@@ -241,12 +243,13 @@ function ns.SetMoneyFrame(moneyFrame, money)
     return CheckMoney(_G[name .. 'Gold']) and CheckMoney(_G[name .. 'Silver']) and CheckMoney(_G[name .. 'Copper'])
 end
 
--- @build>2@
-ns.SELL_HOURS = {[1] = AUCTION_DURATION_ONE, [2] = AUCTION_DURATION_TWO, [3] = AUCTION_DURATION_THREE}
--- @end-build>2@
--- @classic@
-ns.SELL_HOURS = {[1] = '2' .. HOURS, [2] = '8' .. HOURS, [3] = '24' .. HOURS}
--- @end-classic@
+if ns.BUILD >= 2 then
+    ns.SELL_HOURS = {[1] = AUCTION_DURATION_ONE, [2] = AUCTION_DURATION_TWO, [3] = AUCTION_DURATION_THREE}
+elseif ns.BUILD == 1 then
+    ns.SELL_HOURS = {[1] = '2' .. HOURS, [2] = '8' .. HOURS, [3] = '24' .. HOURS}
+else
+    assert(false, 'Unknown build: %s', ns.BUILD)
+end
 
 ns.ZH = (GetLocale() == 'zhCN' or GetLocale() == 'zhTW')
 ns.NARROW_FILTER = ns.ZH and not ElvUI

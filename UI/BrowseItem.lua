@@ -12,22 +12,17 @@ local LibKnown = LibStub('LibKnown-1.0')
 local BrowseItem = ns.Addon:NewClass('UI.BrowseItem', 'Button')
 
 local NONE = GRAY_FONT_COLOR:WrapTextInColorCode(NONE)
--- @build>2@
-local DURATION_TEXT = { --
+local DURATION_TEXT = ns.BUILD >= 2 and { --
     [1] = RED_FONT_COLOR:WrapTextInColorCode('< 30m'),
     [2] = YELLOW_FONT_COLOR:WrapTextInColorCode('30m-2h'),
     [3] = GREEN_FONT_COLOR:WrapTextInColorCode('2-12h'),
     [4] = GRAY_FONT_COLOR:WrapTextInColorCode('> 12h'),
-}
--- @end-build>2@
--- @classic@
-local DURATION_TEXT = { --
+} or { --
     [1] = RED_FONT_COLOR:WrapTextInColorCode('< 30m'),
     [2] = YELLOW_FONT_COLOR:WrapTextInColorCode('30m-2h'),
     [3] = GREEN_FONT_COLOR:WrapTextInColorCode('2-8h'),
     [4] = GRAY_FONT_COLOR:WrapTextInColorCode('> 8h'),
 }
--- @end-classic@
 
 function BrowseItem:Constructor()
     self:SetScript('OnClick', self.OnClick)
