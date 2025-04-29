@@ -6,7 +6,7 @@
 ---@class ns
 local ns = select(2, ...)
 
-ns.BUILD = GetBuildInfo()
+ns.BUILD = tonumber(GetBuildInfo():match('^%d+'))
 
 local Hider
 function ns.hide(obj)
