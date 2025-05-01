@@ -1,3 +1,14 @@
+## [1.2.7](https://github.com/DengSir/tdAuction/compare/v1.2.6...v1.2.7) (2025-05-01)
+
+
+### Features
+
+* build ([22b4029](https://github.com/DengSir/tdAuction/commit/22b402967d3406d348af43fb30bcba0fec02f71c))
+* build ([445a24d](https://github.com/DengSir/tdAuction/commit/445a24dd3113bed10533719c2ec1ee2fafe3e14d))
+* one package ([e61d123](https://github.com/DengSir/tdAuction/commit/e61d1234a1c5e7b358e7af8492709ae922692404))
+
+
+
 ## [1.2.6](https://github.com/DengSir/tdAuction/compare/v1.2.5...v1.2.6) (2025-04-29)
 
 
