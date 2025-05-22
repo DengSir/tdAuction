@@ -108,9 +108,11 @@ local function OnTooltipItem(tip, link, count)
 
     if ns.profile.tooltip.auctionPrice then
         local itemKey = ns.ParseItemKey(link)
-        local priceInfo = itemKey and ns.rawPrices[itemKey]
-        if priceInfo then
-            AddPrice(tip, PREFIX_AUCTION, priceInfo[1], count, priceInfo[2])
+        if itemKey then
+            local price, timestamp = ns.GetPriceInfo(itemKey)
+            if price then
+                AddPrice(tip, PREFIX_AUCTION, price, count, timestamp)
+            end
         end
     end
 

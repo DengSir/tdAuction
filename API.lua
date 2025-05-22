@@ -243,6 +243,21 @@ function ns.SetMoneyFrame(moneyFrame, money)
     return CheckMoney(_G[name .. 'Gold']) and CheckMoney(_G[name .. 'Silver']) and CheckMoney(_G[name .. 'Copper'])
 end
 
+function ns.GetPriceInfo(key)
+    local a, b = ns.rawPrices[key], ns.otherAccountPrices[key]
+    local r
+    if a and b then
+        r = a[2] > b[2] and a or b
+    elseif a then
+        r = a
+    elseif b then
+        r = b
+    end
+    if r then
+        return r[1], r[2]
+    end
+end
+
 if ns.BUILD >= 2 then
     ns.SELL_HOURS = {[1] = AUCTION_DURATION_ONE, [2] = AUCTION_DURATION_TWO, [3] = AUCTION_DURATION_THREE}
 elseif ns.BUILD == 1 then
