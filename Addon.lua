@@ -59,10 +59,12 @@ local DEFAULT_PROFILE = { --
         quickBuy = true,
         hiddenColumns = {Seller = true, UnitBid = not ns.ZH or nil},
     },
+    db = {clean = 0},
 }
 
 function Addon:OnInitialize()
     self:SetupDatabase()
+    self:CleanPrices()
     self:SetupBlizzardUI()
     self:SetupOptionFrame()
 end
@@ -83,7 +85,7 @@ end
 function Addon:SetupDatabase()
     _G.TDDB_AUCTION_NEW = _G.TDDB_AUCTION_NEW or _G.TDDB_AUCTION
 
-    ---@type AceDB-3.0 | DATABASE
+    ---@type AceDBObject-3.0 | DATABASE
     ns.db = LibStub('AceDB-3.0'):New('TDDB_AUCTION_NEW', {global = DEFAULT_GLOBAL, profile = DEFAULT_PROFILE}, true)
 
     ns.global = ns.db.global
@@ -141,9 +143,25 @@ function Addon:SetupDatabase()
 
     -- compat
     ns.db:RegisterCallback('OnDatabaseShutdown', function()
+        self:CleanPrices()
         _G.TDDB_AUCTION = nil
     end)
     _G.TDDB_AUCTION = {global = {prices = {[realm] = ns.prices}}}
+end
+
+function Addon:CleanPrices()
+    if ns.db.profile.db.clean <= 0 then
+        return
+    end
+
+    local now = time()
+    local seconds = ns.db.profile.db.clean * 86400
+
+    for k, v in pairs(ns.rawPrices) do
+        if now - v[2] > seconds then
+            ns.rawPrices[k] = nil
+        end
+    end
 end
 
 function Addon:SetupBlizzardUI()

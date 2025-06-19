@@ -180,6 +180,14 @@ function Addon:SetupOptionFrame()
                 bidRatio = range(L['Start price discount'], 0, 1, 0.01),
             },
             db = treeItem(L['Database']) {
+                clean = drop(L['Auto clean database']) {
+                    {name = L['Never'], value = 0},
+                    {name = L['7 Days'], value = 7},
+                    {name = L['30 Days'], value = 30},
+                    {name = L['90 Days'], value = 90},
+                    {name = L['180 Days'], value = 180},
+                    {name = L['1 Year'], value = 365},
+                },
                 clear = execute(L['Clear database'], L['You are sure to clear the database'], function()
                     return wipe(ns.rawPrices)
                 end),

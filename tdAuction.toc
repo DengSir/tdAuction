@@ -7,6 +7,6 @@
 ## Author: Dencer
 ## Version: @project-version@
 ## OptionalDeps: tdSync
-## SavedVariables: TDDB_AUCTION, TDDB_AUCTION_NEW
+## SavedVariables: TDDB_AUCTION_NEW
 
 Load.xml
