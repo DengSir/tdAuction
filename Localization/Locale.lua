@@ -12,10 +12,22 @@ end
 T('deDE', function(L)
 -- @locale:language=deDE@
 L = L or {}
+--[[Translation missing --]]
+--[[ L["1 Year"] = "1 Year"--]] 
+--[[Translation missing --]]
+--[[ L["180 Days"] = "180 Days"--]] 
+--[[Translation missing --]]
+--[[ L["30 Days"] = "30 Days"--]] 
+--[[Translation missing --]]
+--[[ L["7 Days"] = "7 Days"--]] 
+--[[Translation missing --]]
+--[[ L["90 Days"] = "90 Days"--]] 
 L["Always"] = "Immer"
 L["Auction price"] = "Auktionspreis"
 --[[Translation missing --]]
 --[[ L["Auction price time style"] = "Auction price time style"--]] 
+--[[Translation missing --]]
+--[[ L["Auto clean database"] = "Auto clean database"--]] 
 L["Auto open price list"] = "Preisliste automatisch öffnen"
 L["Bid price"] = "Gebot"
 --[[Translation missing --]]
@@ -44,6 +56,8 @@ L["Ignore"] = "Ignorieren"
 L["in about %s"] = "in etwa %s"
 L["Merchant price"] = "Händlerpreis"
 L["Nerver"] = "Niemals"
+--[[Translation missing --]]
+--[[ L["Never"] = "Never"--]] 
 L["New"] = "Neu"
 L["Next available time:"] = "Nächste verfügbare Zeit:"
 L["No price"] = "Kein Preis"
@@ -86,11 +100,23 @@ T('esES', function(L)
 -- @locale:language=esES@
 L = L or {}
 --[[Translation missing --]]
+--[[ L["1 Year"] = "1 Year"--]] 
+--[[Translation missing --]]
+--[[ L["180 Days"] = "180 Days"--]] 
+--[[Translation missing --]]
+--[[ L["30 Days"] = "30 Days"--]] 
+--[[Translation missing --]]
+--[[ L["7 Days"] = "7 Days"--]] 
+--[[Translation missing --]]
+--[[ L["90 Days"] = "90 Days"--]] 
+--[[Translation missing --]]
 --[[ L["Always"] = "Always"--]] 
 --[[Translation missing --]]
 --[[ L["Auction price"] = "Auction price"--]] 
 --[[Translation missing --]]
 --[[ L["Auction price time style"] = "Auction price time style"--]] 
+--[[Translation missing --]]
+--[[ L["Auto clean database"] = "Auto clean database"--]] 
 --[[Translation missing --]]
 --[[ L["Auto open price list"] = "Auto open price list"--]] 
 --[[Translation missing --]]
@@ -137,6 +163,8 @@ L = L or {}
 --[[ L["Merchant price"] = "Merchant price"--]] 
 --[[Translation missing --]]
 --[[ L["Nerver"] = "Nerver"--]] 
+--[[Translation missing --]]
+--[[ L["Never"] = "Never"--]] 
 --[[Translation missing --]]
 --[[ L["New"] = "New"--]] 
 --[[Translation missing --]]
@@ -208,11 +236,23 @@ T('frFR', function(L)
 -- @locale:language=frFR@
 L = L or {}
 --[[Translation missing --]]
+--[[ L["1 Year"] = "1 Year"--]] 
+--[[Translation missing --]]
+--[[ L["180 Days"] = "180 Days"--]] 
+--[[Translation missing --]]
+--[[ L["30 Days"] = "30 Days"--]] 
+--[[Translation missing --]]
+--[[ L["7 Days"] = "7 Days"--]] 
+--[[Translation missing --]]
+--[[ L["90 Days"] = "90 Days"--]] 
+--[[Translation missing --]]
 --[[ L["Always"] = "Always"--]] 
 --[[Translation missing --]]
 --[[ L["Auction price"] = "Auction price"--]] 
 --[[Translation missing --]]
 --[[ L["Auction price time style"] = "Auction price time style"--]] 
+--[[Translation missing --]]
+--[[ L["Auto clean database"] = "Auto clean database"--]] 
 --[[Translation missing --]]
 --[[ L["Auto open price list"] = "Auto open price list"--]] 
 --[[Translation missing --]]
@@ -259,6 +299,8 @@ L = L or {}
 --[[ L["Merchant price"] = "Merchant price"--]] 
 --[[Translation missing --]]
 --[[ L["Nerver"] = "Nerver"--]] 
+--[[Translation missing --]]
+--[[ L["Never"] = "Never"--]] 
 --[[Translation missing --]]
 --[[ L["New"] = "New"--]] 
 --[[Translation missing --]]
@@ -330,11 +372,23 @@ T('itIT', function(L)
 -- @locale:language=itIT@
 L = L or {}
 --[[Translation missing --]]
+--[[ L["1 Year"] = "1 Year"--]] 
+--[[Translation missing --]]
+--[[ L["180 Days"] = "180 Days"--]] 
+--[[Translation missing --]]
+--[[ L["30 Days"] = "30 Days"--]] 
+--[[Translation missing --]]
+--[[ L["7 Days"] = "7 Days"--]] 
+--[[Translation missing --]]
+--[[ L["90 Days"] = "90 Days"--]] 
+--[[Translation missing --]]
 --[[ L["Always"] = "Always"--]] 
 --[[Translation missing --]]
 --[[ L["Auction price"] = "Auction price"--]] 
 --[[Translation missing --]]
 --[[ L["Auction price time style"] = "Auction price time style"--]] 
+--[[Translation missing --]]
+--[[ L["Auto clean database"] = "Auto clean database"--]] 
 --[[Translation missing --]]
 --[[ L["Auto open price list"] = "Auto open price list"--]] 
 --[[Translation missing --]]
@@ -381,6 +435,8 @@ L = L or {}
 --[[ L["Merchant price"] = "Merchant price"--]] 
 --[[Translation missing --]]
 --[[ L["Nerver"] = "Nerver"--]] 
+--[[Translation missing --]]
+--[[ L["Never"] = "Never"--]] 
 --[[Translation missing --]]
 --[[ L["New"] = "New"--]] 
 --[[Translation missing --]]
@@ -452,11 +508,23 @@ T('koKR', function(L)
 -- @locale:language=koKR@
 L = L or {}
 --[[Translation missing --]]
+--[[ L["1 Year"] = "1 Year"--]] 
+--[[Translation missing --]]
+--[[ L["180 Days"] = "180 Days"--]] 
+--[[Translation missing --]]
+--[[ L["30 Days"] = "30 Days"--]] 
+--[[Translation missing --]]
+--[[ L["7 Days"] = "7 Days"--]] 
+--[[Translation missing --]]
+--[[ L["90 Days"] = "90 Days"--]] 
+--[[Translation missing --]]
 --[[ L["Always"] = "Always"--]] 
 --[[Translation missing --]]
 --[[ L["Auction price"] = "Auction price"--]] 
 --[[Translation missing --]]
 --[[ L["Auction price time style"] = "Auction price time style"--]] 
+--[[Translation missing --]]
+--[[ L["Auto clean database"] = "Auto clean database"--]] 
 --[[Translation missing --]]
 --[[ L["Auto open price list"] = "Auto open price list"--]] 
 --[[Translation missing --]]
@@ -503,6 +571,8 @@ L = L or {}
 --[[ L["Merchant price"] = "Merchant price"--]] 
 --[[Translation missing --]]
 --[[ L["Nerver"] = "Nerver"--]] 
+--[[Translation missing --]]
+--[[ L["Never"] = "Never"--]] 
 --[[Translation missing --]]
 --[[ L["New"] = "New"--]] 
 --[[Translation missing --]]
@@ -574,11 +644,23 @@ T('ptBR', function(L)
 -- @locale:language=ptBR@
 L = L or {}
 --[[Translation missing --]]
+--[[ L["1 Year"] = "1 Year"--]] 
+--[[Translation missing --]]
+--[[ L["180 Days"] = "180 Days"--]] 
+--[[Translation missing --]]
+--[[ L["30 Days"] = "30 Days"--]] 
+--[[Translation missing --]]
+--[[ L["7 Days"] = "7 Days"--]] 
+--[[Translation missing --]]
+--[[ L["90 Days"] = "90 Days"--]] 
+--[[Translation missing --]]
 --[[ L["Always"] = "Always"--]] 
 --[[Translation missing --]]
 --[[ L["Auction price"] = "Auction price"--]] 
 --[[Translation missing --]]
 --[[ L["Auction price time style"] = "Auction price time style"--]] 
+--[[Translation missing --]]
+--[[ L["Auto clean database"] = "Auto clean database"--]] 
 --[[Translation missing --]]
 --[[ L["Auto open price list"] = "Auto open price list"--]] 
 --[[Translation missing --]]
@@ -625,6 +707,8 @@ L = L or {}
 --[[ L["Merchant price"] = "Merchant price"--]] 
 --[[Translation missing --]]
 --[[ L["Nerver"] = "Nerver"--]] 
+--[[Translation missing --]]
+--[[ L["Never"] = "Never"--]] 
 --[[Translation missing --]]
 --[[ L["New"] = "New"--]] 
 --[[Translation missing --]]
@@ -695,9 +779,21 @@ end)
 T('ruRU', function(L)
 -- @locale:language=ruRU@
 L = L or {}
+--[[Translation missing --]]
+--[[ L["1 Year"] = "1 Year"--]] 
+--[[Translation missing --]]
+--[[ L["180 Days"] = "180 Days"--]] 
+--[[Translation missing --]]
+--[[ L["30 Days"] = "30 Days"--]] 
+--[[Translation missing --]]
+--[[ L["7 Days"] = "7 Days"--]] 
+--[[Translation missing --]]
+--[[ L["90 Days"] = "90 Days"--]] 
 L["Always"] = "Всегда"
 L["Auction price"] = "Цена аукциона"
 L["Auction price time style"] = "Стиль аукционной цены по времени"
+--[[Translation missing --]]
+--[[ L["Auto clean database"] = "Auto clean database"--]] 
 L["Auto open price list"] = "Автоматически открыть прайс-лист"
 L["Bid price"] = "Цена предложения"
 L["Bid unit price"] = "Цена за единицу предложения"
@@ -721,6 +817,8 @@ L["Ignore"] = "Игнорировать"
 L["in about %s"] = "примерно в %s"
 L["Merchant price"] = "Цена торговца"
 L["Nerver"] = "Никогда"
+--[[Translation missing --]]
+--[[ L["Never"] = "Never"--]] 
 L["New"] = "Новый"
 L["Next available time:"] = "Ближайшее доступное время:"
 L["No price"] = "Нет цены"
@@ -760,11 +858,23 @@ T('zhTW', function(L)
 -- @locale:language=zhTW@
 L = L or {}
 --[[Translation missing --]]
+--[[ L["1 Year"] = "1 Year"--]] 
+--[[Translation missing --]]
+--[[ L["180 Days"] = "180 Days"--]] 
+--[[Translation missing --]]
+--[[ L["30 Days"] = "30 Days"--]] 
+--[[Translation missing --]]
+--[[ L["7 Days"] = "7 Days"--]] 
+--[[Translation missing --]]
+--[[ L["90 Days"] = "90 Days"--]] 
+--[[Translation missing --]]
 --[[ L["Always"] = "Always"--]] 
 --[[Translation missing --]]
 --[[ L["Auction price"] = "Auction price"--]] 
 --[[Translation missing --]]
 --[[ L["Auction price time style"] = "Auction price time style"--]] 
+--[[Translation missing --]]
+--[[ L["Auto clean database"] = "Auto clean database"--]] 
 --[[Translation missing --]]
 --[[ L["Auto open price list"] = "Auto open price list"--]] 
 --[[Translation missing --]]
@@ -811,6 +921,8 @@ L = L or {}
 --[[ L["Merchant price"] = "Merchant price"--]] 
 --[[Translation missing --]]
 --[[ L["Nerver"] = "Nerver"--]] 
+--[[Translation missing --]]
+--[[ L["Never"] = "Never"--]] 
 --[[Translation missing --]]
 --[[ L["New"] = "New"--]] 
 --[[Translation missing --]]

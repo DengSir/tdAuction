@@ -5,9 +5,15 @@ end
 
 -- @locale:language=enUS@
 L = L or {}
+L["1 Year"] = true
+L["180 Days"] = true
+L["30 Days"] = true
+L["7 Days"] = true
+L["90 Days"] = true
 L["Always"] = true
 L["Auction price"] = true
 L["Auction price time style"] = true
+L["Auto clean database"] = true
 L["Auto open price list"] = true
 L["Bid price"] = true
 L["Bid unit price"] = true
@@ -31,6 +37,7 @@ L["Ignore"] = true
 L["in about %s"] = true
 L["Merchant price"] = true
 L["Nerver"] = true
+L["Never"] = true
 L["New"] = true
 L["Next available time:"] = true
 L["No price"] = true
@@ -132,6 +139,13 @@ L.TOOLTIP_FULLSCAN_DISABLED =
     [[An unknown NPC (%s), tdAuction cannot determine whether the auction house is neutral or not.]]
 
 L.EXPORT_HEADER = [["Price","Name","","","Count"]]
+L['1 Year'] = true
+L['180 Days'] = true
+L['30 Days'] = true
+L['7 Days'] = true
+L['90 Days'] = true
+L['Auto clean database'] = true
+L.Never = true
 -- @locale-fill@
 -- @end-import@
 -- @end-debug@
