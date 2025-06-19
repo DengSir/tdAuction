@@ -70,13 +70,13 @@ L.TOOLTIP_FULLSCAN_DISABLED =
     [[一个未知的NPC（%s），tdAuction不能确定该拍卖行是否是中立拍卖行。]]
 
 L.EXPORT_HEADER = [["价格","名称","","","可购买"]]
-L['1 Year'] = true
-L['180 Days'] = true
-L['30 Days'] = true
-L['7 Days'] = true
-L['90 Days'] = true
-L['Auto clean database'] = true
-L.Never = true
+L['1 Year'] = '一年'
+L['180 Days'] = '180天'
+L['30 Days'] = '30天'
+L['7 Days'] = '7天'
+L['90 Days'] = '90天'
+L['Auto clean database'] = '自动清理数据库'
+L.Never = '从不'
 -- @locale-fill@
 
 -- @end-import@
