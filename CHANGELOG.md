@@ -1,3 +1,13 @@
+## [1.2.8](https://github.com/DengSir/tdAuction/compare/v1.2.7...v1.2.8) (2025-06-19)
+
+
+### Features
+
+* 添加数据自动清理功能 ([7d96bb9](https://github.com/DengSir/tdAuction/commit/7d96bb96f5edbfaf5c07a18ca336b0de5022539b))
+* update price info ([3a2c3b0](https://github.com/DengSir/tdAuction/commit/3a2c3b0ff7bb320acaec51ea5b86dca214e8a065))
+
+
+
 ## [1.2.7](https://github.com/DengSir/tdAuction/compare/v1.2.6...v1.2.7) (2025-05-01)
 
 
