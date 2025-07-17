@@ -779,21 +779,15 @@ end)
 T('ruRU', function(L)
 -- @locale:language=ruRU@
 L = L or {}
---[[Translation missing --]]
---[[ L["1 Year"] = "1 Year"--]] 
---[[Translation missing --]]
---[[ L["180 Days"] = "180 Days"--]] 
---[[Translation missing --]]
---[[ L["30 Days"] = "30 Days"--]] 
---[[Translation missing --]]
---[[ L["7 Days"] = "7 Days"--]] 
---[[Translation missing --]]
---[[ L["90 Days"] = "90 Days"--]] 
+L["1 Year"] = "1 год"
+L["180 Days"] = "180 дней"
+L["30 Days"] = "30 дней"
+L["7 Days"] = "7 дней"
+L["90 Days"] = "90 дней"
 L["Always"] = "Всегда"
 L["Auction price"] = "Цена аукциона"
 L["Auction price time style"] = "Стиль аукционной цены по времени"
---[[Translation missing --]]
---[[ L["Auto clean database"] = "Auto clean database"--]] 
+L["Auto clean database"] = "Автоматическая очистка базы данных"
 L["Auto open price list"] = "Автоматически открыть прайс-лист"
 L["Bid price"] = "Цена предложения"
 L["Bid unit price"] = "Цена за единицу предложения"
@@ -817,8 +811,7 @@ L["Ignore"] = "Игнорировать"
 L["in about %s"] = "примерно в %s"
 L["Merchant price"] = "Цена торговца"
 L["Nerver"] = "Никогда"
---[[Translation missing --]]
---[[ L["Never"] = "Never"--]] 
+L["Never"] = "Никогда"
 L["New"] = "Новый"
 L["Next available time:"] = "Ближайшее доступное время:"
 L["No price"] = "Нет цены"
