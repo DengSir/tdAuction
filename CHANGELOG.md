@@ -1,3 +1,12 @@
+## [1.2.11](https://github.com/DengSir/tdAuction/compare/v1.2.10...v1.2.11) (2025-08-05)
+
+
+### Bug Fixes
+
+* 动作条上的玩具鼠标提示异常的问题 ([e23b11b](https://github.com/DengSir/tdAuction/commit/e23b11bf330520ed2e3f774ff45c8e2f457b2510))
+
+
+
 ## [1.2.10](https://github.com/DengSir/tdAuction/compare/v1.2.9...v1.2.10) (2025-07-28)
 
 
