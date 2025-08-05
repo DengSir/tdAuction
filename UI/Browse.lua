@@ -61,30 +61,30 @@ function Browse:LayoutBlizzard()
     self.SortButtonFrame = self.BuyFrame.SortButtonFrame
     self.ExactCheckButton = self.BuyFrame.ExactCheckButton
 
-    if not ElvUI then
-        local function FixEditBox(f)
-            if not f or not f.Left or not f.Right or not f.Middle then
-                return
-            end
+    -- if not ElvUI then
+    --     local function FixEditBox(f)
+    --         if not f or not f.Left or not f.Right or not f.Middle then
+    --             return
+    --         end
 
-            if f.Left:GetAtlas() or f.Left:GetTexture() then
-                return
-            end
+    --         if f.Left:GetAtlas() or f.Left:GetTexture() then
+    --             return
+    --         end
 
-            f.Left:SetTexture([[interface\common\commonsearch]])
-            f.Left:SetTexCoord(0.88671875, 0.94921875, 0.0078125, 0.3203125)
+    --         f.Left:SetTexture([[interface\common\commonsearch]])
+    --         f.Left:SetTexCoord(0.88671875, 0.94921875, 0.0078125, 0.3203125)
 
-            f.Right:SetTexture([[interface\common\commonsearch]])
-            f.Right:SetTexCoord(0.00390625, 0.06640625, 0.3359375, 0.6484375)
+    --         f.Right:SetTexture([[interface\common\commonsearch]])
+    --         f.Right:SetTexCoord(0.00390625, 0.06640625, 0.3359375, 0.6484375)
 
-            f.Middle:SetTexture([[interface\common\commonsearch]])
-            f.Middle:SetTexCoord(0.00390625, 0.87890625, 0.0078125, 0.3203125)
-        end
+    --         f.Middle:SetTexture([[interface\common\commonsearch]])
+    --         f.Middle:SetTexCoord(0.00390625, 0.87890625, 0.0078125, 0.3203125)
+    --     end
 
-        FixEditBox(self.Name)
-        FixEditBox(self.MinLevel)
-        FixEditBox(self.MaxLevel)
-    end
+    --     FixEditBox(self.Name)
+    --     FixEditBox(self.MinLevel)
+    --     FixEditBox(self.MaxLevel)
+    -- end
 
     self.ExactCheckButton:SetScript('OnClick', function()
         ns.profile.buy.exact = self.ExactCheckButton:GetChecked() or nil
