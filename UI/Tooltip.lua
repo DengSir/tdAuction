@@ -267,9 +267,16 @@ function TipMethods:SetTradeSkillItem(index, slot)
 end
 
 function TipMethods:SetAction(action)
-    local link = select(2, self:GetItem())
+    local actionType, id = GetActionInfo(action)
+    local link, _
+    if actionType == 'item' then
+        _, link = GetItemInfo(id)
+    elseif actionType == 'macro' then
+        _, link = GetMacroItem(id)
+    end
     if link then
-        return OnTooltipSetItem(self, link, GetItemCount(link))
+        local count = GetItemCount(link, true)
+        return OnTooltipSetItem(self, link, count)
     end
 end
 
