@@ -267,6 +267,9 @@ function TipMethods:SetTradeSkillItem(index, slot)
 end
 
 function TipMethods:SetAction(action)
+    if not self:GetItem() then
+        return
+    end
     local actionType, id = GetActionInfo(action)
     local link, _
     if actionType == 'item' then
