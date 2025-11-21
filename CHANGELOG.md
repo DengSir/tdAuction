@@ -1,3 +1,13 @@
+## [1.2.12](https://github.com/DengSir/tdAuction/compare/v1.2.11...v1.2.12) (2025-11-21)
+
+
+### Features
+
+* 更新TOC ([e1a26e8](https://github.com/DengSir/tdAuction/commit/e1a26e86923fde361be4792d9cb7262cd99291ef))
+* 修复#show宏的鼠标提示显示问题 ([56fef55](https://github.com/DengSir/tdAuction/commit/56fef55f506f92dd7a3304a52b34687baf44f439))
+
+
+
 ## [1.2.11](https://github.com/DengSir/tdAuction/compare/v1.2.10...v1.2.11) (2025-08-05)
 
 
