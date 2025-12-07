@@ -178,7 +178,7 @@ function Addon:SetupBlizzardUI()
 end
 
 function Addon:OnAuctionLoaded()
-    self:FixFilter()
+    -- self:FixFilter()
     self:SetupSort()
     self:SetupBackground()
     self:SetupUI()
@@ -223,6 +223,8 @@ function Addon:FixFilter()
     end
 end
 
+ns.AuctionSort = {}
+local AuctionSort = ns.AuctionSort
 function Addon:SetupSort()
     AuctionSort['list_level'] = {
         {column = 'duration', reverse = true},
@@ -255,6 +257,16 @@ function Addon:SetupSort()
         {column = 'seller', reverse = false},
     }
 
+    AuctionSort['list_quality'] = {
+        {column = 'duration', reverse = false},
+        {column = 'unitprice', reverse = false},
+        {column = 'quantity', reverse = true},
+        {column = 'minbidbuyout', reverse = false},
+        {column = 'name', reverse = false},
+        {column = 'level', reverse = true},
+        {column = 'quality', reverse = false},
+    }
+
     AuctionSort['list_unitprice'] = {
         {column = 'duration', reverse = false},
         {column = 'quantity', reverse = true},
@@ -273,16 +285,6 @@ function Addon:SetupSort()
         {column = 'unitbid', reverse = false},
     }
 
-    AuctionSort['list_quality'] = {
-        {column = 'duration', reverse = false},
-        {column = 'unitprice', reverse = false},
-        {column = 'quantity', reverse = true},
-        {column = 'minbidbuyout', reverse = false},
-        {column = 'name', reverse = false},
-        {column = 'level', reverse = true},
-        {column = 'quality', reverse = false},
-    }
-
     AuctionSort['list_buyout'] = {
         {column = 'duration', reverse = false},
         {column = 'quantity', reverse = true},
@@ -290,6 +292,15 @@ function Addon:SetupSort()
         {column = 'level', reverse = true},
         {column = 'quality', reverse = false},
         {column = 'buyout', reverse = false},
+    }
+
+    AuctionSort['list_bid'] = {
+        {column = 'duration', reverse = false},
+        {column = 'quantity', reverse = true},
+        {column = 'name', reverse = false},
+        {column = 'level', reverse = true},
+        {column = 'quality', reverse = false},
+        {column = 'bid', reverse = false},
     }
 
     ns.SetSort('unitprice')
@@ -331,7 +342,7 @@ end
 
 function Addon:SetupUI()
     self.FullScan = ns.UI.FullScan:Bind(CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionFullScanFrameTemplate'))
-    self.Browse = ns.UI.Browse:Bind(AuctionFrameBrowse)
+    self.Browse = ns.UI.Browse:Bind(CreateFrame('Frame', nil, AuctionFrameBrowse))
     self.Sell = ns.UI.Sell:Bind(AuctionFrameAuctions)
     ---@type tdAuctionFeaturesFrameTemplate
     self.Features = CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionFeaturesFrameTemplate')

@@ -352,7 +352,7 @@
         </Scripts>
     </Button>
 
-    <Button name="tdAuctionSortButtonTemplate" virtual="true">
+    <Button name="tdAuctionSortButtonTemplate" inherits="SecureActionButtonTemplate" virtual="true">
         <Size y="19" />
         <Layers>
             <Layer level="BACKGROUND">

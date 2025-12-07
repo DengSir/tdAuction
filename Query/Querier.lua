@@ -32,6 +32,7 @@ function Querier:OnInitialize()
     }
 
     hooksecurefunc('QueryAuctionItems', function()
+        print('QueryAuctionItems called', debugstack())
         if not self.ourQuery then
             self:Cancel()
         end
@@ -134,6 +135,9 @@ function Querier:Pending()
     self.scaner:PreQuery()
 
     self.ourQuery = true
+    if params.virtual then
+        return
+    end
     QueryAuctionItems(text, params.minLevel, params.maxLevel, self.page, params.usable, params.quality, params.queryAll,
                       exact or params.exact, params.filters)
     self.ourQuery = nil

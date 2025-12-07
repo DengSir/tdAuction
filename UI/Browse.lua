@@ -22,13 +22,13 @@ local FRAME_WIDTH_NOSCROLL = BUTTON_WIDTH_NOSCROLL + 4
 ---@class UI.Browse: Object, Frame
 local Browse = ns.Addon:NewClass('UI.Browse', 'Frame')
 
-function Browse:Constructor()
+function Browse:Constructor(parent)
     self.scaner = ns.BrowseScaner:New()
     self.scaner:SetCallback('OnDone', function()
-        self.isSearching = nil
         self:UpdateAll()
     end)
 
+    self.Browse = parent
     self:LayoutBlizzard()
     self:SetupSortButtons()
     self:SetupScrollFrame()
@@ -42,7 +42,7 @@ function Browse:LayoutBlizzard()
     local BrowseDropDownName = BrowseDropDownName or BrowseDropdownName
 
     ---@type tdAuctionBrowseBuyFrameTemplate
-    self.BuyFrame = CreateFrame('Frame', nil, self, 'tdAuctionBrowseBuyFrameTemplate')
+    self.BuyFrame = CreateFrame('Frame', nil, self.Browse, 'tdAuctionBrowseBuyFrameTemplate')
     self.Name = BrowseName
     self.SearchButton = BrowseSearchButton
     self.PrevPageButton = BrowsePrevPageButton
@@ -61,36 +61,11 @@ function Browse:LayoutBlizzard()
     self.SortButtonFrame = self.BuyFrame.SortButtonFrame
     self.ExactCheckButton = self.BuyFrame.ExactCheckButton
 
-    -- if not ElvUI then
-    --     local function FixEditBox(f)
-    --         if not f or not f.Left or not f.Right or not f.Middle then
-    --             return
-    --         end
-
-    --         if f.Left:GetAtlas() or f.Left:GetTexture() then
-    --             return
-    --         end
-
-    --         f.Left:SetTexture([[interface\common\commonsearch]])
-    --         f.Left:SetTexCoord(0.88671875, 0.94921875, 0.0078125, 0.3203125)
-
-    --         f.Right:SetTexture([[interface\common\commonsearch]])
-    --         f.Right:SetTexCoord(0.00390625, 0.06640625, 0.3359375, 0.6484375)
-
-    --         f.Middle:SetTexture([[interface\common\commonsearch]])
-    --         f.Middle:SetTexCoord(0.00390625, 0.87890625, 0.0078125, 0.3203125)
-    --     end
-
-    --     FixEditBox(self.Name)
-    --     FixEditBox(self.MinLevel)
-    --     FixEditBox(self.MaxLevel)
-    -- end
-
-    self.ExactCheckButton:SetScript('OnClick', function()
-        ns.profile.buy.exact = self.ExactCheckButton:GetChecked() or nil
-    end)
-    self.ExactCheckButton:SetChecked(ns.profile.buy.exact)
-    self.ExactCheckButton:SetParent(self)
+    -- self.ExactCheckButton:SetScript('OnClick', function()
+    --     ns.profile.buy.exact = self.ExactCheckButton:GetChecked() or nil
+    -- end)
+    -- self.ExactCheckButton:SetChecked(ns.profile.buy.exact)
+    -- self.ExactCheckButton:SetParent(self)
 
     self.ResetButton:SetSize(80, 22)
 
@@ -147,33 +122,33 @@ function Browse:LayoutBlizzard()
 
     self.Name:SetWidth(nameWidth)
 
-    do
-        local function Get(index)
-            return self.qualityIndex == index;
-        end
+    -- do
+    --     local function Get(index)
+    --         return self.qualityIndex == index;
+    --     end
 
-        local function Set(index)
-            self.qualityIndex = index;
-        end
+    --     local function Set(index)
+    --         self.qualityIndex = index;
+    --     end
 
-        -- 和Blizzard_AuctionUI.lua保持一致
-        local FILTER_ALL_INDEX = -1
+    --     -- 和Blizzard_AuctionUI.lua保持一致
+    --     local FILTER_ALL_INDEX = -1
 
-        self.qualityIndex = FILTER_ALL_INDEX
+    --     self.qualityIndex = FILTER_ALL_INDEX
 
-        self.QualityDropDown:SetupMenu(function(_, root)
-            root:CreateRadio(ALL, Get, Set, FILTER_ALL_INDEX)
+    --     self.QualityDropDown:SetupMenu(function(_, root)
+    --         root:CreateRadio(ALL, Get, Set, FILTER_ALL_INDEX)
 
-            for i = Enum.ItemQuality.Poor, Enum.ItemQuality.Epic do
-                local name = ns.ITEM_QUALITY_DESCS[i]
-                if name then
-                    root:CreateRadio(name, Get, Set, i)
-                end
-            end
-        end)
+    --         for i = Enum.ItemQuality.Poor, Enum.ItemQuality.Epic do
+    --             local name = ns.ITEM_QUALITY_DESCS[i]
+    --             if name then
+    --                 root:CreateRadio(name, Get, Set, i)
+    --             end
+    --         end
+    --     end)
 
-        self.QualityDropDown:SetWidth(100)
-    end
+    --     self.QualityDropDown:SetWidth(100)
+    -- end
 
     point(BrowseSearchDotsText, 'LEFT', self.NoResultsText, 'RIGHT')
 
@@ -185,7 +160,7 @@ function Browse:LayoutBlizzard()
     point(self.BidPrice, 'BOTTOM', 115, 18)
 
     point(BrowseLevelText, 'TOPLEFT', nameWidth + 90, -38)
-    point(BrowseDropDownName, 'TOPLEFT', self, nameWidth + 170, -38)
+    point(BrowseDropDownName, 'TOPLEFT', self.Browse, nameWidth + 170, -38)
 
     point(self.Name, 'TOPLEFT', BrowseNameText, 'BOTTOMLEFT', 3, -3 + CONTROL_LABEL_SPACING)
     point(self.MinLevel, 'TOPLEFT', BrowseLevelText, 'BOTTOMLEFT', 0, -3 + CONTROL_LABEL_SPACING)
@@ -193,13 +168,13 @@ function Browse:LayoutBlizzard()
     point(self.IsUsableCheckButton, 'TOPLEFT', nameWidth + 300, -38)
     point(ShowOnPlayerCheckButton, 'TOPLEFT', self.IsUsableCheckButton, 'BOTTOMLEFT', 0, 2)
 
-    parent(self.PrevPageButton)
-    parent(self.NextPageButton)
-    parent(self.SearchCountText)
-    parent(self.BidButton)
-    parent(self.BuyoutButton)
-    parent(self.SearchButton)
-    parent(self.ResetButton)
+    -- parent(self.PrevPageButton)
+    -- parent(self.NextPageButton)
+    -- parent(self.SearchCountText)
+    -- parent(self.BidButton)
+    -- parent(self.BuyoutButton)
+    -- parent(self.SearchButton)
+    -- parent(self.ResetButton)
 
     if ns.NARROW_FILTER then
         local function SetWidth(button, width, our)
@@ -218,10 +193,10 @@ function Browse:LayoutBlizzard()
             hooksecurefunc(button, 'SetWidth', SetWidth)
         end
 
-        point(BrowseFilterScrollFrame, 'TOPRIGHT', self, 'TOPLEFT', 158 - FILTER_FRAME_SHORT, -105)
+        point(BrowseFilterScrollFrame, 'TOPRIGHT', self.Browse, 'TOPLEFT', 158 - FILTER_FRAME_SHORT, -105)
     end
 
-    point(self.ScrollFrame, 'TOPLEFT', self, 190 - FILTER_FRAME_SHORT, -104)
+    point(self.ScrollFrame, 'TOPLEFT', self.Browse, 190 - FILTER_FRAME_SHORT, -104)
 
 end
 
@@ -250,14 +225,13 @@ function Browse:SetupSortButtons()
     }
 
     local function SortAuction(button)
-        local sortColumn, reverse = GetAuctionSort('list', 1)
+        local sortColumn, reverse = ns.GetAuctionSort()
         local order = sortColumn and sortColumn == button.sortColumn and not reverse
         ns.SetSort(button.sortColumn, order)
     end
 
     local function OnClick(button)
         SortAuction(button)
-        self:RequestSearch()
         self:SaveSorts()
     end
 
@@ -266,7 +240,9 @@ function Browse:SetupSortButtons()
         button.key = info.key
         button.reverse = not not info.reverse
         button.sortColumn = info.sortColumn
-        button:SetScript('OnClick', OnClick)
+        button:SetScript('PreClick', OnClick)
+        button:SetAttribute('type', 'macro')
+        button:SetAttribute('macrotext', '/click BrowseSearchButton')
         button.Text:SetText(info.text)
         if info.width then
             button:SetWidth(info.width)
@@ -337,12 +313,6 @@ function Browse:ApplyItem(frame)
 end
 
 function Browse:SetupEventsAndHooks()
-    AuctionFrameBrowse_Update = nop
-    AuctionFrameBrowse_UpdateArrows = nop
-    AuctionFrameBrowse_Search = function()
-        return self:RequestSearch()
-    end
-
     hooksecurefunc('BrowseWowTokenResults_Update', function()
         self.BuyFrame:SetShown(not self:IsAtWowToken())
     end)
@@ -366,40 +336,40 @@ function Browse:SetupEventsAndHooks()
         end
     end)
 
-    self:SetScript('OnEvent', function()
-        self.isSearching = nil
+    self.Browse:SetScript('OnEvent', function()
+        self.Browse.isSearching = nil
         self:UpdateAll()
     end)
 
-    self:HookScript('OnShow', function()
+    self.Browse:HookScript('OnShow', function()
         self:RestoreSorts()
         self:UpdateAll()
     end)
 
-    local orig_ChatEdit_InsertLink = ChatEdit_InsertLink
-    _G.ChatEdit_InsertLink = function(text)
-        if self.Name:IsVisible() and IsShiftKeyDown() then
-            self.Name:Hide()
-            local ok = orig_ChatEdit_InsertLink(text)
-            self.Name:Show()
+    -- local orig_ChatEdit_InsertLink = ChatEdit_InsertLink
+    -- _G.ChatEdit_InsertLink = function(text)
+    --     if self.Name:IsVisible() and IsShiftKeyDown() then
+    --         self.Name:Hide()
+    --         local ok = orig_ChatEdit_InsertLink(text)
+    --         self.Name:Show()
 
-            if not ok then
-                local name, link = GetItemInfo(text)
-                if link then
-                    self.Name:SetText(link)
-                    self:RequestSearch()
-                    ok = true
-                end
-            end
-            return ok
-        else
-            return orig_ChatEdit_InsertLink(text)
-        end
-    end
+    --         if not ok then
+    --             local name, link = GetItemInfo(text)
+    --             if link then
+    --                 self.Name:SetText(link)
+    --                 self:RequestSearch()
+    --                 ok = true
+    --             end
+    --         end
+    --         return ok
+    --     else
+    --         return orig_ChatEdit_InsertLink(text)
+    --     end
+    -- end
 
-    AuctionFrame:HookScript('OnHide', function()
-        self.Name:SetText('')
-    end)
+    -- AuctionFrame:HookScript('OnHide', function()
+    --     self.Name:SetText('')
+    -- end)
 
     self:PatchVisible('UpdateItems')
     self:PatchVisible('UpdateSelected')
@@ -417,11 +387,12 @@ end
 function Browse:UpdateItems()
     local scrollFrame = self.ScrollFrame
     local offset = HybridScrollFrame_GetOffset(scrollFrame)
-    local page = self.page
+    local page = self.Browse.page or 0
     local pageStart = NUM_AUCTION_ITEMS_PER_PAGE * page
 
-    local ourSearch = self:IsOurSearch()
-    local shouldHide = self.isSearching or not ourSearch
+    -- local ourSearch = self:IsOurSearch()
+    local ourSearch = true
+    local shouldHide = self.Browse.isSearching or not ourSearch
     local num, total, hasScrollBar, buttonWidth
     local totalHeight = 0
 
@@ -432,7 +403,7 @@ function Browse:UpdateItems()
         totalHeight = num * BUTTON_HEIGHT
     end
 
-    if not self.isSearching then
+    if not self.Browse.isSearching then
         self.ScrollFrame:SetWidth(hasScrollBar and FRAME_WIDTH_WITHSCROLL or FRAME_WIDTH_NOSCROLL)
     end
 
@@ -451,7 +422,7 @@ function Browse:UpdateItems()
 
     if not ourSearch then
         self.NoResultsText:SetText(BROWSE_SEARCH_TEXT)
-    elseif self.isSearching then
+    elseif self.Browse.isSearching then
         self.NoResultsText:SetText(SEARCHING_FOR_ITEMS)
     elseif not num or num == 0 then
         self.NoResultsText:SetText(BROWSE_NO_RESULTS)
@@ -461,7 +432,10 @@ function Browse:UpdateItems()
 end
 
 function Browse:UpdateSortButtons()
-    local sortColumn, reverse = GetAuctionSort('list', 1)
+    local sortColumn, reverse = ns.GetAuctionSort()
+
+    print(sortColumn, reverse, GetCVarBool('auctionSortByBuyoutPrice'), GetCVarBool('auctionSortByUnitPrice'))
+
     for i, button in ipairs(self.sortButtons) do
         if sortColumn == button.sortColumn then
             if reverse ~= button.reverse then
@@ -477,57 +451,57 @@ function Browse:UpdateSortButtons()
 end
 
 function Browse:UpdateSelected()
-    self.BidButton:Show()
-    self.BuyoutButton:Show()
-    self.BidButton:Disable()
-    self.BuyoutButton:Disable()
+    -- self.BidButton:Show()
+    -- self.BuyoutButton:Show()
+    -- self.BidButton:Disable()
+    -- self.BuyoutButton:Disable()
 
-    local id = GetSelectedAuctionItem('list')
-    if id == 0 then
-        return
-    end
+    -- local id = GetSelectedAuctionItem('list')
+    -- if id == 0 then
+    --     return
+    -- end
 
-    local money = GetMoney()
-    local name, texture, count, quality, canUse, level, levelColHeader, minBid, minIncrement, buyoutPrice, bidAmount,
-          highBidder, bidderFullName, owner, ownerFullName, saleStatus, itemId, hasAllInfo = GetAuctionItemInfo('list',
-                                                                                                                id)
-    local ownerName = ownerFullName or owner
-    local isMine = UnitName('player') == ownerName
+    -- local money = GetMoney()
+    -- local name, texture, count, quality, canUse, level, levelColHeader, minBid, minIncrement, buyoutPrice, bidAmount,
+    --       highBidder, bidderFullName, owner, ownerFullName, saleStatus, itemId, hasAllInfo = GetAuctionItemInfo('list',
+    --                                                                                                             id)
+    -- local ownerName = ownerFullName or owner
+    -- local isMine = UnitName('player') == ownerName
 
-    if buyoutPrice > 0 and buyoutPrice >= minBid then
-        local canBuyout = 1
-        if money < buyoutPrice then
-            if not highBidder or money + bidAmount < buyoutPrice then
-                canBuyout = nil
-            end
-        end
-        if canBuyout and not isMine then
-            self.BuyoutButton:Enable()
-            AuctionFrame.buyoutPrice = buyoutPrice
-        end
-    else
-        AuctionFrame.buyoutPrice = nil
-    end
+    -- if buyoutPrice > 0 and buyoutPrice >= minBid then
+    --     local canBuyout = 1
+    --     if money < buyoutPrice then
+    --         if not highBidder or money + bidAmount < buyoutPrice then
+    --             canBuyout = nil
+    --         end
+    --     end
+    --     if canBuyout and not isMine then
+    --         self.BuyoutButton:Enable()
+    --         AuctionFrame.buyoutPrice = buyoutPrice
+    --     end
+    -- else
+    --     AuctionFrame.buyoutPrice = nil
+    -- end
 
-    local requiredBid
+    -- local requiredBid
 
-    if bidAmount == 0 then
-        requiredBid = minBid
-    else
-        requiredBid = bidAmount + minIncrement
-    end
+    -- if bidAmount == 0 then
+    --     requiredBid = minBid
+    -- else
+    --     requiredBid = bidAmount + minIncrement
+    -- end
 
-    ns.SetMoneyFrame(self.BidPrice, requiredBid)
+    -- ns.SetMoneyFrame(self.BidPrice, requiredBid)
 
-    if not highBidder and not isMine and money >= requiredBid and requiredBid <= MAXIMUM_BID_PRICE then
-        self.BidButton:Enable()
-    end
+    -- if not highBidder and not isMine and money >= requiredBid and requiredBid <= MAXIMUM_BID_PRICE then
+    --     self.BidButton:Enable()
+    -- end
 end
 
 function Browse:UpdateControls()
-    local shouldHide = self.isSearching or not self:IsOurSearch()
+    local shouldHide = self.Browse.isSearching or not self:IsOurSearch()
     if not shouldHide then
-        local page = self.page
+        local page = self.Browse.page
         local num, total = GetNumAuctionItems('list')
         if total > NUM_AUCTION_ITEMS_PER_PAGE and num <= NUM_AUCTION_ITEMS_PER_PAGE then
             self.PrevPageButton.isEnabled = page ~= 0
@@ -546,7 +520,7 @@ function Browse:UpdateControls()
 end
 
 function Browse:IsAtWowToken()
-    return AuctionFrame_DoesCategoryHaveFlag('WOW_TOKEN_FLAG', self.selectedCategoryIndex)
+    return AuctionFrame_DoesCategoryHaveFlag('WOW_TOKEN_FLAG', self.Browse.selectedCategoryIndex)
 end
 
 function Browse:IsOurSearch()
@@ -554,10 +528,20 @@ function Browse:IsOurSearch()
 end
 
 function Browse:RequestSearch()
-    self.isSearching = true
+    -- self.isSearching = true
     self:BuildSearchParams()
     self:UpdateItems()
     self.scaner:Query(self.searchParams)
+end
+
+function AuctionSecure()
+    print('AuctionFrameBrowse.page', issecurevariable(AuctionFrameBrowse, 'page'))
+    print('AuctionFrameBrowse.selectedCategoryIndex', issecurevariable(AuctionFrameBrowse, 'selectedCategoryIndex'))
+    print('AuctionFrameBrowse.selectedSubCategoryIndex',
+          issecurevariable(AuctionFrameBrowse, 'selectedSubCategoryIndex'))
+    print('AuctionFrameBrowse.selectedSubSubCategoryIndex',
+          issecurevariable(AuctionFrameBrowse, 'selectedSubSubCategoryIndex'))
+    print('AuctionFrameBrowse.qualityIndex', issecurevariable(AuctionFrameBrowse, 'qualityIndex'))
 end
 
 function Browse:BuildSearchParams()
@@ -569,6 +553,7 @@ function Browse:BuildSearchParams()
         usable = self.IsUsableCheckButton:GetChecked(),
         quality = self.qualityIndex,
         exact = self.ExactCheckButton:GetChecked(),
+        virtual = true,
     }
 
     if not ns.ParamsEqual(params, self.searchParams) then

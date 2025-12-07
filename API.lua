@@ -215,10 +215,15 @@ function ns.GetDisenchantPrice(equipLoc, quality, itemLevel)
     return total
 end
 
+function ns.GetAuctionSort()
+    local sortColumn, reverse = GetAuctionSort('list', 1)
+    return sortColumn, reverse
+end
+
 function ns.SetSort(column, order)
     SortAuctionClearSort('list')
 
-    for _, row in ipairs(AuctionSort['list_' .. column]) do
+    for _, row in ipairs(ns.AuctionSort['list_' .. column]) do
         local sort = row.column
         if order then
             SortAuctionSetSort('list', sort, not row.reverse)

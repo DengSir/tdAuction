@@ -13,10 +13,10 @@ local PickupContainerItem = PickupContainerItem or C_Container.PickupContainerIt
 local Sell = ns.Addon:NewClass('UI.Sell', 'Frame')
 
 function Sell:Constructor()
-    self.scaner = ns.PriceScaner:New()
-    self.scaner:SetCallback('OnDone', function()
-        self:OnItemPriceScanDone()
-    end)
+    -- self.scaner = ns.PriceScaner:New()
+    -- self.scaner:SetCallback('OnDone', function()
+    --     self:OnItemPriceScanDone()
+    -- end)
 
     self.validater = CreateFrame('Frame', nil, self)
     self.validater:Hide()
@@ -190,7 +190,7 @@ end
 
 function Sell:OnMultiSellDone()
     C_Timer.After(2, function()
-        GetOwnerAuctionItems()
+        -- GetOwnerAuctionItems()
     end)
 end
 
@@ -256,9 +256,11 @@ function Sell:OnSellItemUpdate()
         ns.SetMoneyFrame(self.StartPrice, 0)
         ns.SetMoneyFrame(self.BuyoutPrice, 0)
 
-        local link = ns.GetAuctionSellItemLink()
-        self.scaner:Query({text = link})
-        self.PriceReading:Show()
+        -- local link = ns.GetAuctionSellItemLink()
+        -- self.scaner:Query({text = link})
+        -- self.PriceReading:Show()
+
+        self:OnItemPriceScanDone()
     end
 
     self.DurationDropDown:Show()
@@ -269,12 +271,13 @@ function Sell:OnItemPriceScanDone()
 
     local link = ns.GetAuctionSellItemLink()
     if not link then
-        self.scaner:Cancel()
+        -- self.scaner:Cancel()
         return
     end
     local itemKey = ns.ParseItemKey(link)
     local price = ns.prices[itemKey]
-    local items = self.scaner:GetResponseItems()
+    -- local items = self.scaner:GetResponseItems()
+    local items
     local errText
 
     if not price then
@@ -287,7 +290,7 @@ function Sell:OnItemPriceScanDone()
             errText = L['No price']
         end
     else
-        if #items > 0 then
+        if items and #items > 0 then
             for i, item in ipairs(items) do
                 if not item.isMine then
                     price = item.price - 1
@@ -386,4 +389,17 @@ end
 function Sell:SetDuration(duration)
     self.duration = duration
     UpdateDeposit()
+end
+
+function _G.CleanBags()
+    for i = 0, 4 do
+        for j = 1, C_Container.GetContainerNumSlots(i) do
+            local id = C_Container.GetContainerItemID(i, j)
+            if id == 43658 then
+                C_Container.PickupContainerItem(i, j)
+                DeleteCursorItem()
+                break
+            end
+        end
+    end
 end
