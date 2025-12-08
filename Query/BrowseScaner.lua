@@ -18,6 +18,8 @@ local BrowseScaner = ns.Addon:NewClass('BrowseScaner', ns.Scaner)
 function BrowseScaner:Query(params)
     if not ns.ParamsEqual(params, self.params) then
         self.db = {}
+
+        print('reset db')
     end
     Scaner.Query(self, params)
 end
@@ -45,6 +47,7 @@ end
 
 function BrowseScaner:OnDone()
     if not self:IsCanSavePrice() then
+        print('cannot save price')
         return
     end
 
@@ -66,6 +69,8 @@ function BrowseScaner:OnDone()
         end
         page = page + 1
     end
+
+    print(self.db)
 
     self:SavePrices(db)
 end

@@ -16,26 +16,28 @@ local STATUS_PENDING = 1
 local STATUS_WAITRESP = 2
 local STATUS_RUNNING = 3
 
----@class Querier: AceAddon-3.0, AceEvent-3.0
+---@class Querier: AceModule, AceEvent-3.0
 local Querier = ns.Addon:NewModule('Querier', 'AceEvent-3.0')
+Querier:Disable()
 
 function Querier:OnInitialize()
-    self.updater = CreateFrame('Frame')
-    self.updater:Hide()
-    self.updater:SetScript('OnUpdate', function()
-        return self:OnIdle()
-    end)
-
     self.statusProcess = { --
         [STATUS_PENDING] = self.Pending,
         [STATUS_RUNNING] = self.Running,
     }
 
-    hooksecurefunc('QueryAuctionItems', function()
-        print('QueryAuctionItems called', debugstack())
-        if not self.ourQuery then
-            self:Cancel()
-        end
+    -- hooksecurefunc('QueryAuctionItems', function()
+    --     if not self.ourQuery then
+    --         self:Cancel()
+    --     end
+    -- end)
+end
+
+function Querier:OnEnable()
+    self.updater = CreateFrame('Frame')
+    self.updater:Hide()
+    self.updater:SetScript('OnUpdate', function()
+        return self:OnIdle()
     end)
 
     self:RegisterEvent('AUCTION_HOUSE_CLOSED')
@@ -71,6 +73,9 @@ function Querier:OnResponse()
         self.pageMax = floor(total / max(count, NUM_AUCTION_ITEMS_PER_PAGE))
     end
 
+    print('response', self.page, self.pageMax)
+
+    self.ourQuery = nil
     self.scaner:OnResponse()
     self.status = STATUS_RUNNING
     self:UnregisterEvent('AUCTION_ITEM_LIST_UPDATE')
@@ -87,6 +92,9 @@ function Querier:Query(params, scaner)
 end
 
 function Querier:CanQuery()
+    if self.params and self.params.virtual then
+        return true
+    end
     local canQuery, canQueryAll = CanSendAuctionQuery('list')
     if not canQuery then
         return false
@@ -133,6 +141,8 @@ function Querier:Pending()
     self:RegisterEvent('GET_ITEM_INFO_RECEIVED')
 
     self.scaner:PreQuery()
+
+    print('query', self.page, self.pageMax, params.text)
 
     self.ourQuery = true
     if params.virtual then

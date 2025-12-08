@@ -10,11 +10,12 @@
 ---@field BrowseScaner BrowseScaner
 ---@field FullScaner FullScaner
 ---@field PriceScaner PriceScaner
+---@field Helper Helper
 -- module
 ---@field Querier Querier
 local ns = select(2, ...)
 
----@class Addon: AceAddon-3.0, LibClass-2.0, AceEvent-3.0
+---@class Addon: AceAddon, LibClass-2.0, AceEvent-3.0
 local Addon = LibStub('AceAddon-3.0'):NewAddon('tdAuction', 'LibClass-2.0', 'AceEvent-3.0')
 
 local L = LibStub('AceLocale-3.0'):GetLocale('tdAuction')
@@ -376,4 +377,7 @@ function Addon:SetupUI()
     self.Features.OptionButton:SetScript('OnClick', function()
         self:OpenOptionFrame()
     end)
+
+    ns.Querier:Enable()
+    ns.Helper:Enable()
 end
