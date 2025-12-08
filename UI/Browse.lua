@@ -434,8 +434,6 @@ end
 function Browse:UpdateSortButtons()
     local sortColumn, reverse = ns.GetAuctionSort()
 
-    print(sortColumn, reverse, GetCVarBool('auctionSortByBuyoutPrice'), GetCVarBool('auctionSortByUnitPrice'))
-
     for i, button in ipairs(self.sortButtons) do
         if sortColumn == button.sortColumn then
             if reverse ~= button.reverse then
@@ -451,51 +449,51 @@ function Browse:UpdateSortButtons()
 end
 
 function Browse:UpdateSelected()
-    -- self.BidButton:Show()
-    -- self.BuyoutButton:Show()
-    -- self.BidButton:Disable()
-    -- self.BuyoutButton:Disable()
+    self.BidButton:Show()
+    self.BuyoutButton:Show()
+    self.BidButton:Disable()
+    self.BuyoutButton:Disable()
 
-    -- local id = GetSelectedAuctionItem('list')
-    -- if id == 0 then
-    --     return
-    -- end
+    local id = GetSelectedAuctionItem('list')
+    if id == 0 then
+        return
+    end
 
-    -- local money = GetMoney()
-    -- local name, texture, count, quality, canUse, level, levelColHeader, minBid, minIncrement, buyoutPrice, bidAmount,
-    --       highBidder, bidderFullName, owner, ownerFullName, saleStatus, itemId, hasAllInfo = GetAuctionItemInfo('list',
-    --                                                                                                             id)
-    -- local ownerName = ownerFullName or owner
-    -- local isMine = UnitName('player') == ownerName
+    local money = GetMoney()
+    local name, texture, count, quality, canUse, level, levelColHeader, minBid, minIncrement, buyoutPrice, bidAmount,
+          highBidder, bidderFullName, owner, ownerFullName, saleStatus, itemId, hasAllInfo = GetAuctionItemInfo('list',
+                                                                                                                id)
+    local ownerName = ownerFullName or owner
+    local isMine = UnitName('player') == ownerName
 
-    -- if buyoutPrice > 0 and buyoutPrice >= minBid then
-    --     local canBuyout = 1
-    --     if money < buyoutPrice then
-    --         if not highBidder or money + bidAmount < buyoutPrice then
-    --             canBuyout = nil
-    --         end
-    --     end
-    --     if canBuyout and not isMine then
-    --         self.BuyoutButton:Enable()
-    --         AuctionFrame.buyoutPrice = buyoutPrice
-    --     end
-    -- else
-    --     AuctionFrame.buyoutPrice = nil
-    -- end
+    if buyoutPrice > 0 and buyoutPrice >= minBid then
+        local canBuyout = 1
+        if money < buyoutPrice then
+            if not highBidder or money + bidAmount < buyoutPrice then
+                canBuyout = nil
+            end
+        end
+        if canBuyout and not isMine then
+            self.BuyoutButton:Enable()
+            AuctionFrame.buyoutPrice = buyoutPrice
+        end
+    else
+        AuctionFrame.buyoutPrice = nil
+    end
 
-    -- local requiredBid
+    local requiredBid
 
-    -- if bidAmount == 0 then
-    --     requiredBid = minBid
-    -- else
-    --     requiredBid = bidAmount + minIncrement
-    -- end
+    if bidAmount == 0 then
+        requiredBid = minBid
+    else
+        requiredBid = bidAmount + minIncrement
+    end
 
-    -- ns.SetMoneyFrame(self.BidPrice, requiredBid)
+    ns.SetMoneyFrame(self.BidPrice, requiredBid)
 
-    -- if not highBidder and not isMine and money >= requiredBid and requiredBid <= MAXIMUM_BID_PRICE then
-    --     self.BidButton:Enable()
-    -- end
+    if not highBidder and not isMine and money >= requiredBid and requiredBid <= MAXIMUM_BID_PRICE then
+        self.BidButton:Enable()
+    end
 end
 
 function Browse:UpdateControls()
