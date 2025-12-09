@@ -19,7 +19,7 @@ function Helper:OnEnable()
 
     self:HookScript(BrowseName, 'OnEditFocusGained', 'OnBrowsePreClick')
     self:HookScript(BrowseName, 'OnEditFocusLost', function()
-        C_Timer.After(10, function()
+        C_Timer.After(0.01, function()
             if not BrowseName:HasFocus() then
                 self.ourQuery = nil
             end
@@ -40,11 +40,15 @@ function Helper:OnBrowsePreClick(...)
 end
 
 function Helper:ChatEdit_InsertLink(link)
+
+    print(debugstack(3))
+
     if not BrowseName or not BrowseName:IsVisible() then
         return
     end
 
-    local text = BrowseName:GetText()
+    -- local text = BrowseName:GetText()
+    local text = self.text
     local name = C_Item.GetItemInfo(link)
     if not name then
         return
