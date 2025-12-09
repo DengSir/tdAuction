@@ -10,7 +10,7 @@
 ---@field BrowseScaner BrowseScaner
 ---@field FullScaner FullScaner
 ---@field PriceScaner PriceScaner
----@field Helper Helper
+---@field Secure Secure
 -- module
 ---@field Querier Querier
 local ns = select(2, ...)
@@ -350,6 +350,12 @@ function Addon:SetupUI()
 
     self.Features:SetScript('OnShow', function()
         self.Features.FullScanButton:SetEnabled(ns.IsValidNpc())
+        print(BrowseSearchButton)
+        ns.Secure:Enable()
+    end)
+
+    self.Features:SetScript('OnHide', function()
+        ns.Secure:Disable()
     end)
 
     self.Features.FullScanButton:SetScript('OnEnter', function(button)
@@ -378,6 +384,11 @@ function Addon:SetupUI()
         self:OpenOptionFrame()
     end)
 
-    ns.Querier:Enable()
-    ns.Helper:Enable()
+    -- local event = CreateFrame('Frame', nil, AuctionFrame)
+    -- event:SetScript('OnShow', function()
+    --     ns.Secure:Enable()
+    -- end)
+    -- event:SetScript('OnHide', function()
+    --     ns.Secure:Disable()
+    -- end)
 end

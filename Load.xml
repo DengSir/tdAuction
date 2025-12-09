@@ -21,8 +21,7 @@
     <Script file="UI\Tooltip.lua" />
     <Script file="UI\SellOutput.lua" />
     <Script file="UI\Option.lua" />
-    <Script file="UI\Helper.lua" />
     <Script file="UI\ElvUI.lua" />
 
-    <Script file="Secure\Sell.lua" />
+    <Script file="Secure\Secure.lua" />
 </Ui>

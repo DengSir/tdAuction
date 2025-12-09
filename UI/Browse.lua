@@ -28,6 +28,8 @@ function Browse:Constructor(parent)
         self:UpdateAll()
     end)
 
+    ns.Secure:SetupScaner(1, self.scaner)
+
     self.Browse = parent
     self:LayoutBlizzard()
     self:SetupSortButtons()
@@ -60,8 +62,6 @@ function Browse:LayoutBlizzard()
     self.NoResultsText = self.BuyFrame.NoResultsText
     self.SortButtonFrame = self.BuyFrame.SortButtonFrame
     self.ExactCheckButton = self.BuyFrame.ExactCheckButton
-
-    ns.Helper:SetupScaner(self.scaner)
 
     -- self.ExactCheckButton:SetScript('OnClick', function()
     --     ns.profile.buy.exact = self.ExactCheckButton:GetChecked() or nil
@@ -367,8 +367,8 @@ function Browse:UpdateItems()
     local page = self.Browse.page or 0
     local pageStart = NUM_AUCTION_ITEMS_PER_PAGE * page
 
-    -- local ourSearch = self:IsOurSearch()
-    local ourSearch = true
+    local ourSearch = self:IsOurSearch()
+    -- local ourSearch = true
     local shouldHide = self.Browse.isSearching or not ourSearch
     local num, total, hasScrollBar, buttonWidth
     local totalHeight = 0

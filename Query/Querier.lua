@@ -18,7 +18,6 @@ local STATUS_RUNNING = 3
 
 ---@class Querier: AceModule, AceEvent-3.0
 local Querier = ns.Addon:NewModule('Querier', 'AceEvent-3.0')
-Querier:Disable()
 
 function Querier:OnInitialize()
     self.statusProcess = { --

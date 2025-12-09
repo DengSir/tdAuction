@@ -13,10 +13,12 @@ local PickupContainerItem = PickupContainerItem or C_Container.PickupContainerIt
 local Sell = ns.Addon:NewClass('UI.Sell', 'Frame')
 
 function Sell:Constructor()
-    -- self.scaner = ns.PriceScaner:New()
-    -- self.scaner:SetCallback('OnDone', function()
-    --     self:OnItemPriceScanDone()
-    -- end)
+    self.scaner = ns.PriceScaner:New()
+    self.scaner:SetCallback('OnDone', function()
+        self:OnItemPriceScanDone()
+    end)
+
+    ns.Secure:SetupScaner(2, self.scaner)
 
     self.validater = CreateFrame('Frame', nil, self)
     self.validater:Hide()
@@ -258,9 +260,9 @@ function Sell:OnSellItemUpdate()
 
         -- local link = ns.GetAuctionSellItemLink()
         -- self.scaner:Query({text = link})
-        -- self.PriceReading:Show()
+        self.PriceReading:Show()
 
-        self:OnItemPriceScanDone()
+        -- self:OnItemPriceScanDone()
     end
 
     self.DurationDropDown:Show()
@@ -276,8 +278,8 @@ function Sell:OnItemPriceScanDone()
     end
     local itemKey = ns.ParseItemKey(link)
     local price = ns.prices[itemKey]
-    -- local items = self.scaner:GetResponseItems()
-    local items
+    local items = self.scaner:GetResponseItems()
+    -- local items
     local errText
 
     if not price then
