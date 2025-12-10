@@ -12,7 +12,7 @@ local SELL_TEMPLATE = [[
 /click AuctionFrameTab1
 /click BrowseResetButton
 /click %s
-/click BrowseSearchButton
+/click BrowseSearchButton ForSell
 /click AuctionFrameTab3
 ]]
 
@@ -25,96 +25,30 @@ local SEARCH_TEMPLATE = [[
 local Secure = ns.Addon:NewModule('Secure', 'AceHook-3.0', 'AceEvent-3.0')
 Secure:Disable()
 
-function Secure:OnInitialize()
-    self.scaners = {}
-end
-
 function Secure:OnEnable()
-    self:SecureHook('QueryAuctionItems')
-
     self:SecureHook('ContainerFrameItemButton_OnEnter')
     self:RegisterEvent('MODIFIER_STATE_CHANGED')
-
-    self:SecureHook('ChatEdit_InsertLink')
 
     self:HookScript(BrowseSearchButton, 'PreClick', 'OnBrowsePreClick')
     self:HookScript(BrowsePrevPageButton, 'PreClick', 'OnBrowsePreClick')
     self:HookScript(BrowseNextPageButton, 'PreClick', 'OnBrowsePreClick')
 
     self:HookScript(BrowseName, 'OnEditFocusGained', 'OnBrowsePreClick')
-    self:HookScript(BrowseName, 'OnEditFocusLost', function()
-        C_Timer.After(0.01, function()
-            if not BrowseName:HasFocus() then
-                self.ourQuery = nil
-            end
-        end)
-    end)
-
-    self:HookScript(BrowseName, 'OnTextChanged', function(edit, userInput)
-        if userInput or edit:GetText() == '' then
-            self.lastLink = nil
-        end
-    end)
-
+    -- self:HookScript(BrowseName, 'OnEditFocusLost', function()
+    --     C_Timer.After(0.01, function()
+    --         if not BrowseName:HasFocus() then
+    --             self.ourQuery = nil
+    --         end
+    --     end)
+    -- end)
 end
 
-function Secure:SetupScaner(mode, scaner)
-    self.scaners[mode] = scaner
-end
-
-function Secure:OnBrowsePreClick()
-    if not self.scaner then
-        self.scaner = self.scaners[MODE_BROWSE]
-    end
-end
-
-function Secure:ChatEdit_InsertLink(link)
-    print(debugstack(3))
-
-    if not BrowseName:IsVisible() then
-        return
-    end
-
-    local text = BrowseName:GetText()
-    local name = C_Item.GetItemInfo(link)
-    if not name then
-        return
-    end
-
-    if text ~= '"' .. name .. '"' then
-        return
-    end
-
-    self.lastLink = link
-end
-
-function Secure:QueryAuctionItems(text, minLevel, maxLevel, page, usable, quality, queryAll, exactMatch, filters)
-    if queryAll then
-        return
-    end
-
-    local link = self.lastLink
-    if not link then
-        return
-    end
-
-    local params = {
-        text = link,
-        minLevel = minLevel,
-        maxLevel = maxLevel,
-        page = page,
-        usable = usable,
-        quality = quality,
-        queryAll = queryAll,
-        exact = exactMatch,
-        filters = filters,
-        virtual = true,
-    }
-
-    print(params)
-
-    if self.scaner then
-        self.scaner:Query(params)
+function Secure:OnBrowsePreClick(_, which)
+    print(which)
+    if which == 'ForSell' then
+        self:SendMessage('TDAUCTION_QUERY_FOR_SELL')
+    else
+        self:SendMessage('TDAUCTION_QUERY_BROWSE')
     end
 end
 
@@ -137,15 +71,15 @@ function Secure:CreateOverlay()
     local overlay = CreateFrame('Button', nil, UIParent, 'SecureActionButtonTemplate')
     overlay:SetAttribute('type', 'macro')
     overlay:SetScript('OnLeave', overlay.Hide)
-    overlay:SetScript('PreClick', function(overlay)
-        if overlay.mode == MODE_BROWSE then
-            self.scaner = self.scaners[MODE_BROWSE]
-        elseif overlay.mode == MODE_SELL then
-            self.scaner = self.scaners[MODE_SELL]
-        else
-            self.scaner = nil
-        end
-    end)
+    -- overlay:SetScript('PreClick', function(overlay)
+    --     if overlay.mode == MODE_BROWSE then
+    --         self.scaner = self.scaners[MODE_BROWSE]
+    --     elseif overlay.mode == MODE_SELL then
+    --         self.scaner = self.scaners[MODE_SELL]
+    --     else
+    --         self.scaner = nil
+    --     end
+    -- end)
     overlay:SetScript('PostClick', function(overlay)
         if overlay.mode == MODE_SELL then
             C_Container.PickupContainerItem(overlay.bag, overlay.slot)

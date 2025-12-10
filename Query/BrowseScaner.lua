@@ -15,20 +15,13 @@ local Scaner = ns.Scaner
 ---@class BrowseScaner: Scaner
 local BrowseScaner = ns.Addon:NewClass('BrowseScaner', ns.Scaner)
 
-function BrowseScaner:Query(params)
-    if not ns.ParamsEqual(params, self.params) then
-        self.db = {}
-
-        print('reset db')
-    end
-    Scaner.Query(self, params)
-end
-
 function BrowseScaner:GetDB()
     return self:IsCanSavePrice() and self.db[self.params.page]
 end
 
 function BrowseScaner:OnResponse()
+    self.lastParams = self.params
+
     Scaner.OnResponse(self)
 
     if self:IsCanSavePrice() then
@@ -43,6 +36,15 @@ end
 function BrowseScaner:IsCanSavePrice()
     local sortType, sortRev = GetAuctionSort('list', 1)
     return sortType == 'unitprice' and not sortRev
+end
+
+function BrowseScaner:OnParams()
+    if not ns.ParamsEqual(self.params, self.lastParams) then
+        self.db = {}
+        self.lastParams = self.params
+
+        print('reset db')
+    end
 end
 
 function BrowseScaner:OnDone()

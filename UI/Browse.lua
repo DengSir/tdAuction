@@ -22,13 +22,13 @@ local FRAME_WIDTH_NOSCROLL = BUTTON_WIDTH_NOSCROLL + 4
 ---@class UI.Browse: Object, Frame
 local Browse = ns.Addon:NewClass('UI.Browse', 'Frame')
 
+Browse.RegisterMessage = LibStub('AceEvent-3.0').RegisterMessage
+
 function Browse:Constructor(parent)
     self.scaner = ns.BrowseScaner:New()
     self.scaner:SetCallback('OnDone', function()
         self:UpdateAll()
     end)
-
-    ns.Secure:SetupScaner(1, self.scaner)
 
     self.Browse = parent
     self:LayoutBlizzard()
@@ -346,6 +346,10 @@ function Browse:SetupEventsAndHooks()
     self.Browse:HookScript('OnShow', function()
         self:RestoreSorts()
         self:UpdateAll()
+    end)
+
+    self:RegisterMessage('TDAUCTION_QUERY_BROWSE', function()
+        self.scaner:Query({virtual = true})
     end)
 
     self:PatchVisible('UpdateItems')

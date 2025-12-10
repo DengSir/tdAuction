@@ -23,5 +23,6 @@
     <Script file="UI\Option.lua" />
     <Script file="UI\ElvUI.lua" />
 
+    <Script file="Secure\LastLink.lua" />
     <Script file="Secure\Secure.lua" />
 </Ui>

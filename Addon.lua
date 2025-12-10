@@ -11,6 +11,7 @@
 ---@field FullScaner FullScaner
 ---@field PriceScaner PriceScaner
 ---@field Secure Secure
+---@field LastLink LastLink
 -- module
 ---@field Querier Querier
 local ns = select(2, ...)

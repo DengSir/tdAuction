@@ -12,13 +12,13 @@ local PickupContainerItem = PickupContainerItem or C_Container.PickupContainerIt
 
 local Sell = ns.Addon:NewClass('UI.Sell', 'Frame')
 
+Sell.RegisterMessage = LibStub('AceEvent-3.0').RegisterMessage
+
 function Sell:Constructor()
     self.scaner = ns.PriceScaner:New()
     self.scaner:SetCallback('OnDone', function()
         self:OnItemPriceScanDone()
     end)
-
-    ns.Secure:SetupScaner(2, self.scaner)
 
     self.validater = CreateFrame('Frame', nil, self)
     self.validater:Hide()
@@ -188,6 +188,10 @@ function Sell:SetupEventsAndHooks()
     end)
 
     self:HookScript('OnShow', self.OnSellItemUpdate)
+
+    self:RegisterMessage('TDAUCTION_QUERY_FOR_SELL', function()
+        self.scaner:Query({virtual = true})
+    end)
 end
 
 function Sell:OnMultiSellDone()
