@@ -20,10 +20,9 @@ local Scaner = ns.Scaner
 ---@class PriceScaner: Scaner
 local PriceScaner = ns.Addon:NewClass('PriceScaner', Scaner)
 
-function PriceScaner:Query(params)
-    self.link = params.text
+function PriceScaner:OnParams()
+    self.link = self.params.text
     self.itemKey = ns.ParseItemKey(self.link)
-    Scaner.Query(self, params)
 end
 
 function PriceScaner:Next()

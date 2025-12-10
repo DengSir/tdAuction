@@ -315,6 +315,8 @@ function Browse:ApplyItem(frame)
 end
 
 function Browse:SetupEventsAndHooks()
+    AuctionFrameBrowse_Update = nop
+
     hooksecurefunc('BrowseWowTokenResults_Update', function()
         self.BuyFrame:SetShown(not self:IsAtWowToken())
     end)
@@ -480,7 +482,7 @@ end
 function Browse:UpdateControls()
     local shouldHide = self.Browse.isSearching or not self:IsOurSearch()
     if not shouldHide then
-        local page = self.Browse.page
+        local page = self.Browse.page or 0
         local num, total = GetNumAuctionItems('list')
         if total > NUM_AUCTION_ITEMS_PER_PAGE and num <= NUM_AUCTION_ITEMS_PER_PAGE then
             self.PrevPageButton.isEnabled = page ~= 0

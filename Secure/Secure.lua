@@ -43,6 +43,12 @@ function Secure:OnEnable()
     -- end)
 end
 
+function Secure:OnDisable()
+    if self.Overlay then
+        self.Overlay:Hide()
+    end
+end
+
 function Secure:OnBrowsePreClick(_, which)
     print(which)
     if which == 'ForSell' then
@@ -54,12 +60,10 @@ end
 
 function Secure:MODIFIER_STATE_CHANGED()
     local mode = self:GetCurrentMode()
-    print(mode)
     if not mode then
         return
     end
     for _, v in ipairs(GetMouseFoci()) do
-        print(v, self:IsSecureButton(v))
         if self:IsSecureButton(v) then
             self:ContainerFrameItemButton_OnEnter(v)
             return
@@ -71,15 +75,11 @@ function Secure:CreateOverlay()
     local overlay = CreateFrame('Button', nil, UIParent, 'SecureActionButtonTemplate')
     overlay:SetAttribute('type', 'macro')
     overlay:SetScript('OnLeave', overlay.Hide)
-    -- overlay:SetScript('PreClick', function(overlay)
-    --     if overlay.mode == MODE_BROWSE then
-    --         self.scaner = self.scaners[MODE_BROWSE]
-    --     elseif overlay.mode == MODE_SELL then
-    --         self.scaner = self.scaners[MODE_SELL]
-    --     else
-    --         self.scaner = nil
-    --     end
-    -- end)
+    overlay:SetScript('PreClick', function(overlay)
+        if overlay.mode == MODE_SELL then
+            AuctionFrameBrowse.page = nil
+        end
+    end)
     overlay:SetScript('PostClick', function(overlay)
         if overlay.mode == MODE_SELL then
             C_Container.PickupContainerItem(overlay.bag, overlay.slot)
@@ -103,8 +103,6 @@ function Secure:SetupOverlay(button, bag, slot, mode)
     overlay.bag = bag
     overlay.slot = slot
     overlay.mode = mode
-
-    print('SetupOverlay', button:GetName(), bag, slot, mode)
 end
 
 function Secure:GenerateMacro(button, mode)
@@ -116,10 +114,12 @@ function Secure:GenerateMacro(button, mode)
 end
 
 function Secure:ContainerFrameItemButton_OnEnter(button)
-    print(button)
     local mode = self:GetCurrentMode()
-    print(mode)
     if not mode then
+        return
+    end
+
+    if not IsModifiedClick('CHATLINK') then
         return
     end
 
@@ -130,8 +130,11 @@ function Secure:ContainerFrameItemButton_OnEnter(button)
     local slot = button:GetID()
     local bag = button:GetParent():GetID()
     local itemLink = C_Container.GetContainerItemLink(bag, slot)
-    print(bag, slot, itemLink)
     if not itemLink then
+        return
+    end
+    local info = C_Container.GetContainerItemInfo(bag, slot)
+    if info.isBound or info.isLocked then
         return
     end
 

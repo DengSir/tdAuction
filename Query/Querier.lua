@@ -30,7 +30,6 @@ function Querier:OnInitialize()
     self.updater:SetScript('OnUpdate', function()
         return self:OnIdle()
     end)
-
 end
 
 function Querier:OnEnable()
@@ -100,7 +99,7 @@ function Querier:OnResponse()
         self.pageMax = floor(total / max(count, NUM_AUCTION_ITEMS_PER_PAGE))
     end
 
-    print('response', self.page, self.pageMax)
+    print('response', self.page, self.pageMax, self.scaner)
 
     self.ourQuery = nil
     self.scaner:OnResponse()

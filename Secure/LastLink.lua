@@ -12,13 +12,14 @@ LastLink:Disable()
 
 function LastLink:OnEnable()
     self:SecureHook('ChatEdit_InsertLink')
-    self:RegisterEvent('AUCTION_HOUSE_CLOSED')
 
+    self:SecureHook(BrowseName, 'SetText', 'BrowseNameSetText')
     self:HookScript(BrowseName, 'OnTextChanged', 'BrowseNameOnTextChanged')
 end
 
-function LastLink:AUCTION_HOUSE_CLOSED()
+function LastLink:OnDisable()
     self.lastLink = nil
+    self.lastEdit = nil
 end
 
 function LastLink:GetLastLink()
@@ -46,9 +47,14 @@ function LastLink:ChatEdit_InsertLink(link)
     self.lastLink = link
 end
 
+function LastLink:BrowseNameSetText(edit, text)
+    self.lastEdit = GetTime()
+end
+
 function LastLink:BrowseNameOnTextChanged(edit, text, userInput)
+    self.lastEdit = GetTime()
+
     if userInput or text == '' then
         self.lastLink = nil
     end
-    self.lastEdit = GetTime()
 end

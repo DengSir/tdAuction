@@ -277,7 +277,7 @@ function Sell:OnItemPriceScanDone()
 
     local link = ns.GetAuctionSellItemLink()
     if not link then
-        -- self.scaner:Cancel()
+        self.scaner:Cancel()
         return
     end
     local itemKey = ns.ParseItemKey(link)

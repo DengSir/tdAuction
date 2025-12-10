@@ -353,9 +353,11 @@ function Addon:SetupUI()
         self.Features.FullScanButton:SetEnabled(ns.IsValidNpc())
         print(BrowseSearchButton)
         ns.Secure:Enable()
+        ns.LastLink:Enable()
     end)
 
     self.Features:SetScript('OnHide', function()
+        ns.Secure:Disable()
         ns.Secure:Disable()
     end)
 
