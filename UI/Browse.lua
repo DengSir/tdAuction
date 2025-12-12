@@ -508,16 +508,6 @@ function Browse:IsOurSearch()
     return self.scaner == ns.Querier.scaner
 end
 
-function AuctionSecure()
-    print('AuctionFrameBrowse.page', issecurevariable(AuctionFrameBrowse, 'page'))
-    print('AuctionFrameBrowse.selectedCategoryIndex', issecurevariable(AuctionFrameBrowse, 'selectedCategoryIndex'))
-    print('AuctionFrameBrowse.selectedSubCategoryIndex',
-          issecurevariable(AuctionFrameBrowse, 'selectedSubCategoryIndex'))
-    print('AuctionFrameBrowse.selectedSubSubCategoryIndex',
-          issecurevariable(AuctionFrameBrowse, 'selectedSubSubCategoryIndex'))
-    print('AuctionFrameBrowse.qualityIndex', issecurevariable(AuctionFrameBrowse, 'qualityIndex'))
-end
-
 function Browse:BuildSearchParams()
     local params = {
         text = self.Name:GetText(),

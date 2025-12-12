@@ -37,24 +37,23 @@ function Querier:OnEnable()
     self:SecureHook('QueryAuctionItems')
 end
 
+function Querier:OnDisable()
+    self:Cancel()
+end
+
 function Querier:QueryAuctionItems(text, minLevel, maxLevel, page, usable, quality, queryAll, exactMatch, filters)
     if not self.ourQuery then
-        print('not our query')
         self:Cancel()
         return
     end
 
     if not self.params then
-        print('no params')
         return
     end
 
     if not self.params.virtual then
-        print('not virtual')
         return
     end
-
-    print('our query', page)
 
     self.params.text = ns.LastLink:GetLastLink() or text
     self.params.minLevel = minLevel
@@ -98,8 +97,6 @@ function Querier:OnResponse()
     else
         self.pageMax = floor(total / max(count, NUM_AUCTION_ITEMS_PER_PAGE))
     end
-
-    print('response', self.page, self.pageMax, self.scaner)
 
     self.ourQuery = nil
     self.scaner:OnResponse()

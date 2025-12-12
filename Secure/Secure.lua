@@ -5,8 +5,11 @@
 ---@type ns
 local ns = select(2, ...)
 
+local L = ns.L
+
 local MODE_BROWSE = 1
 local MODE_SELL = 2
+local MODE_LOCKED = 3
 
 local SELL_TEMPLATE = [[
 /click AuctionFrameTab1
@@ -25,6 +28,23 @@ local SEARCH_TEMPLATE = [[
 local Secure = ns.Addon:NewModule('Secure', 'AceHook-3.0', 'AceEvent-3.0')
 Secure:Disable()
 
+local IsAddOnSecure = ns.memorize(function(addon)
+    local _, _, _, _, reason, security = C_AddOns.GetAddOnInfo(addon)
+    if reason ~= 'MISSING' and security == 'INSECURE' and C_AddOns.IsAddOnLoaded(addon) then
+        return false
+    end
+    return true
+end)
+
+local function IsSecureStack(stack)
+    for p in stack:gmatch('AddOns/([^/\\]+)') do
+        if not IsAddOnSecure(p) then
+            return false
+        end
+    end
+    return true
+end
+
 function Secure:OnEnable()
     self:SecureHook('ContainerFrameItemButton_OnEnter')
     self:RegisterEvent('MODIFIER_STATE_CHANGED')
@@ -34,13 +54,6 @@ function Secure:OnEnable()
     self:HookScript(BrowseNextPageButton, 'PreClick', 'OnBrowsePreClick')
 
     self:HookScript(BrowseName, 'OnEditFocusGained', 'OnBrowsePreClick')
-    -- self:HookScript(BrowseName, 'OnEditFocusLost', function()
-    --     C_Timer.After(0.01, function()
-    --         if not BrowseName:HasFocus() then
-    --             self.ourQuery = nil
-    --         end
-    --     end)
-    -- end)
 end
 
 function Secure:OnDisable()
@@ -50,7 +63,6 @@ function Secure:OnDisable()
 end
 
 function Secure:OnBrowsePreClick(_, which)
-    print(which)
     if which == 'ForSell' then
         self:SendMessage('TDAUCTION_QUERY_FOR_SELL')
     else
@@ -78,6 +90,9 @@ function Secure:CreateOverlay()
     overlay:SetScript('PreClick', function(overlay)
         if overlay.mode == MODE_SELL then
             AuctionFrameBrowse.page = nil
+        elseif overlay.mode == MODE_LOCKED then
+            UIErrorsFrame:AddMessage(L['Cannot perform this action while the search is locked.'],
+                                     RED_FONT_COLOR:GetRGB())
         end
     end)
     overlay:SetScript('PostClick', function(overlay)
@@ -110,6 +125,8 @@ function Secure:GenerateMacro(button, mode)
         return format(SEARCH_TEMPLATE, button:GetName())
     elseif mode == MODE_SELL then
         return format(SELL_TEMPLATE, button:GetName())
+    else
+        return ''
     end
 end
 
@@ -156,9 +173,14 @@ function Secure:IsSecureButton(button)
 end
 
 function Secure:GetCurrentMode()
-    if AuctionFrameBrowse:IsVisible() then
+    if not AuctionFrame:IsVisible() then
+        return
+    end
+    if not CanSendAuctionQuery('list') then
+        return MODE_LOCKED
+    elseif AuctionFrameBrowse:IsVisible() then
         return MODE_BROWSE
-    elseif AuctionFrameAuctions:IsVisible() then
+    elseif AuctionFrameAuctions:IsVisible() and ns.profile.sell.shiftSell then
         return MODE_SELL
     end
 end

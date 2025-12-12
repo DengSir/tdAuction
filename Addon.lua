@@ -53,7 +53,7 @@ local DEFAULT_PROFILE = { --
         durationNoDeposit = false,
         autoOpenPriceList = true,
         scanFull = false,
-        altSell = true,
+        shiftSell = true,
         bidRatio = 0.95,
         merchantRatio = 5,
     },
@@ -180,131 +180,12 @@ function Addon:SetupBlizzardUI()
 end
 
 function Addon:OnAuctionLoaded()
-    -- self:FixFilter()
     self:SetupSort()
     self:SetupBackground()
     self:SetupUI()
 end
 
-function Addon:FixFilter()
-    local categories = {
-        -- [AUCTION_CATEGORY_WEAPONS] = Enum.ItemClass.Weapon,
-        -- [AUCTION_CATEGORY_ARMOR] = Enum.ItemClass.Armor,
-        [AUCTION_CATEGORY_CONTAINERS] = Enum.ItemClass.Container,
-        -- [AUCTION_CATEGORY_CONSUMABLES] = Enum.ItemClass.Consumable,
-        -- [AUCTION_CATEGORY_GLYPHS] = Enum.ItemClass.Glyph,
-        [AUCTION_CATEGORY_TRADE_GOODS] = Enum.ItemClass.Tradegoods,
-        -- [AUCTION_CATEGORY_PROJECTILE] = Enum.ItemClass.Projectile,
-        -- [AUCTION_CATEGORY_QUIVER] = Enum.ItemClass.Quiver,
-        [AUCTION_CATEGORY_RECIPES] = Enum.ItemClass.Recipe,
-        -- [AUCTION_CATEGORY_REAGENT] = Enum.ItemClass.Reagent,
-        -- [AUCTION_CATEGORY_GEMS] = Enum.ItemClass.Gem,
-        -- [AUCTION_CATEGORY_MISCELLANEOUS] = Enum.ItemClass.Miscellaneous,
-        -- [AUCTION_CATEGORY_QUEST_ITEMS] = Enum.ItemClass.Questitem,
-    }
-
-    for _, obj in pairs(AuctionCategories) do
-        if not obj.filters or not obj.filters[1] or not obj.filters[1].subClassID then
-            local classId = categories[obj.name]
-            if classId then
-                obj.filters = nil
-                -- @debug@
-                print('FixFilter', obj.name, classId)
-                -- @end-debug@
-                local subClassId = 0
-                while true do
-                    local name = GetItemSubClassInfo(classId, subClassId)
-                    if not name then
-                        break
-                    end
-                    obj:CreateSubCategoryAndFilter(classId, subClassId)
-                    subClassId = subClassId + 1
-                end
-            end
-        end
-    end
-end
-
-ns.AuctionSort = {}
-local AuctionSort = ns.AuctionSort
 function Addon:SetupSort()
-    AuctionSort['list_level'] = {
-        {column = 'duration', reverse = true},
-        {column = 'unitprice', reverse = false},
-        {column = 'quantity', reverse = false},
-        {column = 'minbidbuyout', reverse = true},
-        {column = 'name', reverse = true},
-        {column = 'quality', reverse = true},
-        {column = 'level', reverse = false},
-    }
-
-    AuctionSort['list_duration'] = {
-        {column = 'unitprice', reverse = false},
-        {column = 'quantity', reverse = true},
-        {column = 'minbidbuyout', reverse = false},
-        {column = 'name', reverse = false},
-        {column = 'level', reverse = true},
-        {column = 'quality', reverse = false},
-        {column = 'duration', reverse = false},
-    }
-
-    AuctionSort['list_seller'] = {
-        {column = 'duration', reverse = false},
-        {column = 'unitprice', reverse = false},
-        {column = 'quantity', reverse = true},
-        {column = 'minbidbuyout', reverse = false},
-        {column = 'name', reverse = false},
-        {column = 'level', reverse = true},
-        {column = 'quality', reverse = false},
-        {column = 'seller', reverse = false},
-    }
-
-    AuctionSort['list_quality'] = {
-        {column = 'duration', reverse = false},
-        {column = 'unitprice', reverse = false},
-        {column = 'quantity', reverse = true},
-        {column = 'minbidbuyout', reverse = false},
-        {column = 'name', reverse = false},
-        {column = 'level', reverse = true},
-        {column = 'quality', reverse = false},
-    }
-
-    AuctionSort['list_unitprice'] = {
-        {column = 'duration', reverse = false},
-        {column = 'quantity', reverse = true},
-        {column = 'name', reverse = false},
-        {column = 'level', reverse = true},
-        {column = 'quality', reverse = false},
-        {column = 'unitprice', reverse = false},
-    }
-
-    AuctionSort['list_unitbid'] = {
-        {column = 'duration', reverse = false},
-        {column = 'quantity', reverse = true},
-        {column = 'name', reverse = false},
-        {column = 'level', reverse = true},
-        {column = 'quality', reverse = false},
-        {column = 'unitbid', reverse = false},
-    }
-
-    AuctionSort['list_buyout'] = {
-        {column = 'duration', reverse = false},
-        {column = 'quantity', reverse = true},
-        {column = 'name', reverse = false},
-        {column = 'level', reverse = true},
-        {column = 'quality', reverse = false},
-        {column = 'buyout', reverse = false},
-    }
-
-    AuctionSort['list_bid'] = {
-        {column = 'duration', reverse = false},
-        {column = 'quantity', reverse = true},
-        {column = 'name', reverse = false},
-        {column = 'level', reverse = true},
-        {column = 'quality', reverse = false},
-        {column = 'bid', reverse = false},
-    }
-
     ns.SetSort('unitprice')
 end
 
@@ -351,7 +232,6 @@ function Addon:SetupUI()
 
     self.Features:SetScript('OnShow', function()
         self.Features.FullScanButton:SetEnabled(ns.IsValidNpc())
-        print(BrowseSearchButton)
         ns.Secure:Enable()
         ns.LastLink:Enable()
     end)
@@ -386,12 +266,4 @@ function Addon:SetupUI()
     self.Features.OptionButton:SetScript('OnClick', function()
         self:OpenOptionFrame()
     end)
-
-    -- local event = CreateFrame('Frame', nil, AuctionFrame)
-    -- event:SetScript('OnShow', function()
-    --     ns.Secure:Enable()
-    -- end)
-    -- event:SetScript('OnHide', function()
-    --     ns.Secure:Disable()
-    -- end)
 end

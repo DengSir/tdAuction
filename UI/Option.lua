@@ -151,7 +151,7 @@ function Addon:SetupOptionFrame()
                 quickBuy = toggle(L['Enable ALT-CTRL click to buyout']),
             },
             sell = treeItem(AUCTIONS) {
-                altSell = toggle(L['Enable ALT to sell']),
+                shiftSell = toggle(L['Enable SHIFT to sell']),
                 autoOpenPriceList = toggle(L['Auto open price list']),
                 scanFull = drop(L['Scan price mode']) {
                     {name = L['Scan all'], value = true},

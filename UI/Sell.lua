@@ -155,20 +155,20 @@ function Sell:SetupEventsAndHooks()
         self.validater:Show()
     end)
 
-    hooksecurefunc('ContainerFrameItemButton_OnModifiedClick', function(button)
-        if ns.profile.sell.altSell and AuctionFrame:IsShown() and IsAltKeyDown() then
-            local bag = button:GetParent():GetID()
-            local slot = button:GetID()
-            local locked = select(3, GetContainerItemInfo(bag, slot))
+    -- hooksecurefunc('ContainerFrameItemButton_OnModifiedClick', function(button)
+    --     if ns.profile.sell.altSell and AuctionFrame:IsShown() and IsAltKeyDown() then
+    --         local bag = button:GetParent():GetID()
+    --         local slot = button:GetID()
+    --         local locked = select(3, GetContainerItemInfo(bag, slot))
 
-            if not locked then
-                AuctionFrameTab_OnClick(AuctionFrameTab3)
-                PickupContainerItem(bag, slot)
-                ClickAuctionSellItemButton()
-                ClearCursor()
-            end
-        end
-    end)
+    --         if not locked then
+    --             AuctionFrameTab_OnClick(AuctionFrameTab3)
+    --             PickupContainerItem(bag, slot)
+    --             ClickAuctionSellItemButton()
+    --             ClearCursor()
+    --         end
+    --     end
+    -- end)
 
     AuctionsStackSizeEntry:HookScript('OnTextChanged', function(_, text)
         if self.priceType ~= 1 and self.price then

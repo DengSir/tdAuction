@@ -42,14 +42,11 @@ function BrowseScaner:OnParams()
     if not ns.ParamsEqual(self.params, self.lastParams) then
         self.db = {}
         self.lastParams = self.params
-
-        print('reset db')
     end
 end
 
 function BrowseScaner:OnDone()
     if not self:IsCanSavePrice() then
-        print('cannot save price')
         return
     end
 
@@ -71,8 +68,6 @@ function BrowseScaner:OnDone()
         end
         page = page + 1
     end
-
-    print(self.db)
 
     self:SavePrices(db)
 end
