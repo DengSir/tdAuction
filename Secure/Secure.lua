@@ -28,6 +28,13 @@ local SEARCH_TEMPLATE = [[
 local Secure = ns.Addon:NewModule('Secure', 'AceHook-3.0', 'AceEvent-3.0')
 Secure:Disable()
 
+hooksecurefunc('ContainerFrameItemButton_OnEnter', function(button)
+    if not Secure:IsEnabled() then
+        return
+    end
+    Secure:ContainerFrameItemButton_OnEnter(button)
+end)
+
 local IsAddOnSecure = ns.memorize(function(addon)
     local _, _, _, _, reason, security = C_AddOns.GetAddOnInfo(addon)
     if reason ~= 'MISSING' and security == 'INSECURE' and C_AddOns.IsAddOnLoaded(addon) then
@@ -46,7 +53,6 @@ local function IsSecureStack(stack)
 end
 
 function Secure:OnEnable()
-    self:SecureHook('ContainerFrameItemButton_OnEnter')
     self:RegisterEvent('MODIFIER_STATE_CHANGED')
 
     self:HookScript(BrowseSearchButton, 'PreClick', 'OnBrowsePreClick')
@@ -57,13 +63,12 @@ function Secure:OnEnable()
 end
 
 function Secure:OnDisable()
-    if self.Overlay then
-        self.Overlay:Hide()
-    end
+    self:CloseOverlay()
 end
 
 function Secure:OnBrowsePreClick(_, which)
     if which == 'ForSell' then
+        AuctionFrameBrowse.page = nil
         self:SendMessage('TDAUCTION_QUERY_FOR_SELL')
     else
         self:SendMessage('TDAUCTION_QUERY_BROWSE')
@@ -73,6 +78,7 @@ end
 function Secure:MODIFIER_STATE_CHANGED()
     local mode = self:GetCurrentMode()
     if not mode then
+        self:CloseOverlay()
         return
     end
     for _, v in ipairs(GetMouseFoci()) do
@@ -88,9 +94,7 @@ function Secure:CreateOverlay()
     overlay:SetAttribute('type', 'macro')
     overlay:SetScript('OnLeave', overlay.Hide)
     overlay:SetScript('PreClick', function(overlay)
-        if overlay.mode == MODE_SELL then
-            AuctionFrameBrowse.page = nil
-        elseif overlay.mode == MODE_LOCKED then
+        if overlay.mode == MODE_LOCKED then
             UIErrorsFrame:AddMessage(L['Cannot perform this action while the search is locked.'],
                                      RED_FONT_COLOR:GetRGB())
         end
@@ -118,6 +122,13 @@ function Secure:SetupOverlay(button, bag, slot, mode)
     overlay.bag = bag
     overlay.slot = slot
     overlay.mode = mode
+end
+
+function Secure:CloseOverlay()
+    if not self.Overlay then
+        return
+    end
+    self.Overlay:Hide()
 end
 
 function Secure:GenerateMacro(button, mode)
@@ -176,6 +187,9 @@ function Secure:GetCurrentMode()
     if not AuctionFrame:IsVisible() then
         return
     end
+    if not IsModifiedClick('CHATLINK') then
+        return
+    end
     if not CanSendAuctionQuery('list') then
         return MODE_LOCKED
     elseif AuctionFrameBrowse:IsVisible() then
@@ -184,3 +198,20 @@ function Secure:GetCurrentMode()
         return MODE_SELL
     end
 end
+
+function AuctionSecure()
+    print('AuctionFrameBrowse.page', issecurevariable(AuctionFrameBrowse, 'page'))
+    print('AuctionFrameBrowse.selectedCategoryIndex', issecurevariable(AuctionFrameBrowse, 'selectedCategoryIndex'))
+    print('AuctionFrameBrowse.selectedSubCategoryIndex',
+          issecurevariable(AuctionFrameBrowse, 'selectedSubCategoryIndex'))
+    print('AuctionFrameBrowse.selectedSubSubCategoryIndex',
+          issecurevariable(AuctionFrameBrowse, 'selectedSubSubCategoryIndex'))
+    print('AuctionFrameBrowse.qualityIndex', issecurevariable(AuctionFrameBrowse, 'qualityIndex'))
+
+    print('ContainerFrameItemButton_OnEnter', issecurevariable('ContainerFrameItemButton_OnEnter'))
+    print('ContainerFrameItemButton_OnModifiedClick', issecurevariable('ContainerFrameItemButton_OnModifiedClick'))
+
+    print('ChatEdit_InsertLink', issecurevariable('ChatEdit_InsertLink'))
+    print('HandleModifiedClick', issecurevariable('HandleModifiedClick'))
+end
+

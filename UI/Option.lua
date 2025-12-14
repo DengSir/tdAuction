@@ -138,7 +138,7 @@ function Addon:SetupOptionFrame()
 
     local options = {
         type = 'group',
-        name = 'tdAuction ' .. GetAddOnMetadata('tdAuction', 'Version'),
+        name = 'tdAuctionLite ' .. GetAddOnMetadata(ADDON, 'Version'),
         get = function(paths)
             return getConfig(paths)
         end,
@@ -153,10 +153,10 @@ function Addon:SetupOptionFrame()
             sell = treeItem(AUCTIONS) {
                 shiftSell = toggle(L['Enable SHIFT to sell']),
                 autoOpenPriceList = toggle(L['Auto open price list']),
-                scanFull = drop(L['Scan price mode']) {
-                    {name = L['Scan all'], value = true},
-                    {name = L['Scan one page'], value = false},
-                },
+                -- scanFull = drop(L['Scan price mode']) {
+                --     {name = L['Scan all'], value = true},
+                --     {name = L['Scan one page'], value = false},
+                -- },
                 stackSize = drop(L['Default stack size']) { --
                     {name = L['Full'], value = 0},
                     {name = '1', value = 1},
@@ -219,9 +219,9 @@ function Addon:SetupOptionFrame()
         },
     }
 
-    tdOptions:Register('tdAuction', options)
+    tdOptions:Register('tdAuctionLite', options, ADDON)
 end
 
 function Addon:OpenOptionFrame()
-    tdOptions:Open('tdAuction')
+    tdOptions:Open('tdAuctionLite')
 end

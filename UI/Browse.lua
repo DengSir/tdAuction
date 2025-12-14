@@ -315,11 +315,11 @@ function Browse:ApplyItem(frame)
 end
 
 function Browse:SetupEventsAndHooks()
-    AuctionFrameBrowse_Update = nop
+    -- AuctionFrameBrowse_Update = nop
 
-    hooksecurefunc('BrowseWowTokenResults_Update', function()
-        self.BuyFrame:SetShown(not self:IsAtWowToken())
-    end)
+    -- hooksecurefunc('BrowseWowTokenResults_Update', function()
+    --     self.BuyFrame:SetShown(not self:IsAtWowToken())
+    -- end)
 
     hooksecurefunc('SetSelectedAuctionItem', function(listType)
         if listType == 'list' then
@@ -506,43 +506,6 @@ end
 
 function Browse:IsOurSearch()
     return self.scaner == ns.Querier.scaner
-end
-
-function Browse:BuildSearchParams()
-    local params = {
-        text = self.Name:GetText(),
-        minLevel = self.MinLevel:GetNumber(),
-        maxLevel = self.MaxLevel:GetNumber(),
-        filters = self:GetFilters(),
-        usable = self.IsUsableCheckButton:GetChecked(),
-        quality = self.qualityIndex,
-        exact = self.ExactCheckButton:GetChecked(),
-        virtual = true,
-    }
-
-    if not ns.ParamsEqual(params, self.searchParams) then
-        self.searchParams = params
-        self.page = 0
-    end
-    self.searchParams.page = self.page
-end
-
-function Browse:GetFilters()
-    local categoryIndex = self.selectedCategoryIndex
-    local subCategoryIndex = self.selectedSubCategoryIndex
-    local subSubCategoryIndex = self.selectedSubSubCategoryIndex
-    local filters
-
-    if categoryIndex and subCategoryIndex and subSubCategoryIndex then
-        filters = AuctionCategories[categoryIndex].subCategories[subCategoryIndex].subCategories[subSubCategoryIndex]
-                      .filters
-    elseif categoryIndex and subCategoryIndex then
-        filters = AuctionCategories[categoryIndex].subCategories[subCategoryIndex].filters
-    elseif categoryIndex then
-        filters = AuctionCategories[categoryIndex].filters
-    else
-    end
-    return filters
 end
 
 function Browse:PatchVisible(method)

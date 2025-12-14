@@ -26,7 +26,8 @@ function PriceScaner:OnParams()
 end
 
 function PriceScaner:Next()
-    return not self.db[self.itemKey] or ns.profile.sell.scanFull
+    -- return not self.db[self.itemKey] or ns.profile.sell.scanFull
+    return false
 end
 
 function PriceScaner:OnStart()

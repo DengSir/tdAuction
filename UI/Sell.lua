@@ -396,16 +396,3 @@ function Sell:SetDuration(duration)
     self.duration = duration
     UpdateDeposit()
 end
-
-function _G.CleanBags()
-    for i = 0, 4 do
-        for j = 1, C_Container.GetContainerNumSlots(i) do
-            local id = C_Container.GetContainerItemID(i, j)
-            if id == 43658 then
-                C_Container.PickupContainerItem(i, j)
-                DeleteCursorItem()
-                break
-            end
-        end
-    end
-end

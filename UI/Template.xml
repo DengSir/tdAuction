@@ -45,7 +45,7 @@
 
                             local t = self:CreateTexture(nil, 'BACKGROUND')
                             t:SetAllPoints(v)
-                            t:SetColorTexture(0,0,0,0.6)
+                            t:SetColorTexture(0,0,0,0.7)
                             t:AddMaskTexture(m)
                         end
                     </OnLoad>
