@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/DengSir/tdAuction#readme",
   "wow": {
-    "name": "!tdAuctionLite",
+    "name": "tdAuction",
     "curse_id": 442222,
     "changelog": "CHANGELOG.md",
     "builds": {

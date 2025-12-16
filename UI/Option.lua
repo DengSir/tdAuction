@@ -138,7 +138,7 @@ function Addon:SetupOptionFrame()
 
     local options = {
         type = 'group',
-        name = 'tdAuctionLite ' .. GetAddOnMetadata(ADDON, 'Version'),
+        name = 'tdAuction ' .. GetAddOnMetadata(ADDON, 'Version'),
         get = function(paths)
             return getConfig(paths)
         end,
@@ -219,9 +219,9 @@ function Addon:SetupOptionFrame()
         },
     }
 
-    tdOptions:Register('tdAuctionLite', options, ADDON)
+    tdOptions:Register('tdAuction', options)
 end
 
 function Addon:OpenOptionFrame()
-    tdOptions:Open('tdAuctionLite')
+    tdOptions:Open('tdAuction')
 end
