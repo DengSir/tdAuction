@@ -16,41 +16,43 @@
             </Button>
         </Frames>
     </Frame>
+    <Frame name="tdAuctionFrameBlockerTemplate" enableMouse="true" virtual="true">
+        <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="AuctionFrame" x="-20" y="20" />
+            <Anchor point="BOTTOMRIGHT" relativeTo="AuctionFrame" x="20" y="-20" />
+        </Anchors>
+        <Scripts>
+            <OnLoad>
+                local ts = {
+                    AuctionFrameTopLeft,
+                    AuctionFrameTop,
+                    AuctionFrameTopRight,
+                    AuctionFrameBotLeft,
+                    AuctionFrameBot,
+                    AuctionFrameBotRight,
+                }
+
+                for _, v in ipairs(ts) do
+                    local m = self:CreateMaskTexture(nil, 'BACKGROUND')
+                    print(m)
+                    m:SetAllPoints(v)
+                    m:SetTexture(v:GetTexture(), 'CLAMPTOBLACKADDITIVE', 'CLAMPTOBLACKADDITIVE')
+
+                    local t = self:CreateTexture(nil, 'BACKGROUND')
+                    t:SetAllPoints(v)
+                    t:SetColorTexture(0,0,0,0.7)
+                    t:AddMaskTexture(m)
+                end
+            </OnLoad>
+        </Scripts>
+    </Frame>
     <Frame name="tdAuctionFullScanFrameTemplate" hidden="true" inherits="BackdropTemplate" virtual="true">
         <Size x="600" y="300" />
         <Anchors>
             <Anchor point="CENTER" />
         </Anchors>
         <Frames>
-            <Frame parentKey="Blocker" enableMouse="true">
-                <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="AuctionFrame" x="-20" y="20" />
-                    <Anchor point="BOTTOMRIGHT" relativeTo="AuctionFrame" x="20" y="-20" />
-                </Anchors>
-                <Scripts>
-                    <OnLoad>
-                        local ts = {
-                            AuctionFrameTopLeft,
-                            AuctionFrameTop,
-                            AuctionFrameTopRight,
-                            AuctionFrameBotLeft,
-                            AuctionFrameBot,
-                            AuctionFrameBotRight,
-                        }
-
-                        for _, v in ipairs(ts) do
-                            local m = self:CreateMaskTexture(nil, 'BACKGROUND')
-                            m:SetAllPoints(v)
-                            m:SetTexture(v:GetTexture(), 'CLAMPTOBLACKADDITIVE', 'CLAMPTOBLACKADDITIVE')
-
-                            local t = self:CreateTexture(nil, 'BACKGROUND')
-                            t:SetAllPoints(v)
-                            t:SetColorTexture(0,0,0,0.7)
-                            t:AddMaskTexture(m)
-                        end
-                    </OnLoad>
-                </Scripts>
-            </Frame>
+            <Frame parentKey="Blocker" inherits="tdAuctionFrameBlockerTemplate" />
             <Button parentKey="CloseButton" inherits="UIPanelCloseButton">
                 <Anchors>
                     <Anchor point="TOPRIGHT" x="-8" y="-8"/>

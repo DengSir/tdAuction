@@ -28,12 +28,12 @@ local SEARCH_TEMPLATE = [[
 local Secure = ns.Addon:NewModule('Secure', 'AceHook-3.0', 'AceEvent-3.0')
 Secure:Disable()
 
-hooksecurefunc('ContainerFrameItemButton_OnEnter', function(button)
-    if not Secure:IsEnabled() then
-        return
-    end
-    Secure:ContainerFrameItemButton_OnEnter(button)
-end)
+-- hooksecurefunc('ContainerFrameItemButton_OnEnter', function(button)
+--     if not Secure:IsEnabled() then
+--         return
+--     end
+--     Secure:ContainerFrameItemButton_OnEnter(button)
+-- end)
 
 local IsAddOnSecure = ns.memorize(function(addon)
     local _, _, _, _, reason, security = C_AddOns.GetAddOnInfo(addon)
@@ -55,11 +55,16 @@ end
 function Secure:OnEnable()
     self:RegisterEvent('MODIFIER_STATE_CHANGED')
 
+    self:SecureHook(GameTooltip, 'SetBagItem', 'GameTooltip_SetBagItem')
+
     self:HookScript(BrowseSearchButton, 'PreClick', 'OnBrowsePreClick')
     self:HookScript(BrowsePrevPageButton, 'PreClick', 'OnBrowsePreClick')
     self:HookScript(BrowseNextPageButton, 'PreClick', 'OnBrowsePreClick')
 
     self:HookScript(BrowseName, 'OnEditFocusGained', 'OnBrowsePreClick')
+
+    self:SecureHook(BrowseName, 'SetText', 'BrowseName_SetText')
+    self:SecureHook('QueryAuctionItems')
 end
 
 function Secure:OnDisable()
@@ -75,6 +80,35 @@ function Secure:OnBrowsePreClick(_, which)
     end
 end
 
+function Secure:QueryAuctionItems()
+    self.queried = true
+    C_Timer.After(0.01, function()
+        self.queried = nil
+    end)
+end
+
+function Secure:BrowseName_SetText(editBox, text)
+    if text == '' then
+        return
+    end
+
+    C_Timer.After(0, function()
+        if self.queried then
+            return
+        end
+        editBox:SetText('')
+        self:SendMessage('TDAUCTION_INSECURE_TEXT_INPUT', text)
+    end)
+end
+
+function Secure:GameTooltip_SetBagItem(tip)
+    local owner = tip:GetOwner()
+    if not owner then
+        return
+    end
+    return self:CheckItemButton(owner)
+end
+
 function Secure:MODIFIER_STATE_CHANGED()
     local mode = self:GetCurrentMode()
     if not mode then
@@ -83,7 +117,7 @@ function Secure:MODIFIER_STATE_CHANGED()
     end
     for _, v in ipairs(GetMouseFoci()) do
         if self:IsSecureButton(v) then
-            self:ContainerFrameItemButton_OnEnter(v)
+            self:CheckItemButton(v)
             return
         end
     end
@@ -141,7 +175,7 @@ function Secure:GenerateMacro(button, mode)
     end
 end
 
-function Secure:ContainerFrameItemButton_OnEnter(button)
+function Secure:CheckItemButton(button)
     local mode = self:GetCurrentMode()
     if not mode then
         return

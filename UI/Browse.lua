@@ -354,10 +354,37 @@ function Browse:SetupEventsAndHooks()
         self.scaner:Query({virtual = true})
     end)
 
+    self:RegisterMessage('TDAUCTION_INSECURE_TEXT_INPUT', function(_, text)
+        local frame = self.InsecureInputFrame or self:CreateInsecureInputFrame()
+        frame:ShowText(text)
+    end)
+
     self:PatchVisible('UpdateItems')
     self:PatchVisible('UpdateSelected')
     self:PatchVisible('UpdateControls')
     self:PatchVisible('UpdateSortButtons')
+end
+
+function Browse:CreateInsecureInputFrame()
+    local frame = CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionInsecureInputFrameTemplate')
+
+    frame.Input:SetScript('OnTextChanged', function(input, userInput)
+        if userInput and input:GetText() == '' then
+            frame:Hide()
+            BrowseName:SetText('')
+            BrowseName:SetFocus()
+        end
+    end)
+
+    frame.ShowText = function(_, text)
+        frame:Show()
+        frame.Input:SetText(text)
+        frame.Input:HighlightText()
+        frame.Input:SetFocus()
+    end
+
+    self.InsecureInputFrame = frame
+    return frame
 end
 
 function Browse:UpdateAll()

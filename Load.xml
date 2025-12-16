@@ -25,4 +25,5 @@
 
     <Script file="Secure\LastLink.lua" />
     <Script file="Secure\Secure.lua" />
+    <Include file="Secure\Secure.xml" />
 </Ui>

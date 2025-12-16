@@ -1,0 +1,57 @@
+<Ui xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+    <Frame name="tdAuctionInsecureInputFrameTemplate" hidden="true" inherits="BackdropTemplate" virtual="true">
+        <Size x="600" y="300" />
+        <Anchors>
+            <Anchor point="CENTER" />
+        </Anchors>
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture parentKey="Header" file="Interface\DialogFrame\UI-DialogBox-Header">
+                    <Size x="300" y="68"/>
+                    <Anchors>
+                        <Anchor point="TOP" x="0" y="12"/>
+                    </Anchors>
+                </Texture>
+                <FontString parentKey="HeaderText" inherits="GameFontNormal">
+                    <Anchors>
+                        <Anchor point="TOP" relativeKey="$parent.Header">
+                            <Offset x="0" y="-14"/>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+                <FontString parentKey="Text" inherits="GameFontHighlight">
+                    <Anchors>
+                        <Anchor point="TOP" relativeKey="$parent.ExecButton" relativePoint="BOTTOM" x="0" y="-60" />
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+            <Frame parentKey="Blocker" inherits="tdAuctionFrameBlockerTemplate" />
+            <Button parentKey="CloseButton" inherits="UIPanelCloseButton">
+                <Anchors>
+                    <Anchor point="TOPRIGHT" x="-8" y="-8"/>
+                </Anchors>
+            </Button>
+            <EditBox parentKey="Input" autoFocus="true" inherits="InputBoxInstructionsTemplate">
+                <Size x="340" y="16" />
+                <Anchors>
+                    <Anchor point="CENTER" />
+                </Anchors>
+            </EditBox>
+        </Frames>
+        <Scripts>
+            <OnLoad>
+                self:SetBackdrop(BACKDROP_DIALOG_32_32)
+            </OnLoad>
+            <OnShow>
+                self:SetFrameLevel(self:GetParent():GetFrameLevel() + 100)
+                self.Blocker:SetFrameLevel(self:GetFrameLevel() - 1)
+            </OnShow>
+            <OnHide>
+                self:Hide()
+            </OnHide>
+        </Scripts>
+    </Frame>
+</Ui>
