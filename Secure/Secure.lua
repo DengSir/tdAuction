@@ -96,7 +96,6 @@ function Secure:BrowseName_SetText(editBox, text)
         if self.queried then
             return
         end
-        editBox:SetText('')
         self:SendMessage('TDAUCTION_INSECURE_TEXT_INPUT', text)
     end)
 end

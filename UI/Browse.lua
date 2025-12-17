@@ -355,8 +355,8 @@ function Browse:SetupEventsAndHooks()
     end)
 
     self:RegisterMessage('TDAUCTION_INSECURE_TEXT_INPUT', function(_, text)
-        local frame = self.InsecureInputFrame or self:CreateInsecureInputFrame()
-        frame:ShowText(text)
+        self.Name:SetText('')
+        self:SecureInput(text)
     end)
 
     self:PatchVisible('UpdateItems')
@@ -365,8 +365,17 @@ function Browse:SetupEventsAndHooks()
     self:PatchVisible('UpdateSortButtons')
 end
 
+function Browse:SecureInput(text)
+    local frame = self.InsecureInputFrame or self:CreateInsecureInputFrame()
+    frame:ShowText(text)
+end
+
 function Browse:CreateInsecureInputFrame()
     local frame = CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionInsecureInputFrameTemplate')
+
+    frame.HeaderText:SetText(L['Insecure Input'])
+    frame.Text:SetText(
+        L['tdAuction cannot detect the source of the link. Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search.'])
 
     frame.Input:SetScript('OnTextChanged', function(input, userInput)
         if userInput and input:GetText() == '' then

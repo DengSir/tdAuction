@@ -20,9 +20,10 @@
                         </Anchor>
                     </Anchors>
                 </FontString>
-                <FontString parentKey="Text" inherits="GameFontHighlight">
+                <FontString parentKey="Text" wordWrap="true" justifyH="CENTER" inherits="GameFontHighlight">
                     <Anchors>
-                        <Anchor point="TOP" relativeKey="$parent.ExecButton" relativePoint="BOTTOM" x="0" y="-60" />
+                        <Anchor point="TOPLEFT" x="50" y="-60" />
+                        <Anchor point="TOPRIGHT" x="-50" y="-60" />
                     </Anchors>
                 </FontString>
             </Layer>
@@ -34,7 +35,7 @@
                     <Anchor point="TOPRIGHT" x="-8" y="-8"/>
                 </Anchors>
             </Button>
-            <EditBox parentKey="Input" autoFocus="true" inherits="InputBoxInstructionsTemplate">
+            <EditBox parentKey="Input" autoFocus="true" justifyH="CENTER" inherits="InputBoxInstructionsTemplate">
                 <Size x="340" y="16" />
                 <Anchors>
                     <Anchor point="CENTER" />
