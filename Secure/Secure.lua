@@ -53,6 +53,11 @@ local function IsSecureStack(stack)
 end
 
 function Secure:OnEnable()
+    if not self:IsSecure() then
+        UIErrorsFrame:AddMessage(L['I found that some addons prevent quick search and quick selling from working.'],
+                                 RED_FONT_COLOR:GetRGB())
+    end
+
     self:RegisterEvent('MODIFIER_STATE_CHANGED')
 
     self:SecureHook(GameTooltip, 'SetBagItem', 'GameTooltip_SetBagItem')
@@ -69,6 +74,41 @@ end
 
 function Secure:OnDisable()
     self:CloseOverlay()
+end
+
+local secures = {
+    ['AuctionFrameBrowse'] = {
+        'page',
+        'selectedCategoryIndex',
+        'selectedSubCategoryIndex',
+        'selectedSubSubCategoryIndex',
+        'qualityIndex',
+    },
+    ['ContainerFrameItemButton_OnEnter'] = false,
+    ['ContainerFrameItemButton_OnModifiedClick'] = false,
+    ['ChatEdit_InsertLink'] = false,
+    ['HandleModifiedItemClick'] = false,
+    ['QueryAuctionItems'] = false,
+    ['AuctionFrameAuctions_Update'] = false,
+    ['AuctionFrameBrowse_Search'] = false,
+}
+
+function Secure:IsSecure()
+    for k, v in pairs(secures) do
+        if v then
+            local t = _G[k]
+            for _, key in ipairs(v) do
+                if not issecurevariable(t, key) then
+                    return false
+                end
+            end
+        else
+            if not issecurevariable(k) then
+                return false
+            end
+        end
+    end
+    return true
 end
 
 function Secure:OnBrowsePreClick(_, which)
@@ -175,6 +215,9 @@ function Secure:GenerateMacro(button, mode)
 end
 
 function Secure:CheckItemButton(button)
+    if not self:IsSecure() then
+        return
+    end
     local mode = self:GetCurrentMode()
     if not mode then
         return
