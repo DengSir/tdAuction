@@ -141,10 +141,17 @@ function Sell:LayoutBlizzard()
 end
 
 function Sell:SetupEventsAndHooks()
-    AuctionsItemButton:HookScript('OnEvent', function(_, event)
-        if event == 'NEW_AUCTION_UPDATE' then
-            return self:OnSellItemUpdate()
-        end
+    -- AuctionsItemButton:HookScript('OnEvent', function(_, event)
+    --     if event == 'NEW_AUCTION_UPDATE' then
+    --         return self:OnSellItemUpdate()
+    --     end
+    -- end)
+
+    -- self:HookScript('OnShow', self.OnSellItemUpdate)
+
+    self:RegisterMessage('TDAUCTION_QUERY_FOR_SELL', function()
+        self.scaner:Query({virtual = true})
+        self:OnSellItemUpdate()
     end)
 
     AuctionsBlockFrame:HookScript('OnShow', function()
@@ -187,11 +194,6 @@ function Sell:SetupEventsAndHooks()
         end
     end)
 
-    self:HookScript('OnShow', self.OnSellItemUpdate)
-
-    self:RegisterMessage('TDAUCTION_QUERY_FOR_SELL', function()
-        self.scaner:Query({virtual = true})
-    end)
 end
 
 function Sell:OnMultiSellDone()
@@ -283,7 +285,6 @@ function Sell:OnItemPriceScanDone()
     local itemKey = ns.ParseItemKey(link)
     local price = ns.prices[itemKey]
     local items = self.scaner:GetResponseItems()
-    -- local items
     local errText
 
     if not price then

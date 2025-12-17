@@ -356,7 +356,7 @@ function Browse:SetupEventsAndHooks()
 
     self:RegisterMessage('TDAUCTION_INSECURE_TEXT_INPUT', function(_, text)
         self.Name:SetText('')
-        self:SecureInput(text)
+        self:GetSecureInput():ShowText(text)
     end)
 
     self:PatchVisible('UpdateItems')
@@ -365,35 +365,12 @@ function Browse:SetupEventsAndHooks()
     self:PatchVisible('UpdateSortButtons')
 end
 
-function Browse:SecureInput(text)
-    local frame = self.InsecureInputFrame or self:CreateInsecureInputFrame()
-    frame:ShowText(text)
-end
-
-function Browse:CreateInsecureInputFrame()
-    local frame = CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionInsecureInputFrameTemplate')
-
-    frame.HeaderText:SetText(L['Insecure Input'])
-    frame.Text:SetText(
-        L['tdAuction cannot detect the source of the link. Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search.'])
-
-    frame.Input:SetScript('OnTextChanged', function(input, userInput)
-        if userInput and input:GetText() == '' then
-            frame:Hide()
-            BrowseName:SetText('')
-            BrowseName:SetFocus()
-        end
-    end)
-
-    frame.ShowText = function(_, text)
-        frame:Show()
-        frame.Input:SetText(text)
-        frame.Input:HighlightText()
-        frame.Input:SetFocus()
+function Browse:GetSecureInput()
+    if not self.SecureInput then
+        self.SecureInput = ns.UI.SecureInput:Bind(CreateFrame('Frame', nil, AuctionFrame,
+                                                              'tdAuctionSecureInputFrameTemplate'))
     end
-
-    self.InsecureInputFrame = frame
-    return frame
+    return self.SecureInput
 end
 
 function Browse:UpdateAll()

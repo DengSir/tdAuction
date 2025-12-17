@@ -6,10 +6,14 @@ end
 -- @import:language=zhCN@
 L['Enable ALT-CTRL click to buyout'] = '开启ALT-CTRL点击一口价购买'
 L['Auto open price list'] = '自动打开价格列表'
-L['Scan price mode'] = '扫描价格模式'
-L['Scan all'] = '扫描所有'
-L['Scan one page'] = '扫描一页'
-L['Enable ALT to sell'] = '开启ALT出售'
+--[====[ never used ]====]
+--[====[ L['Scan price mode'] = '扫描价格模式' ]====]
+--[====[ never used ]====]
+--[====[ L['Scan all'] = '扫描所有' ]====]
+--[====[ never used ]====]
+--[====[ L['Scan one page'] = '扫描一页' ]====]
+--[====[ never used ]====]
+--[====[ L['Enable ALT to sell'] = '开启ALT出售' ]====]
 L['Default stack size'] = '默认堆叠数量'
 L['Full'] = '满'
 L['Default auction duration'] = '默认拍卖时长'
@@ -77,6 +81,17 @@ L['7 Days'] = '7天'
 L['90 Days'] = '90天'
 L['Auto clean database'] = '自动清理数据库'
 L.Never = '从不'
+L['Cannot perform this action while the search is locked.'] = '搜索被锁定时，无法执行此操作。'
+L['Enable SHIFT to sell'] = '开启SHIFT出售'
+L['I found that some addons prevent quick search and quick selling from working.'] =
+    '我发现有些插件阻止了快速搜索和快速出售功能的正常工作。'
+L['Insecure Input'] = '不安全的输入'
+L['Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm.'] =
+    '带有随机附魔的物品在国服客户端无法正确搜索，|cff00fffftdAuction|r已经修复了此问题，但你需要在时光服手动输入搜索文本。'
+L['Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search.'] =
+    '请按 |cff00ff00CTRL-X|r，然后按 |cff00ff00CTRL-V|r 和 |cff00ff00回车|r 进行搜索。'
+L['|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text.'] =
+    '|cff00fffftdAuction|r 无法检测链接来源，这可能导致污染，因此你需要手动输入搜索文本。'
 -- @locale-fill@
 
 -- @end-import@

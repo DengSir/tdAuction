@@ -25,6 +25,7 @@ ns.Addon = Addon
 ---@class UI
 ---@field Browse UI.Browse
 ---@field BrowseItem UI.BrowseItem
+---@field SecureInput UI.SecureInput
 ns.UI = {}
 ns.L = L
 

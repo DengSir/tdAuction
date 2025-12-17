@@ -10,6 +10,7 @@ local L = ns.L
 local MODE_BROWSE = 1
 local MODE_SELL = 2
 local MODE_LOCKED = 3
+local MODE_SUFFIX = 4
 
 local SELL_TEMPLATE = [[
 /click AuctionFrameTab1
@@ -239,6 +240,10 @@ function Secure:CheckItemButton(button)
     end
     local info = C_Container.GetContainerItemInfo(bag, slot)
     if info.isBound or info.isLocked then
+        return
+    end
+    local searchText, exact = ns.Querier:ParseSearchText(itemLink)
+    if searchText ~= C_Item.GetItemInfo(itemLink) then
         return
     end
 
