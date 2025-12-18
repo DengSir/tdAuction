@@ -160,3 +160,6 @@ function Scaner:ProcessAuction(index)
     end
     return true
 end
+
+function Scaner:OnParams()
+end

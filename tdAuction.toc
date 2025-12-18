@@ -9,4 +9,33 @@
 ## OptionalDeps: tdSync
 ## SavedVariables: TDDB_AUCTION_NEW
 
-Load.xml
+Libs\Libs.xml
+Localization\Localization.xml
+Addon.lua
+API.lua
+Data.lua
+
+Query\Querier.lua
+Query\Pending.lua
+Query\Scaner.lua
+Query\FullScaner.lua
+Query\BrowseScaner.lua
+Query\PriceScaner.lua
+
+UI\Template.xml
+UI\Vanilla.xml  [AllowLoadGameType Vanilla]
+UI\Wrath.xml  [AllowLoadGameType Wrath]
+UI\UI.xml
+UI\FullScan.lua
+UI\BrowseItem.lua
+UI\Browse.lua
+UI\Sell.lua
+UI\Tooltip.lua
+UI\SellOutput.lua
+UI\Option.lua
+UI\ElvUI.lua
+
+Secure\Secure.xml [AllowLoadGameType Wrath]
+Secure\LastLink.lua [AllowLoadGameType Wrath]
+Secure\Secure.lua [AllowLoadGameType Wrath]
+Secure\SecureInput.lua [AllowLoadGameType Wrath]

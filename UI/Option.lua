@@ -138,7 +138,7 @@ function Addon:SetupOptionFrame()
 
     local options = {
         type = 'group',
-        name = 'tdAuction ' .. GetAddOnMetadata('tdAuction', 'Version'),
+        name = 'tdAuction ' .. GetAddOnMetadata(ADDON, 'Version'),
         get = function(paths)
             return getConfig(paths)
         end,
@@ -151,12 +151,13 @@ function Addon:SetupOptionFrame()
                 quickBuy = toggle(L['Enable ALT-CTRL click to buyout']),
             },
             sell = treeItem(AUCTIONS) {
-                altSell = toggle(L['Enable ALT to sell']),
+                quickSell = toggle(format(L['Enable %s to sell'], ns.TITAN and 'SHIFT' or 'ALT')),
                 autoOpenPriceList = toggle(L['Auto open price list']),
-                scanFull = drop(L['Scan price mode']) {
-                    {name = L['Scan all'], value = true},
-                    {name = L['Scan one page'], value = false},
-                },
+                scanFull = not ns.TITAN and
+                    drop(L['Scan price mode']) {
+                        {name = L['Scan all'], value = true},
+                        {name = L['Scan one page'], value = false},
+                    } or nil,
                 stackSize = drop(L['Default stack size']) { --
                     {name = L['Full'], value = 0},
                     {name = '1', value = 1},

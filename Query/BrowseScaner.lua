@@ -16,10 +16,20 @@ local Scaner = ns.Scaner
 local BrowseScaner = ns.Addon:NewClass('BrowseScaner', ns.Scaner)
 
 function BrowseScaner:Query(params)
-    if not ns.ParamsEqual(params, self.params) then
+    if not params.virtual and not ns.ParamsEqual(params, self.params) then
         self.db = {}
     end
     Scaner.Query(self, params)
+end
+
+function BrowseScaner:OnParams()
+    if not self.params.virtual then
+        return
+    end
+    if not ns.ParamsEqual(self.params, self.lastParams) then
+        self.db = {}
+        self.lastParams = self.params
+    end
 end
 
 function BrowseScaner:GetDB()
@@ -27,6 +37,10 @@ function BrowseScaner:GetDB()
 end
 
 function BrowseScaner:OnResponse()
+    if self.params.virtual then
+        self.lastParams = self.params
+    end
+
     Scaner.OnResponse(self)
 
     if self:IsCanSavePrice() then

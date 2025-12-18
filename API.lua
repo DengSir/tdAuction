@@ -7,6 +7,91 @@
 local ns = select(2, ...)
 
 ns.BUILD = tonumber(GetBuildInfo():match('^%d+'))
+ns.TITAN = ns.BUILD == 3
+
+ns.AuctionSort = {
+    ['list_level'] = {
+        {column = 'duration', reverse = true},
+        {column = 'unitprice', reverse = false},
+        {column = 'quantity', reverse = false},
+        {column = 'minbidbuyout', reverse = true},
+        {column = 'name', reverse = true},
+        {column = 'quality', reverse = true},
+        {column = 'level', reverse = false},
+    },
+    ['list_duration'] = {
+        {column = 'unitprice', reverse = false},
+        {column = 'quantity', reverse = true},
+        {column = 'minbidbuyout', reverse = false},
+        {column = 'name', reverse = false},
+        {column = 'level', reverse = true},
+        {column = 'quality', reverse = false},
+        {column = 'duration', reverse = false},
+    },
+    ['list_seller'] = {
+        {column = 'duration', reverse = false},
+        {column = 'unitprice', reverse = false},
+        {column = 'quantity', reverse = true},
+        {column = 'minbidbuyout', reverse = false},
+        {column = 'name', reverse = false},
+        {column = 'level', reverse = true},
+        {column = 'quality', reverse = false},
+        {column = 'seller', reverse = false},
+    },
+    ['list_quality'] = {
+        {column = 'duration', reverse = false},
+        {column = 'unitprice', reverse = false},
+        {column = 'quantity', reverse = true},
+        {column = 'minbidbuyout', reverse = false},
+        {column = 'name', reverse = false},
+        {column = 'level', reverse = true},
+        {column = 'quality', reverse = false},
+    },
+    ['list_unitprice'] = {
+        {column = 'duration', reverse = false},
+        {column = 'quantity', reverse = true},
+        {column = 'name', reverse = false},
+        {column = 'level', reverse = true},
+        {column = 'quality', reverse = false},
+        {column = 'unitprice', reverse = false},
+    },
+    ['list_unitbid'] = {
+        {column = 'duration', reverse = false},
+        {column = 'quantity', reverse = true},
+        {column = 'name', reverse = false},
+        {column = 'level', reverse = true},
+        {column = 'quality', reverse = false},
+        {column = 'unitbid', reverse = false},
+    },
+    ['list_buyout'] = {
+        {column = 'duration', reverse = false},
+        {column = 'quantity', reverse = true},
+        {column = 'name', reverse = false},
+        {column = 'level', reverse = true},
+        {column = 'quality', reverse = false},
+        {column = 'buyout', reverse = false},
+    },
+    ['list_bid'] = {
+        {column = 'duration', reverse = false},
+        {column = 'quantity', reverse = true},
+        {column = 'name', reverse = false},
+        {column = 'level', reverse = true},
+        {column = 'quality', reverse = false},
+        {column = 'bid', reverse = false},
+    },
+}
+
+function ns.memorize(func)
+    local cache = {}
+    return function(arg1, ...)
+        local value = cache[arg1]
+        if value == nil then
+            value = func(arg1, ...)
+            cache[arg1] = value
+        end
+        return value
+    end
+end
 
 local Hider
 function ns.hide(obj)
@@ -215,10 +300,15 @@ function ns.GetDisenchantPrice(equipLoc, quality, itemLevel)
     return total
 end
 
+function ns.GetAuctionSort()
+    local sortColumn, reverse = GetAuctionSort('list', 1)
+    return sortColumn, reverse
+end
+
 function ns.SetSort(column, order)
     SortAuctionClearSort('list')
 
-    for _, row in ipairs(AuctionSort['list_' .. column]) do
+    for _, row in ipairs(ns.AuctionSort['list_' .. column]) do
         local sort = row.column
         if order then
             SortAuctionSetSort('list', sort, not row.reverse)

@@ -21,13 +21,23 @@ local Scaner = ns.Scaner
 local PriceScaner = ns.Addon:NewClass('PriceScaner', Scaner)
 
 function PriceScaner:Query(params)
-    self.link = params.text
-    self.itemKey = ns.ParseItemKey(self.link)
+    if not params.virtual then
+        self.link = params.text
+        self.itemKey = ns.ParseItemKey(self.link)
+    end
     Scaner.Query(self, params)
 end
 
+function PriceScaner:OnParams()
+    if not self.params.virtual then
+        return
+    end
+    self.link = self.params.text
+    self.itemKey = ns.ParseItemKey(self.link)
+end
+
 function PriceScaner:Next()
-    return not self.db[self.itemKey] or ns.profile.sell.scanFull
+    return not self.params.virtual and (not self.db[self.itemKey] or ns.profile.sell.scanFull)
 end
 
 function PriceScaner:OnStart()

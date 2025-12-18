@@ -16,28 +16,55 @@ local STATUS_PENDING = 1
 local STATUS_WAITRESP = 2
 local STATUS_RUNNING = 3
 
----@class Querier: AceAddon-3.0, AceEvent-3.0
-local Querier = ns.Addon:NewModule('Querier', 'AceEvent-3.0')
+---@class Querier: AceModule, AceEvent-3.0, AceHook-3.0
+local Querier = ns.Addon:NewModule('Querier', 'AceEvent-3.0', 'AceHook-3.0')
 
 function Querier:OnInitialize()
-    self.updater = CreateFrame('Frame')
-    self.updater:Hide()
-    self.updater:SetScript('OnUpdate', function()
-        return self:OnIdle()
-    end)
-
     self.statusProcess = { --
         [STATUS_PENDING] = self.Pending,
         [STATUS_RUNNING] = self.Running,
     }
 
-    hooksecurefunc('QueryAuctionItems', function()
-        if not self.ourQuery then
-            self:Cancel()
-        end
+    self.updater = CreateFrame('Frame')
+    self.updater:Hide()
+    self.updater:SetScript('OnUpdate', function()
+        return self:OnIdle()
     end)
+end
 
+function Querier:OnEnable()
     self:RegisterEvent('AUCTION_HOUSE_CLOSED')
+
+    if ns.TITAN then
+        self:SecureHook('QueryAuctionItems')
+    end
+end
+
+function Querier:OnDisable()
+    self:Cancel()
+end
+
+function Querier:QueryAuctionItems(text, minLevel, maxLevel, page, usable, quality, queryAll, exactMatch, filters)
+    if not self.ourQuery then
+        self:Cancel()
+        return
+    end
+
+    if not self.params or not self.params.virtual then
+        return
+    end
+
+    self.params.text = ns.LastLink:GetLastLink() or text
+    self.params.minLevel = minLevel
+    self.params.maxLevel = maxLevel
+    self.params.page = page
+    self.params.usable = usable
+    self.params.quality = quality
+    self.params.queryAll = queryAll
+    self.params.exact = exactMatch
+    self.params.filters = filters
+
+    self.scaner:OnParams()
 end
 
 function Querier:AUCTION_HOUSE_CLOSED()
@@ -70,6 +97,7 @@ function Querier:OnResponse()
         self.pageMax = floor(total / max(count, NUM_AUCTION_ITEMS_PER_PAGE))
     end
 
+    self.ourQuery = nil
     self.scaner:OnResponse()
     self.status = STATUS_RUNNING
     self:UnregisterEvent('AUCTION_ITEM_LIST_UPDATE')
@@ -82,10 +110,19 @@ function Querier:Query(params, scaner)
     self.page = params.page or 0
 
     self.scaner:OnStart()
+
+    if params.virtual then
+        self.scaner:PreQuery()
+        self:OnIdle()
+    end
+
     self.updater:Show()
 end
 
 function Querier:CanQuery()
+    if self.params and self.params.virtual then
+        return true
+    end
     local canQuery, canQueryAll = CanSendAuctionQuery('list')
     if not canQuery then
         return false
@@ -124,22 +161,26 @@ function Querier:Pending()
         return
     end
 
-    local params = self.params
-    local text, exact = self:ParseSearchText(params.text)
-
     self.status = STATUS_WAITRESP
     self:RegisterEvent('AUCTION_ITEM_LIST_UPDATE', 'OnResponse')
     self:RegisterEvent('GET_ITEM_INFO_RECEIVED')
 
-    self.scaner:PreQuery()
+    if self.params.virtual then
+        self.ourQuery = true
+    else
+        local params = self.params
+        local text, exact = self:ParseSearchText(params.text)
 
-    self.ourQuery = true
-    QueryAuctionItems(text, params.minLevel, params.maxLevel, self.page, params.usable, params.quality, params.queryAll,
-                      exact or params.exact, params.filters)
-    self.ourQuery = nil
+        self.scaner:PreQuery()
 
-    if params.queryAll then
-        self.queryAllDisabled = true
+        self.ourQuery = true
+        QueryAuctionItems(text, params.minLevel, params.maxLevel, self.page, params.usable, params.quality,
+                          params.queryAll, exact or params.exact, params.filters)
+        self.ourQuery = nil
+
+        if params.queryAll then
+            self.queryAllDisabled = true
+        end
     end
 end
 

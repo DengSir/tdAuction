@@ -22,13 +22,18 @@ local FRAME_WIDTH_NOSCROLL = BUTTON_WIDTH_NOSCROLL + 4
 ---@class UI.Browse: Object, Frame
 local Browse = ns.Addon:NewClass('UI.Browse', 'Frame')
 
-function Browse:Constructor()
+if ns.TITAN then
+    Browse.RegisterMessage = LibStub('AceEvent-3.0').RegisterMessage
+end
+
+function Browse:Constructor(parent)
     self.scaner = ns.BrowseScaner:New()
     self.scaner:SetCallback('OnDone', function()
-        self.isSearching = nil
+        self.Browse.isSearching = nil
         self:UpdateAll()
     end)
 
+    self.Browse = parent
     self:LayoutBlizzard()
     self:SetupSortButtons()
     self:SetupScrollFrame()
@@ -42,7 +47,7 @@ function Browse:LayoutBlizzard()
     local BrowseDropDownName = BrowseDropDownName or BrowseDropdownName
 
     ---@type tdAuctionBrowseBuyFrameTemplate
-    self.BuyFrame = CreateFrame('Frame', nil, self, 'tdAuctionBrowseBuyFrameTemplate')
+    self.BuyFrame = CreateFrame('Frame', nil, self.Browse, 'tdAuctionBrowseBuyFrameTemplate')
     self.Name = BrowseName
     self.SearchButton = BrowseSearchButton
     self.PrevPageButton = BrowsePrevPageButton
@@ -61,36 +66,15 @@ function Browse:LayoutBlizzard()
     self.SortButtonFrame = self.BuyFrame.SortButtonFrame
     self.ExactCheckButton = self.BuyFrame.ExactCheckButton
 
-    -- if not ElvUI then
-    --     local function FixEditBox(f)
-    --         if not f or not f.Left or not f.Right or not f.Middle then
-    --             return
-    --         end
-
-    --         if f.Left:GetAtlas() or f.Left:GetTexture() then
-    --             return
-    --         end
-
-    --         f.Left:SetTexture([[interface\common\commonsearch]])
-    --         f.Left:SetTexCoord(0.88671875, 0.94921875, 0.0078125, 0.3203125)
-
-    --         f.Right:SetTexture([[interface\common\commonsearch]])
-    --         f.Right:SetTexCoord(0.00390625, 0.06640625, 0.3359375, 0.6484375)
-
-    --         f.Middle:SetTexture([[interface\common\commonsearch]])
-    --         f.Middle:SetTexCoord(0.00390625, 0.87890625, 0.0078125, 0.3203125)
-    --     end
-
-    --     FixEditBox(self.Name)
-    --     FixEditBox(self.MinLevel)
-    --     FixEditBox(self.MaxLevel)
-    -- end
-
-    self.ExactCheckButton:SetScript('OnClick', function()
-        ns.profile.buy.exact = self.ExactCheckButton:GetChecked() or nil
-    end)
-    self.ExactCheckButton:SetChecked(ns.profile.buy.exact)
-    self.ExactCheckButton:SetParent(self)
+    if not ns.TITAN then
+        self.ExactCheckButton:SetScript('OnClick', function()
+            ns.profile.buy.exact = self.ExactCheckButton:GetChecked() or nil
+        end)
+        self.ExactCheckButton:SetChecked(ns.profile.buy.exact)
+        self.ExactCheckButton:SetParent(self)
+    else
+        self.ExactCheckButton:Hide()
+    end
 
     self.ResetButton:SetSize(80, 22)
 
@@ -147,7 +131,7 @@ function Browse:LayoutBlizzard()
 
     self.Name:SetWidth(nameWidth)
 
-    do
+    if not ns.TITAN then
         local function Get(index)
             return self.qualityIndex == index;
         end
@@ -171,9 +155,9 @@ function Browse:LayoutBlizzard()
                 end
             end
         end)
-
-        self.QualityDropDown:SetWidth(100)
     end
+
+    self.QualityDropDown:SetWidth(100)
 
     point(BrowseSearchDotsText, 'LEFT', self.NoResultsText, 'RIGHT')
 
@@ -185,7 +169,7 @@ function Browse:LayoutBlizzard()
     point(self.BidPrice, 'BOTTOM', 115, 18)
 
     point(BrowseLevelText, 'TOPLEFT', nameWidth + 90, -38)
-    point(BrowseDropDownName, 'TOPLEFT', self, nameWidth + 170, -38)
+    point(BrowseDropDownName, 'TOPLEFT', self.Browse, nameWidth + 170, -38)
 
     point(self.Name, 'TOPLEFT', BrowseNameText, 'BOTTOMLEFT', 3, -3 + CONTROL_LABEL_SPACING)
     point(self.MinLevel, 'TOPLEFT', BrowseLevelText, 'BOTTOMLEFT', 0, -3 + CONTROL_LABEL_SPACING)
@@ -218,11 +202,10 @@ function Browse:LayoutBlizzard()
             hooksecurefunc(button, 'SetWidth', SetWidth)
         end
 
-        point(BrowseFilterScrollFrame, 'TOPRIGHT', self, 'TOPLEFT', 158 - FILTER_FRAME_SHORT, -105)
+        point(BrowseFilterScrollFrame, 'TOPRIGHT', self.Browse, 'TOPLEFT', 158 - FILTER_FRAME_SHORT, -105)
     end
 
-    point(self.ScrollFrame, 'TOPLEFT', self, 190 - FILTER_FRAME_SHORT, -104)
-
+    point(self.ScrollFrame, 'TOPLEFT', self.Browse, 190 - FILTER_FRAME_SHORT, -104)
 end
 
 function Browse:SetupScrollFrame()
@@ -250,7 +233,7 @@ function Browse:SetupSortButtons()
     }
 
     local function SortAuction(button)
-        local sortColumn, reverse = GetAuctionSort('list', 1)
+        local sortColumn, reverse = ns.GetAuctionSort()
         local order = sortColumn and sortColumn == button.sortColumn and not reverse
         ns.SetSort(button.sortColumn, order)
     end
@@ -261,12 +244,23 @@ function Browse:SetupSortButtons()
         self:SaveSorts()
     end
 
+    local function PreClick(button)
+        SortAuction(button)
+        self:SaveSorts()
+    end
+
     for _, info in pairs(self.headers) do
         local button = self.SortButtonFrame[info.key]
         button.key = info.key
         button.reverse = not not info.reverse
         button.sortColumn = info.sortColumn
-        button:SetScript('OnClick', OnClick)
+        if ns.TITAN then
+            button:SetScript('PreClick', PreClick)
+            button:SetAttribute('type', 'macro')
+            button:SetAttribute('macrotext', '/click BrowseSearchButton')
+        else
+            button:SetScript('OnClick', OnClick)
+        end
         button.Text:SetText(info.text)
         if info.width then
             button:SetWidth(info.width)
@@ -337,15 +331,17 @@ function Browse:ApplyItem(frame)
 end
 
 function Browse:SetupEventsAndHooks()
-    AuctionFrameBrowse_Update = nop
-    AuctionFrameBrowse_UpdateArrows = nop
-    AuctionFrameBrowse_Search = function()
-        return self:RequestSearch()
-    end
+    if not ns.TITAN then
+        AuctionFrameBrowse_Update = nop
+        AuctionFrameBrowse_UpdateArrows = nop
+        AuctionFrameBrowse_Search = function()
+            return self:RequestSearch()
+        end
 
-    hooksecurefunc('BrowseWowTokenResults_Update', function()
-        self.BuyFrame:SetShown(not self:IsAtWowToken())
-    end)
+        hooksecurefunc('BrowseWowTokenResults_Update', function()
+            self.BuyFrame:SetShown(not self:IsAtWowToken())
+        end)
+    end
 
     hooksecurefunc('SetSelectedAuctionItem', function(listType)
         if listType == 'list' then
@@ -366,45 +362,60 @@ function Browse:SetupEventsAndHooks()
         end
     end)
 
-    self:SetScript('OnEvent', function()
-        self.isSearching = nil
+    self.Browse:SetScript('OnEvent', function()
+        self.Browse.isSearching = nil
         self:UpdateAll()
     end)
 
-    self:HookScript('OnShow', function()
+    self.Browse:HookScript('OnShow', function()
         self:RestoreSorts()
         self:UpdateAll()
     end)
 
-    local orig_ChatEdit_InsertLink = ChatEdit_InsertLink
-    _G.ChatEdit_InsertLink = function(text)
-        if self.Name:IsVisible() and IsShiftKeyDown() then
-            self.Name:Hide()
-            local ok = orig_ChatEdit_InsertLink(text)
-            self.Name:Show()
+    if not ns.TITAN then
+        local orig_ChatEdit_InsertLink = ChatEdit_InsertLink
+        _G.ChatEdit_InsertLink = function(text)
+            if self.Name:IsVisible() and IsShiftKeyDown() then
+                self.Name:Hide()
+                local ok = orig_ChatEdit_InsertLink(text)
+                self.Name:Show()
 
-            if not ok then
-                local name, link = GetItemInfo(text)
-                if link then
-                    self.Name:SetText(link)
-                    self:RequestSearch()
-                    ok = true
+                if not ok then
+                    local name, link = GetItemInfo(text)
+                    if link then
+                        self.Name:SetText(link)
+                        self:RequestSearch()
+                        ok = true
+                    end
                 end
+                return ok
+            else
+                return orig_ChatEdit_InsertLink(text)
             end
-            return ok
-        else
-            return orig_ChatEdit_InsertLink(text)
         end
-    end
+    else
+        self:RegisterMessage('TDAUCTION_QUERY_BROWSE', function()
+            self.scaner:Query({virtual = true})
+        end)
 
-    AuctionFrame:HookScript('OnHide', function()
-        self.Name:SetText('')
-    end)
+        self:RegisterMessage('TDAUCTION_INSECURE_TEXT_INPUT', function(_, text)
+            self.Name:SetText('')
+            self:GetSecureInput():ShowText(text)
+        end)
+    end
 
     self:PatchVisible('UpdateItems')
     self:PatchVisible('UpdateSelected')
     self:PatchVisible('UpdateControls')
     self:PatchVisible('UpdateSortButtons')
+end
+
+function Browse:GetSecureInput()
+    if not self.SecureInput then
+        self.SecureInput = ns.UI.SecureInput:Bind(CreateFrame('Frame', nil, AuctionFrame,
+                                                              'tdAuctionSecureInputFrameTemplate'))
+    end
+    return self.SecureInput
 end
 
 function Browse:UpdateAll()
@@ -417,11 +428,11 @@ end
 function Browse:UpdateItems()
     local scrollFrame = self.ScrollFrame
     local offset = HybridScrollFrame_GetOffset(scrollFrame)
-    local page = self.page
+    local page = self.Browse.page or 0
     local pageStart = NUM_AUCTION_ITEMS_PER_PAGE * page
 
     local ourSearch = self:IsOurSearch()
-    local shouldHide = self.isSearching or not ourSearch
+    local shouldHide = self.Browse.isSearching or not ourSearch
     local num, total, hasScrollBar, buttonWidth
     local totalHeight = 0
 
@@ -432,7 +443,7 @@ function Browse:UpdateItems()
         totalHeight = num * BUTTON_HEIGHT
     end
 
-    if not self.isSearching then
+    if not self.Browse.isSearching then
         self.ScrollFrame:SetWidth(hasScrollBar and FRAME_WIDTH_WITHSCROLL or FRAME_WIDTH_NOSCROLL)
     end
 
@@ -451,7 +462,7 @@ function Browse:UpdateItems()
 
     if not ourSearch then
         self.NoResultsText:SetText(BROWSE_SEARCH_TEXT)
-    elseif self.isSearching then
+    elseif self.Browse.isSearching then
         self.NoResultsText:SetText(SEARCHING_FOR_ITEMS)
     elseif not num or num == 0 then
         self.NoResultsText:SetText(BROWSE_NO_RESULTS)
@@ -461,7 +472,8 @@ function Browse:UpdateItems()
 end
 
 function Browse:UpdateSortButtons()
-    local sortColumn, reverse = GetAuctionSort('list', 1)
+    local sortColumn, reverse = ns.GetAuctionSort()
+
     for i, button in ipairs(self.sortButtons) do
         if sortColumn == button.sortColumn then
             if reverse ~= button.reverse then
@@ -525,9 +537,9 @@ function Browse:UpdateSelected()
 end
 
 function Browse:UpdateControls()
-    local shouldHide = self.isSearching or not self:IsOurSearch()
+    local shouldHide = self.Browse.isSearching or not self:IsOurSearch()
     if not shouldHide then
-        local page = self.page
+        local page = self.Browse.page or 0
         local num, total = GetNumAuctionItems('list')
         if total > NUM_AUCTION_ITEMS_PER_PAGE and num <= NUM_AUCTION_ITEMS_PER_PAGE then
             self.PrevPageButton.isEnabled = page ~= 0
@@ -546,13 +558,12 @@ function Browse:UpdateControls()
 end
 
 function Browse:IsAtWowToken()
-    return AuctionFrame_DoesCategoryHaveFlag('WOW_TOKEN_FLAG', self.selectedCategoryIndex)
+    return AuctionFrame_DoesCategoryHaveFlag('WOW_TOKEN_FLAG', self.Browse.selectedCategoryIndex)
 end
 
 function Browse:IsOurSearch()
     return self.scaner == ns.Querier.scaner
 end
-
 function Browse:RequestSearch()
     self.isSearching = true
     self:BuildSearchParams()
@@ -573,15 +584,15 @@ function Browse:BuildSearchParams()
 
     if not ns.ParamsEqual(params, self.searchParams) then
         self.searchParams = params
-        self.page = 0
+        self.Browse.page = 0
     end
-    self.searchParams.page = self.page
+    self.searchParams.page = self.Browse.page
 end
 
 function Browse:GetFilters()
-    local categoryIndex = self.selectedCategoryIndex
-    local subCategoryIndex = self.selectedSubCategoryIndex
-    local subSubCategoryIndex = self.selectedSubSubCategoryIndex
+    local categoryIndex = self.Browse.selectedCategoryIndex
+    local subCategoryIndex = self.Browse.selectedSubCategoryIndex
+    local subSubCategoryIndex = self.Browse.selectedSubSubCategoryIndex
     local filters
 
     if categoryIndex and subCategoryIndex and subSubCategoryIndex then

@@ -26,7 +26,8 @@ L["Default auction duration"] = true
 L["Default stack size"] = true
 L["Disenchant price"] = true
 L["Duration no deposit"] = true
-L["Enable ALT to sell"] = true
+--[====[ never used ]====]
+--[====[ L["Enable ALT to sell"] = true ]====]
 L["Enable ALT-CTRL click to buyout"] = true
 L["Export"] = true
 L["EXPORT_HEADER"] = "\"Price\",\"Name\",\"\",\"\",\"Count\""
@@ -79,7 +80,8 @@ L['Auto open price list'] = true
 L['Scan price mode'] = true
 L['Scan all'] = true
 L['Scan one page'] = true
-L['Enable ALT to sell'] = true
+--[====[ never used ]====]
+--[====[ L['Enable ALT to sell'] = true ]====]
 L['Default stack size'] = true
 L['Full'] = true
 L['Default auction duration'] = true
@@ -146,6 +148,13 @@ L['7 Days'] = true
 L['90 Days'] = true
 L['Auto clean database'] = true
 L.Never = true
+L['Cannot perform this action while the search is locked.'] = true
+L['I found that some addons prevent quick search and quick selling from working.'] = true
+L['Insecure Input'] = true
+L['Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm.'] = true
+L['Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search.'] = true
+L['|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text.'] = true
+L['Enable %s to sell'] = true
 -- @locale-fill@
 -- @end-import@
 -- @end-debug@

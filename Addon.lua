@@ -10,11 +10,13 @@
 ---@field BrowseScaner BrowseScaner
 ---@field FullScaner FullScaner
 ---@field PriceScaner PriceScaner
+---@field Secure Secure
+---@field LastLink LastLink
 -- module
 ---@field Querier Querier
 local ns = select(2, ...)
 
----@class Addon: AceAddon-3.0, LibClass-2.0, AceEvent-3.0
+---@class Addon: AceAddon, LibClass-2.0, AceEvent-3.0
 local Addon = LibStub('AceAddon-3.0'):NewAddon('tdAuction', 'LibClass-2.0', 'AceEvent-3.0')
 
 local L = LibStub('AceLocale-3.0'):GetLocale('tdAuction')
@@ -23,6 +25,7 @@ ns.Addon = Addon
 ---@class UI
 ---@field Browse UI.Browse
 ---@field BrowseItem UI.BrowseItem
+---@field SecureInput UI.SecureInput
 ns.UI = {}
 ns.L = L
 
@@ -51,7 +54,7 @@ local DEFAULT_PROFILE = { --
         durationNoDeposit = false,
         autoOpenPriceList = true,
         scanFull = false,
-        altSell = true,
+        quickSell = true,
         bidRatio = 0.95,
         merchantRatio = 5,
     },
@@ -178,120 +181,12 @@ function Addon:SetupBlizzardUI()
 end
 
 function Addon:OnAuctionLoaded()
-    self:FixFilter()
     self:SetupSort()
     self:SetupBackground()
     self:SetupUI()
 end
 
-function Addon:FixFilter()
-    local categories = {
-        -- [AUCTION_CATEGORY_WEAPONS] = Enum.ItemClass.Weapon,
-        -- [AUCTION_CATEGORY_ARMOR] = Enum.ItemClass.Armor,
-        [AUCTION_CATEGORY_CONTAINERS] = Enum.ItemClass.Container,
-        -- [AUCTION_CATEGORY_CONSUMABLES] = Enum.ItemClass.Consumable,
-        -- [AUCTION_CATEGORY_GLYPHS] = Enum.ItemClass.Glyph,
-        [AUCTION_CATEGORY_TRADE_GOODS] = Enum.ItemClass.Tradegoods,
-        -- [AUCTION_CATEGORY_PROJECTILE] = Enum.ItemClass.Projectile,
-        -- [AUCTION_CATEGORY_QUIVER] = Enum.ItemClass.Quiver,
-        [AUCTION_CATEGORY_RECIPES] = Enum.ItemClass.Recipe,
-        -- [AUCTION_CATEGORY_REAGENT] = Enum.ItemClass.Reagent,
-        -- [AUCTION_CATEGORY_GEMS] = Enum.ItemClass.Gem,
-        -- [AUCTION_CATEGORY_MISCELLANEOUS] = Enum.ItemClass.Miscellaneous,
-        -- [AUCTION_CATEGORY_QUEST_ITEMS] = Enum.ItemClass.Questitem,
-    }
-
-    for _, obj in pairs(AuctionCategories) do
-        if not obj.filters or not obj.filters[1] or not obj.filters[1].subClassID then
-            local classId = categories[obj.name]
-            if classId then
-                obj.filters = nil
-                -- @debug@
-                print('FixFilter', obj.name, classId)
-                -- @end-debug@
-                local subClassId = 0
-                while true do
-                    local name = GetItemSubClassInfo(classId, subClassId)
-                    if not name then
-                        break
-                    end
-                    obj:CreateSubCategoryAndFilter(classId, subClassId)
-                    subClassId = subClassId + 1
-                end
-            end
-        end
-    end
-end
-
 function Addon:SetupSort()
-    AuctionSort['list_level'] = {
-        {column = 'duration', reverse = true},
-        {column = 'unitprice', reverse = false},
-        {column = 'quantity', reverse = false},
-        {column = 'minbidbuyout', reverse = true},
-        {column = 'name', reverse = true},
-        {column = 'quality', reverse = true},
-        {column = 'level', reverse = false},
-    }
-
-    AuctionSort['list_duration'] = {
-        {column = 'unitprice', reverse = false},
-        {column = 'quantity', reverse = true},
-        {column = 'minbidbuyout', reverse = false},
-        {column = 'name', reverse = false},
-        {column = 'level', reverse = true},
-        {column = 'quality', reverse = false},
-        {column = 'duration', reverse = false},
-    }
-
-    AuctionSort['list_seller'] = {
-        {column = 'duration', reverse = false},
-        {column = 'unitprice', reverse = false},
-        {column = 'quantity', reverse = true},
-        {column = 'minbidbuyout', reverse = false},
-        {column = 'name', reverse = false},
-        {column = 'level', reverse = true},
-        {column = 'quality', reverse = false},
-        {column = 'seller', reverse = false},
-    }
-
-    AuctionSort['list_unitprice'] = {
-        {column = 'duration', reverse = false},
-        {column = 'quantity', reverse = true},
-        {column = 'name', reverse = false},
-        {column = 'level', reverse = true},
-        {column = 'quality', reverse = false},
-        {column = 'unitprice', reverse = false},
-    }
-
-    AuctionSort['list_unitbid'] = {
-        {column = 'duration', reverse = false},
-        {column = 'quantity', reverse = true},
-        {column = 'name', reverse = false},
-        {column = 'level', reverse = true},
-        {column = 'quality', reverse = false},
-        {column = 'unitbid', reverse = false},
-    }
-
-    AuctionSort['list_quality'] = {
-        {column = 'duration', reverse = false},
-        {column = 'unitprice', reverse = false},
-        {column = 'quantity', reverse = true},
-        {column = 'minbidbuyout', reverse = false},
-        {column = 'name', reverse = false},
-        {column = 'level', reverse = true},
-        {column = 'quality', reverse = false},
-    }
-
-    AuctionSort['list_buyout'] = {
-        {column = 'duration', reverse = false},
-        {column = 'quantity', reverse = true},
-        {column = 'name', reverse = false},
-        {column = 'level', reverse = true},
-        {column = 'quality', reverse = false},
-        {column = 'buyout', reverse = false},
-    }
-
     ns.SetSort('unitprice')
 end
 
@@ -331,14 +226,26 @@ end
 
 function Addon:SetupUI()
     self.FullScan = ns.UI.FullScan:Bind(CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionFullScanFrameTemplate'))
-    self.Browse = ns.UI.Browse:Bind(AuctionFrameBrowse)
+    self.Browse = ns.UI.Browse:Bind(CreateFrame('Frame', nil, AuctionFrameBrowse))
     self.Sell = ns.UI.Sell:Bind(AuctionFrameAuctions)
     ---@type tdAuctionFeaturesFrameTemplate
     self.Features = CreateFrame('Frame', nil, AuctionFrame, 'tdAuctionFeaturesFrameTemplate')
 
     self.Features:SetScript('OnShow', function()
         self.Features.FullScanButton:SetEnabled(ns.IsValidNpc())
+
+        if ns.TITAN then
+            ns.Secure:Enable()
+            ns.LastLink:Enable()
+        end
     end)
+
+    if ns.TITAN then
+        self.Features:SetScript('OnHide', function()
+            ns.Secure:Disable()
+            ns.LastLink:Disable()
+        end)
+    end
 
     self.Features.FullScanButton:SetScript('OnEnter', function(button)
         if button:IsEnabled() then

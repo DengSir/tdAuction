@@ -12,6 +12,10 @@ local PickupContainerItem = PickupContainerItem or C_Container.PickupContainerIt
 
 local Sell = ns.Addon:NewClass('UI.Sell', 'Frame')
 
+if ns.TITAN then
+    Sell.RegisterMessage = LibStub('AceEvent-3.0').RegisterMessage
+end
+
 function Sell:Constructor()
     self.scaner = ns.PriceScaner:New()
     self.scaner:SetCallback('OnDone', function()
@@ -145,6 +149,14 @@ function Sell:SetupEventsAndHooks()
         end
     end)
 
+    if ns.TITAN then
+        self:RegisterMessage('TDAUCTION_QUERY_FOR_SELL', function()
+            self.scaner:Query({virtual = true})
+            self:OnSellItemUpdate()
+            self.PriceReading:Show()
+        end)
+    end
+
     AuctionsBlockFrame:HookScript('OnShow', function()
         self.PriceList:Hide()
     end)
@@ -153,20 +165,22 @@ function Sell:SetupEventsAndHooks()
         self.validater:Show()
     end)
 
-    hooksecurefunc('ContainerFrameItemButton_OnModifiedClick', function(button)
-        if ns.profile.sell.altSell and AuctionFrame:IsShown() and IsAltKeyDown() then
-            local bag = button:GetParent():GetID()
-            local slot = button:GetID()
-            local locked = select(3, GetContainerItemInfo(bag, slot))
+    if not ns.TITAN then
+        hooksecurefunc('ContainerFrameItemButton_OnModifiedClick', function(button)
+            if ns.profile.sell.quickSell and AuctionFrame:IsShown() and IsAltKeyDown() then
+                local bag = button:GetParent():GetID()
+                local slot = button:GetID()
+                local locked = select(3, GetContainerItemInfo(bag, slot))
 
-            if not locked then
-                AuctionFrameTab_OnClick(AuctionFrameTab3)
-                PickupContainerItem(bag, slot)
-                ClickAuctionSellItemButton()
-                ClearCursor()
+                if not locked then
+                    AuctionFrameTab_OnClick(AuctionFrameTab3)
+                    PickupContainerItem(bag, slot)
+                    ClickAuctionSellItemButton()
+                    ClearCursor()
+                end
             end
-        end
-    end)
+        end)
+    end
 
     AuctionsStackSizeEntry:HookScript('OnTextChanged', function(_, text)
         if self.priceType ~= 1 and self.price then
@@ -189,6 +203,9 @@ function Sell:SetupEventsAndHooks()
 end
 
 function Sell:OnMultiSellDone()
+    if ns.TITAN then
+        return
+    end
     C_Timer.After(2, function()
         GetOwnerAuctionItems()
     end)
@@ -208,7 +225,9 @@ function Sell:OnSellItemUpdate()
     self.PriceListButton:Hide()
     self.PriceSetText:Hide()
     self.DurationDropDown:Hide()
-    self.PriceReading:Hide()
+    if not ns.TITAN then
+        self.PriceReading:Hide()
+    end
 
     if C_WowTokenPublic.IsAuctionableWowToken(itemId) then
         return
@@ -256,9 +275,11 @@ function Sell:OnSellItemUpdate()
         ns.SetMoneyFrame(self.StartPrice, 0)
         ns.SetMoneyFrame(self.BuyoutPrice, 0)
 
-        local link = ns.GetAuctionSellItemLink()
-        self.scaner:Query({text = link})
-        self.PriceReading:Show()
+        if not ns.TITAN then
+            local link = ns.GetAuctionSellItemLink()
+            self.scaner:Query({text = link})
+            self.PriceReading:Show()
+        end
     end
 
     self.DurationDropDown:Show()
@@ -287,7 +308,7 @@ function Sell:OnItemPriceScanDone()
             errText = L['No price']
         end
     else
-        if #items > 0 then
+        if items and #items > 0 then
             for i, item in ipairs(items) do
                 if not item.isMine then
                     price = item.price - 1
