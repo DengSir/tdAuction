@@ -141,17 +141,18 @@ function Sell:LayoutBlizzard()
 end
 
 function Sell:SetupEventsAndHooks()
-    -- AuctionsItemButton:HookScript('OnEvent', function(_, event)
-    --     if event == 'NEW_AUCTION_UPDATE' then
-    --         return self:OnSellItemUpdate()
-    --     end
-    -- end)
+    AuctionsItemButton:HookScript('OnEvent', function(_, event)
+        if event == 'NEW_AUCTION_UPDATE' then
+            return self:OnSellItemUpdate()
+        end
+    end)
 
-    -- self:HookScript('OnShow', self.OnSellItemUpdate)
+    self:HookScript('OnShow', self.OnSellItemUpdate)
 
     self:RegisterMessage('TDAUCTION_QUERY_FOR_SELL', function()
         self.scaner:Query({virtual = true})
         self:OnSellItemUpdate()
+        self.PriceReading:Show()
     end)
 
     AuctionsBlockFrame:HookScript('OnShow', function()
@@ -216,7 +217,7 @@ function Sell:OnSellItemUpdate()
     self.PriceListButton:Hide()
     self.PriceSetText:Hide()
     self.DurationDropDown:Hide()
-    self.PriceReading:Hide()
+    -- self.PriceReading:Hide()
 
     if C_WowTokenPublic.IsAuctionableWowToken(itemId) then
         return
@@ -266,9 +267,7 @@ function Sell:OnSellItemUpdate()
 
         -- local link = ns.GetAuctionSellItemLink()
         -- self.scaner:Query({text = link})
-        self.PriceReading:Show()
-
-        -- self:OnItemPriceScanDone()
+        -- self.PriceReading:Show()
     end
 
     self.DurationDropDown:Show()
