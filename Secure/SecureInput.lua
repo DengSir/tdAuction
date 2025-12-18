@@ -26,6 +26,8 @@ function SecureInput:Constructor()
     self.HeaderText:SetText(L['Insecure Input'])
 
     self.Input:SetScript('OnTextChanged', OnTextChanged)
+
+    self.Support:SetText(L['Support me'])
 end
 
 function SecureInput:SetText(text, fix)

@@ -41,6 +41,17 @@
                     <Anchor point="CENTER" x="0" y="-50" />
                 </Anchors>
             </EditBox>
+            <Button parentKey="Support" inherits="UIPanelButtonTemplate">
+                <Size x="120" y="22" />
+                <Anchors>
+                    <Anchor point="BOTTOM" x="0" y="20" />
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        LibStub('tdOptions'):Open('tdSupport')
+                    </OnClick>
+                </Scripts>
+            </Button>
         </Frames>
         <Scripts>
             <OnLoad>

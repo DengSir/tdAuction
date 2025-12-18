@@ -89,6 +89,7 @@ L['Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00
 L['|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text.'] =
     '|cff00fffftdAuction|r 无法检测链接来源，这可能导致污染，因此你需要手动输入搜索文本。'
 L['Enable %s to sell'] = '开启%s出售'
+L['Support me'] = '支持我'
 -- @locale-fill@
 
 -- @end-import@

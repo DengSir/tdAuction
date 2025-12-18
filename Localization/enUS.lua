@@ -160,6 +160,7 @@ L['Items with random enchantments cannot be searched correctly on the Chinese cl
 L['Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search.'] = true
 L['|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text.'] = true
 L['Enable %s to sell'] = true
+L['Support me'] = true
 -- @locale-fill@
 -- @end-import@
 -- @end-debug@
