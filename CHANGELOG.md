@@ -1,3 +1,12 @@
+## [2.0.1](https://github.com/DengSir/tdAuction/compare/v2.0.0...v2.0.1) (2025-12-18)
+
+
+### Features
+
+* 添加一个按钮 ([bab88da](https://github.com/DengSir/tdAuction/commit/bab88da1f5aa58b7fe27f2232bd4150e25f5e3cc))
+
+
+
 # [2.0.0](https://github.com/DengSir/tdAuction/compare/v1.2.12...v2.0.0) (2025-12-18)
 
 
