@@ -59,6 +59,7 @@ L["Single price"] = true
 L["Start auction:"] = true
 L["Start price discount"] = true
 L["Start scan"] = true
+L["Support me"] = true
 L["Time"] = true
 L["Time different"] = true
 L["Toggle column"] = true

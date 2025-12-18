@@ -86,6 +86,8 @@ L["Single price"] = "Einzelpreis"
 L["Start auction:"] = "Auktion starten:"
 L["Start price discount"] = "Startpreis Rabatt"
 L["Start scan"] = "Scan starten"
+--[[Translation missing --]]
+--[[ L["Support me"] = "Support me"--]] 
 L["Time"] = "Zeit"
 --[[Translation missing --]]
 --[[ L["Time different"] = "Time different"--]] 
@@ -220,6 +222,8 @@ L = L or {}
 --[[ L["Start price discount"] = "Start price discount"--]] 
 --[[Translation missing --]]
 --[[ L["Start scan"] = "Start scan"--]] 
+--[[Translation missing --]]
+--[[ L["Support me"] = "Support me"--]] 
 --[[Translation missing --]]
 --[[ L["Time"] = "Time"--]] 
 --[[Translation missing --]]
@@ -369,6 +373,8 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Start scan"] = "Start scan"--]] 
 --[[Translation missing --]]
+--[[ L["Support me"] = "Support me"--]] 
+--[[Translation missing --]]
 --[[ L["Time"] = "Time"--]] 
 --[[Translation missing --]]
 --[[ L["Time different"] = "Time different"--]] 
@@ -516,6 +522,8 @@ L = L or {}
 --[[ L["Start price discount"] = "Start price discount"--]] 
 --[[Translation missing --]]
 --[[ L["Start scan"] = "Start scan"--]] 
+--[[Translation missing --]]
+--[[ L["Support me"] = "Support me"--]] 
 --[[Translation missing --]]
 --[[ L["Time"] = "Time"--]] 
 --[[Translation missing --]]
@@ -665,6 +673,8 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Start scan"] = "Start scan"--]] 
 --[[Translation missing --]]
+--[[ L["Support me"] = "Support me"--]] 
+--[[Translation missing --]]
 --[[ L["Time"] = "Time"--]] 
 --[[Translation missing --]]
 --[[ L["Time different"] = "Time different"--]] 
@@ -813,6 +823,8 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Start scan"] = "Start scan"--]] 
 --[[Translation missing --]]
+--[[ L["Support me"] = "Support me"--]] 
+--[[Translation missing --]]
 --[[ L["Time"] = "Time"--]] 
 --[[Translation missing --]]
 --[[ L["Time different"] = "Time different"--]] 
@@ -913,6 +925,8 @@ L["Single price"] = "Единая цена"
 L["Start auction:"] = "Начать аукцион:"
 L["Start price discount"] = "Скидка на начальную цену"
 L["Start scan"] = "Начать сканирование"
+--[[Translation missing --]]
+--[[ L["Support me"] = "Support me"--]] 
 L["Time"] = "Время"
 L["Time different"] = "Время другое"
 L["Toggle column"] = "Переключить столбец"
@@ -1044,6 +1058,8 @@ L = L or {}
 --[[ L["Start price discount"] = "Start price discount"--]] 
 --[[Translation missing --]]
 --[[ L["Start scan"] = "Start scan"--]] 
+--[[Translation missing --]]
+--[[ L["Support me"] = "Support me"--]] 
 --[[Translation missing --]]
 --[[ L["Time"] = "Time"--]] 
 --[[Translation missing --]]
