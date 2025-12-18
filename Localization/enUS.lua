@@ -5,6 +5,7 @@ end
 
 -- @locale:language=enUS@
 L = L or {}
+L["|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."] = true
 L["1 Year"] = true
 L["180 Days"] = true
 L["30 Days"] = true
@@ -17,6 +18,7 @@ L["Auto clean database"] = true
 L["Auto open price list"] = true
 L["Bid price"] = true
 L["Bid unit price"] = true
+L["Cannot perform this action while the search is locked."] = true
 L["Choose other price"] = true
 L["Clear database"] = true
 L["Count"] = true
@@ -26,16 +28,18 @@ L["Default auction duration"] = true
 L["Default stack size"] = true
 L["Disenchant price"] = true
 L["Duration no deposit"] = true
---[====[ never used ]====]
---[====[ L["Enable ALT to sell"] = true ]====]
+L["Enable %s to sell"] = true
 L["Enable ALT-CTRL click to buyout"] = true
 L["Export"] = true
 L["EXPORT_HEADER"] = "\"Price\",\"Name\",\"\",\"\",\"Count\""
 L["Full"] = true
 L["Full scan"] = true
 L["Full scaning, elapsed time: %s"] = true
+L["I found that some addons prevent quick search and quick selling from working."] = true
 L["Ignore"] = true
 L["in about %s"] = true
+L["Insecure Input"] = true
+L["Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."] = true
 L["Merchant price"] = true
 L["Nerver"] = true
 L["Never"] = true
@@ -43,6 +47,7 @@ L["New"] = true
 L["Next available time:"] = true
 L["No price"] = true
 L["Now"] = true
+L["Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."] = true
 L["Pressed SHIFT"] = true
 L["Price"] = true
 L["Processing data, elapsed time: %s"] = true

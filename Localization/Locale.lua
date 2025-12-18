@@ -13,6 +13,8 @@ T('deDE', function(L)
 -- @locale:language=deDE@
 L = L or {}
 --[[Translation missing --]]
+--[[ L["|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."] = "|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."--]] 
+--[[Translation missing --]]
 --[[ L["1 Year"] = "1 Year"--]] 
 --[[Translation missing --]]
 --[[ L["180 Days"] = "180 Days"--]] 
@@ -32,6 +34,8 @@ L["Auto open price list"] = "Preisliste automatisch öffnen"
 L["Bid price"] = "Gebot"
 --[[Translation missing --]]
 --[[ L["Bid unit price"] = "Bid unit price"--]] 
+--[[Translation missing --]]
+--[[ L["Cannot perform this action while the search is locked."] = "Cannot perform this action while the search is locked."--]] 
 L["Choose other price"] = "Anderen Preis wählen"
 L["Clear database"] = "Datenbank leeren"
 L["Count"] = "Anzahl"
@@ -43,7 +47,8 @@ L["Default stack size"] = "Standardtwert für Stapelgröße"
 L["Disenchant price"] = "Entzauberungspreis"
 --[[Translation missing --]]
 --[[ L["Duration no deposit"] = "Duration no deposit"--]] 
-L["Enable ALT to sell"] = "Aktiviere ALT zum verkaufen"
+--[[Translation missing --]]
+--[[ L["Enable %s to sell"] = "Enable %s to sell"--]] 
 L["Enable ALT-CTRL click to buyout"] = "Aktiviere ALT-STRG zum kaufen"
 --[[Translation missing --]]
 --[[ L["Export"] = "Export"--]] 
@@ -52,8 +57,14 @@ L["Enable ALT-CTRL click to buyout"] = "Aktiviere ALT-STRG zum kaufen"
 L["Full"] = "Voll"
 L["Full scan"] = "Vollständiger Scan"
 L["Full scaning, elapsed time: %s"] = "Vollständiger Scan, verstrichene Zeit: %s"
+--[[Translation missing --]]
+--[[ L["I found that some addons prevent quick search and quick selling from working."] = "I found that some addons prevent quick search and quick selling from working."--]] 
 L["Ignore"] = "Ignorieren"
 L["in about %s"] = "in etwa %s"
+--[[Translation missing --]]
+--[[ L["Insecure Input"] = "Insecure Input"--]] 
+--[[Translation missing --]]
+--[[ L["Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."] = "Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."--]] 
 L["Merchant price"] = "Händlerpreis"
 L["Nerver"] = "Niemals"
 --[[Translation missing --]]
@@ -62,6 +73,8 @@ L["New"] = "Neu"
 L["Next available time:"] = "Nächste verfügbare Zeit:"
 L["No price"] = "Kein Preis"
 L["Now"] = "Jetzt"
+--[[Translation missing --]]
+--[[ L["Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."] = "Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."--]] 
 L["Pressed SHIFT"] = "Wenn SHIFT gedrückt"
 L["Price"] = "Preis"
 L["Processing data, elapsed time: %s"] = "Verarbeite Daten, verstrichene Zeit: %s"
@@ -100,6 +113,8 @@ T('esES', function(L)
 -- @locale:language=esES@
 L = L or {}
 --[[Translation missing --]]
+--[[ L["|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."] = "|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."--]] 
+--[[Translation missing --]]
 --[[ L["1 Year"] = "1 Year"--]] 
 --[[Translation missing --]]
 --[[ L["180 Days"] = "180 Days"--]] 
@@ -124,6 +139,8 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Bid unit price"] = "Bid unit price"--]] 
 --[[Translation missing --]]
+--[[ L["Cannot perform this action while the search is locked."] = "Cannot perform this action while the search is locked."--]] 
+--[[Translation missing --]]
 --[[ L["Choose other price"] = "Choose other price"--]] 
 --[[Translation missing --]]
 --[[ L["Clear database"] = "Clear database"--]] 
@@ -142,7 +159,7 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Duration no deposit"] = "Duration no deposit"--]] 
 --[[Translation missing --]]
---[[ L["Enable ALT to sell"] = "Enable ALT to sell"--]] 
+--[[ L["Enable %s to sell"] = "Enable %s to sell"--]] 
 --[[Translation missing --]]
 --[[ L["Enable ALT-CTRL click to buyout"] = "Enable ALT-CTRL click to buyout"--]] 
 --[[Translation missing --]]
@@ -156,9 +173,15 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Full scaning, elapsed time: %s"] = "Full scaning, elapsed time: %s"--]] 
 --[[Translation missing --]]
+--[[ L["I found that some addons prevent quick search and quick selling from working."] = "I found that some addons prevent quick search and quick selling from working."--]] 
+--[[Translation missing --]]
 --[[ L["Ignore"] = "Ignore"--]] 
 --[[Translation missing --]]
 --[[ L["in about %s"] = "in about %s"--]] 
+--[[Translation missing --]]
+--[[ L["Insecure Input"] = "Insecure Input"--]] 
+--[[Translation missing --]]
+--[[ L["Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."] = "Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."--]] 
 --[[Translation missing --]]
 --[[ L["Merchant price"] = "Merchant price"--]] 
 --[[Translation missing --]]
@@ -173,6 +196,8 @@ L = L or {}
 --[[ L["No price"] = "No price"--]] 
 --[[Translation missing --]]
 --[[ L["Now"] = "Now"--]] 
+--[[Translation missing --]]
+--[[ L["Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."] = "Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."--]] 
 --[[Translation missing --]]
 --[[ L["Pressed SHIFT"] = "Pressed SHIFT"--]] 
 --[[Translation missing --]]
@@ -236,6 +261,8 @@ T('frFR', function(L)
 -- @locale:language=frFR@
 L = L or {}
 --[[Translation missing --]]
+--[[ L["|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."] = "|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."--]] 
+--[[Translation missing --]]
 --[[ L["1 Year"] = "1 Year"--]] 
 --[[Translation missing --]]
 --[[ L["180 Days"] = "180 Days"--]] 
@@ -260,6 +287,8 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Bid unit price"] = "Bid unit price"--]] 
 --[[Translation missing --]]
+--[[ L["Cannot perform this action while the search is locked."] = "Cannot perform this action while the search is locked."--]] 
+--[[Translation missing --]]
 --[[ L["Choose other price"] = "Choose other price"--]] 
 --[[Translation missing --]]
 --[[ L["Clear database"] = "Clear database"--]] 
@@ -278,7 +307,7 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Duration no deposit"] = "Duration no deposit"--]] 
 --[[Translation missing --]]
---[[ L["Enable ALT to sell"] = "Enable ALT to sell"--]] 
+--[[ L["Enable %s to sell"] = "Enable %s to sell"--]] 
 --[[Translation missing --]]
 --[[ L["Enable ALT-CTRL click to buyout"] = "Enable ALT-CTRL click to buyout"--]] 
 --[[Translation missing --]]
@@ -292,9 +321,15 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Full scaning, elapsed time: %s"] = "Full scaning, elapsed time: %s"--]] 
 --[[Translation missing --]]
+--[[ L["I found that some addons prevent quick search and quick selling from working."] = "I found that some addons prevent quick search and quick selling from working."--]] 
+--[[Translation missing --]]
 --[[ L["Ignore"] = "Ignore"--]] 
 --[[Translation missing --]]
 --[[ L["in about %s"] = "in about %s"--]] 
+--[[Translation missing --]]
+--[[ L["Insecure Input"] = "Insecure Input"--]] 
+--[[Translation missing --]]
+--[[ L["Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."] = "Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."--]] 
 --[[Translation missing --]]
 --[[ L["Merchant price"] = "Merchant price"--]] 
 --[[Translation missing --]]
@@ -309,6 +344,8 @@ L = L or {}
 --[[ L["No price"] = "No price"--]] 
 --[[Translation missing --]]
 --[[ L["Now"] = "Now"--]] 
+--[[Translation missing --]]
+--[[ L["Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."] = "Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."--]] 
 --[[Translation missing --]]
 --[[ L["Pressed SHIFT"] = "Pressed SHIFT"--]] 
 --[[Translation missing --]]
@@ -372,6 +409,8 @@ T('itIT', function(L)
 -- @locale:language=itIT@
 L = L or {}
 --[[Translation missing --]]
+--[[ L["|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."] = "|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."--]] 
+--[[Translation missing --]]
 --[[ L["1 Year"] = "1 Year"--]] 
 --[[Translation missing --]]
 --[[ L["180 Days"] = "180 Days"--]] 
@@ -396,6 +435,8 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Bid unit price"] = "Bid unit price"--]] 
 --[[Translation missing --]]
+--[[ L["Cannot perform this action while the search is locked."] = "Cannot perform this action while the search is locked."--]] 
+--[[Translation missing --]]
 --[[ L["Choose other price"] = "Choose other price"--]] 
 --[[Translation missing --]]
 --[[ L["Clear database"] = "Clear database"--]] 
@@ -414,7 +455,7 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Duration no deposit"] = "Duration no deposit"--]] 
 --[[Translation missing --]]
---[[ L["Enable ALT to sell"] = "Enable ALT to sell"--]] 
+--[[ L["Enable %s to sell"] = "Enable %s to sell"--]] 
 --[[Translation missing --]]
 --[[ L["Enable ALT-CTRL click to buyout"] = "Enable ALT-CTRL click to buyout"--]] 
 --[[Translation missing --]]
@@ -428,9 +469,15 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Full scaning, elapsed time: %s"] = "Full scaning, elapsed time: %s"--]] 
 --[[Translation missing --]]
+--[[ L["I found that some addons prevent quick search and quick selling from working."] = "I found that some addons prevent quick search and quick selling from working."--]] 
+--[[Translation missing --]]
 --[[ L["Ignore"] = "Ignore"--]] 
 --[[Translation missing --]]
 --[[ L["in about %s"] = "in about %s"--]] 
+--[[Translation missing --]]
+--[[ L["Insecure Input"] = "Insecure Input"--]] 
+--[[Translation missing --]]
+--[[ L["Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."] = "Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."--]] 
 --[[Translation missing --]]
 --[[ L["Merchant price"] = "Merchant price"--]] 
 --[[Translation missing --]]
@@ -445,6 +492,8 @@ L = L or {}
 --[[ L["No price"] = "No price"--]] 
 --[[Translation missing --]]
 --[[ L["Now"] = "Now"--]] 
+--[[Translation missing --]]
+--[[ L["Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."] = "Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."--]] 
 --[[Translation missing --]]
 --[[ L["Pressed SHIFT"] = "Pressed SHIFT"--]] 
 --[[Translation missing --]]
@@ -508,6 +557,8 @@ T('koKR', function(L)
 -- @locale:language=koKR@
 L = L or {}
 --[[Translation missing --]]
+--[[ L["|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."] = "|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."--]] 
+--[[Translation missing --]]
 --[[ L["1 Year"] = "1 Year"--]] 
 --[[Translation missing --]]
 --[[ L["180 Days"] = "180 Days"--]] 
@@ -532,6 +583,8 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Bid unit price"] = "Bid unit price"--]] 
 --[[Translation missing --]]
+--[[ L["Cannot perform this action while the search is locked."] = "Cannot perform this action while the search is locked."--]] 
+--[[Translation missing --]]
 --[[ L["Choose other price"] = "Choose other price"--]] 
 --[[Translation missing --]]
 --[[ L["Clear database"] = "Clear database"--]] 
@@ -550,7 +603,7 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Duration no deposit"] = "Duration no deposit"--]] 
 --[[Translation missing --]]
---[[ L["Enable ALT to sell"] = "Enable ALT to sell"--]] 
+--[[ L["Enable %s to sell"] = "Enable %s to sell"--]] 
 --[[Translation missing --]]
 --[[ L["Enable ALT-CTRL click to buyout"] = "Enable ALT-CTRL click to buyout"--]] 
 --[[Translation missing --]]
@@ -564,9 +617,15 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Full scaning, elapsed time: %s"] = "Full scaning, elapsed time: %s"--]] 
 --[[Translation missing --]]
+--[[ L["I found that some addons prevent quick search and quick selling from working."] = "I found that some addons prevent quick search and quick selling from working."--]] 
+--[[Translation missing --]]
 --[[ L["Ignore"] = "Ignore"--]] 
 --[[Translation missing --]]
 --[[ L["in about %s"] = "in about %s"--]] 
+--[[Translation missing --]]
+--[[ L["Insecure Input"] = "Insecure Input"--]] 
+--[[Translation missing --]]
+--[[ L["Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."] = "Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."--]] 
 --[[Translation missing --]]
 --[[ L["Merchant price"] = "Merchant price"--]] 
 --[[Translation missing --]]
@@ -581,6 +640,8 @@ L = L or {}
 --[[ L["No price"] = "No price"--]] 
 --[[Translation missing --]]
 --[[ L["Now"] = "Now"--]] 
+--[[Translation missing --]]
+--[[ L["Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."] = "Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."--]] 
 --[[Translation missing --]]
 --[[ L["Pressed SHIFT"] = "Pressed SHIFT"--]] 
 --[[Translation missing --]]
@@ -644,6 +705,8 @@ T('ptBR', function(L)
 -- @locale:language=ptBR@
 L = L or {}
 --[[Translation missing --]]
+--[[ L["|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."] = "|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."--]] 
+--[[Translation missing --]]
 --[[ L["1 Year"] = "1 Year"--]] 
 --[[Translation missing --]]
 --[[ L["180 Days"] = "180 Days"--]] 
@@ -668,6 +731,8 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Bid unit price"] = "Bid unit price"--]] 
 --[[Translation missing --]]
+--[[ L["Cannot perform this action while the search is locked."] = "Cannot perform this action while the search is locked."--]] 
+--[[Translation missing --]]
 --[[ L["Choose other price"] = "Choose other price"--]] 
 --[[Translation missing --]]
 --[[ L["Clear database"] = "Clear database"--]] 
@@ -686,7 +751,7 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Duration no deposit"] = "Duration no deposit"--]] 
 --[[Translation missing --]]
---[[ L["Enable ALT to sell"] = "Enable ALT to sell"--]] 
+--[[ L["Enable %s to sell"] = "Enable %s to sell"--]] 
 --[[Translation missing --]]
 --[[ L["Enable ALT-CTRL click to buyout"] = "Enable ALT-CTRL click to buyout"--]] 
 --[[Translation missing --]]
@@ -700,9 +765,15 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Full scaning, elapsed time: %s"] = "Full scaning, elapsed time: %s"--]] 
 --[[Translation missing --]]
+--[[ L["I found that some addons prevent quick search and quick selling from working."] = "I found that some addons prevent quick search and quick selling from working."--]] 
+--[[Translation missing --]]
 --[[ L["Ignore"] = "Ignore"--]] 
 --[[Translation missing --]]
 --[[ L["in about %s"] = "in about %s"--]] 
+--[[Translation missing --]]
+--[[ L["Insecure Input"] = "Insecure Input"--]] 
+--[[Translation missing --]]
+--[[ L["Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."] = "Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."--]] 
 --[[Translation missing --]]
 --[[ L["Merchant price"] = "Merchant price"--]] 
 --[[Translation missing --]]
@@ -717,6 +788,8 @@ L = L or {}
 --[[ L["No price"] = "No price"--]] 
 --[[Translation missing --]]
 --[[ L["Now"] = "Now"--]] 
+--[[Translation missing --]]
+--[[ L["Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."] = "Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."--]] 
 --[[Translation missing --]]
 --[[ L["Pressed SHIFT"] = "Pressed SHIFT"--]] 
 --[[Translation missing --]]
@@ -779,6 +852,8 @@ end)
 T('ruRU', function(L)
 -- @locale:language=ruRU@
 L = L or {}
+--[[Translation missing --]]
+--[[ L["|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."] = "|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."--]] 
 L["1 Year"] = "1 год"
 L["180 Days"] = "180 дней"
 L["30 Days"] = "30 дней"
@@ -791,6 +866,8 @@ L["Auto clean database"] = "Автоматическая очистка базы
 L["Auto open price list"] = "Автоматически открыть прайс-лист"
 L["Bid price"] = "Цена предложения"
 L["Bid unit price"] = "Цена за единицу предложения"
+--[[Translation missing --]]
+--[[ L["Cannot perform this action while the search is locked."] = "Cannot perform this action while the search is locked."--]] 
 L["Choose other price"] = "Выбрать другую цену"
 L["Clear database"] = "Очистить базу данных"
 L["Count"] = "Считать"
@@ -800,15 +877,22 @@ L["Default auction duration"] = "Продолжительность аукцио
 L["Default stack size"] = "Размер стака по умолчанию"
 L["Disenchant price"] = "Цена наложения чар"
 L["Duration no deposit"] = "Продолжительность без депозита"
-L["Enable ALT to sell"] = "Включить ALT для продажи"
+--[[Translation missing --]]
+--[[ L["Enable %s to sell"] = "Enable %s to sell"--]] 
 L["Enable ALT-CTRL click to buyout"] = "Включить ALT-CTRL для выкупа"
 L["Export"] = "Экспорт"
 L["EXPORT_HEADER"] = "\"Цена\",\"Имя\",\"\",\"\",\"Количество\""
 L["Full"] = "Полное"
 L["Full scan"] = "Полное сканирование"
 L["Full scaning, elapsed time: %s"] = "Полное сканирование, прошедшее время: %s"
+--[[Translation missing --]]
+--[[ L["I found that some addons prevent quick search and quick selling from working."] = "I found that some addons prevent quick search and quick selling from working."--]] 
 L["Ignore"] = "Игнорировать"
 L["in about %s"] = "примерно в %s"
+--[[Translation missing --]]
+--[[ L["Insecure Input"] = "Insecure Input"--]] 
+--[[Translation missing --]]
+--[[ L["Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."] = "Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."--]] 
 L["Merchant price"] = "Цена торговца"
 L["Nerver"] = "Никогда"
 L["Never"] = "Никогда"
@@ -816,6 +900,8 @@ L["New"] = "Новый"
 L["Next available time:"] = "Ближайшее доступное время:"
 L["No price"] = "Нет цены"
 L["Now"] = "Сейчас"
+--[[Translation missing --]]
+--[[ L["Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."] = "Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."--]] 
 L["Pressed SHIFT"] = "Нажата клавиша SHIFT"
 L["Price"] = "Цена"
 L["Processing data, elapsed time: %s"] = "Обработка данных, прошедшее время: %s"
@@ -851,6 +937,8 @@ T('zhTW', function(L)
 -- @locale:language=zhTW@
 L = L or {}
 --[[Translation missing --]]
+--[[ L["|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."] = "|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text."--]] 
+--[[Translation missing --]]
 --[[ L["1 Year"] = "1 Year"--]] 
 --[[Translation missing --]]
 --[[ L["180 Days"] = "180 Days"--]] 
@@ -875,6 +963,8 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Bid unit price"] = "Bid unit price"--]] 
 --[[Translation missing --]]
+--[[ L["Cannot perform this action while the search is locked."] = "Cannot perform this action while the search is locked."--]] 
+--[[Translation missing --]]
 --[[ L["Choose other price"] = "Choose other price"--]] 
 --[[Translation missing --]]
 --[[ L["Clear database"] = "Clear database"--]] 
@@ -893,7 +983,7 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Duration no deposit"] = "Duration no deposit"--]] 
 --[[Translation missing --]]
---[[ L["Enable ALT to sell"] = "Enable ALT to sell"--]] 
+--[[ L["Enable %s to sell"] = "Enable %s to sell"--]] 
 --[[Translation missing --]]
 --[[ L["Enable ALT-CTRL click to buyout"] = "Enable ALT-CTRL click to buyout"--]] 
 --[[Translation missing --]]
@@ -907,9 +997,15 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Full scaning, elapsed time: %s"] = "Full scaning, elapsed time: %s"--]] 
 --[[Translation missing --]]
+--[[ L["I found that some addons prevent quick search and quick selling from working."] = "I found that some addons prevent quick search and quick selling from working."--]] 
+--[[Translation missing --]]
 --[[ L["Ignore"] = "Ignore"--]] 
 --[[Translation missing --]]
 --[[ L["in about %s"] = "in about %s"--]] 
+--[[Translation missing --]]
+--[[ L["Insecure Input"] = "Insecure Input"--]] 
+--[[Translation missing --]]
+--[[ L["Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."] = "Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm."--]] 
 --[[Translation missing --]]
 --[[ L["Merchant price"] = "Merchant price"--]] 
 --[[Translation missing --]]
@@ -924,6 +1020,8 @@ L = L or {}
 --[[ L["No price"] = "No price"--]] 
 --[[Translation missing --]]
 --[[ L["Now"] = "Now"--]] 
+--[[Translation missing --]]
+--[[ L["Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."] = "Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00Enter|r to search."--]] 
 --[[Translation missing --]]
 --[[ L["Pressed SHIFT"] = "Pressed SHIFT"--]] 
 --[[Translation missing --]]
