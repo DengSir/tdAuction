@@ -1,3 +1,12 @@
+# [2.0.0](https://github.com/DengSir/tdAuction/compare/v1.2.12...v2.0.0) (2025-12-18)
+
+
+### Features
+
+* support TITAN realm ([17ec445](https://github.com/DengSir/tdAuction/commit/17ec44524689c9f571596bd6819a3be0cda4c80b))
+
+
+
 ## [1.2.12](https://github.com/DengSir/tdAuction/compare/v1.2.11...v1.2.12) (2025-11-21)
 
 
