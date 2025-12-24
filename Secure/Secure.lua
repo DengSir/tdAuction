@@ -164,9 +164,13 @@ function Secure:MODIFIER_STATE_CHANGED()
 end
 
 function Secure:CreateOverlay()
-    local overlay = CreateFrame('Button', nil, UIParent, 'SecureActionButtonTemplate')
+    ---@type Button
+    local overlay = CreateFrame('Button', nil, UIParent,
+                                'SecureActionButtonTemplate SecureHandlerShowHideTemplate SecureHandlerEnterLeaveTemplate SecureHandlerStateTemplate')
+    overlay:SetPropagateMouseMotion(true)
+    overlay:SetFrameStrata('FULLSCREEN_DIALOG')
+
     overlay:SetAttribute('type', 'macro')
-    overlay:SetScript('OnLeave', overlay.Hide)
     overlay:SetScript('PreClick', function(overlay)
         if overlay.mode == MODE_LOCKED then
             UIErrorsFrame:AddMessage(L['Cannot perform this action while the search is locked.'],
@@ -180,6 +184,22 @@ function Secure:CreateOverlay()
             ClearCursor()
         end
     end)
+    overlay:SetAttribute('_onstate-usable', [[
+        if newstate == '1' then
+            self:Hide()
+        end
+    ]])
+    overlay:SetAttribute('_onleave', [[
+        self:Hide()
+    ]])
+    overlay:SetAttribute('_onhide', [[
+        self:Hide()
+        self:SetParent(nil)
+        self:ClearAllPoints()
+    ]])
+
+    RegisterStateDriver(overlay, 'usable', '[combat]1;0')
+
     self.Overlay = overlay
     return overlay
 end
@@ -187,10 +207,9 @@ end
 function Secure:SetupOverlay(button, bag, slot, mode)
     local overlay = self.Overlay or self:CreateOverlay()
     overlay:ClearAllPoints()
-    overlay:SetParent(button)
     overlay:SetAllPoints(button)
-    overlay:SetPropagateMouseMotion(true)
-    overlay:SetFrameLevel(button:GetFrameLevel() + 10)
+    overlay:SetFrameStrata('FULLSCREEN_DIALOG')
+    overlay:SetFrameLevel(9900)
     overlay:SetAttribute('macrotext', self:GenerateMacro(button, mode))
     overlay:Show()
     overlay.bag = bag
@@ -280,6 +299,7 @@ function Secure:GetCurrentMode()
     end
 end
 
+-- @debug@
 function AuctionSecure()
     print('AuctionFrameBrowse.page', issecurevariable(AuctionFrameBrowse, 'page'))
     print('AuctionFrameBrowse.selectedCategoryIndex', issecurevariable(AuctionFrameBrowse, 'selectedCategoryIndex'))
@@ -295,4 +315,4 @@ function AuctionSecure()
     print('ChatEdit_InsertLink', issecurevariable('ChatEdit_InsertLink'))
     print('HandleModifiedClick', issecurevariable('HandleModifiedClick'))
 end
-
+-- @end-debug@

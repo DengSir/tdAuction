@@ -31,6 +31,10 @@ function Browse:Constructor(parent)
     self.scaner:SetCallback('OnDone', function()
         self.Browse.isSearching = nil
         self:UpdateAll()
+
+        if self.SecureInput then
+            self.SecureInput:Hide()
+        end
     end)
 
     self.Browse = parent

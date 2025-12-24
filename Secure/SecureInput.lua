@@ -11,21 +11,22 @@ local L = ns.L
 ---@class UI.SecureInput : Frame
 local SecureInput = ns.Addon:NewClass('UI.SecureInput', 'Frame')
 
-local function OnTextChanged(editBox, userInput)
-    if not editBox:IsVisible() then
-        return
-    end
-    if userInput or editBox:GetText() == '' then
-        editBox:GetParent():Hide()
-        BrowseName:SetText('')
-        BrowseName:SetFocus()
-    end
-end
-
 function SecureInput:Constructor()
     self.HeaderText:SetText(L['Insecure Input'])
 
-    self.Input:SetScript('OnTextChanged', OnTextChanged)
+    self.Input:SetScript('OnTextChanged', function(editBox, userInput)
+        if not editBox:IsVisible() then
+            return
+        end
+        if userInput or editBox:GetText() == '' then
+            editBox:GetParent():Hide()
+            BrowseName:SetText('')
+            BrowseName:SetFocus()
+        end
+    end)
+    self.Input:SetScript('OnEditFocusLost', function()
+        self:Hide()
+    end)
 
     self.Support:SetText(L['Support me'])
 end

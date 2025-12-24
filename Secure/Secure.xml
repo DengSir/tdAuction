@@ -35,7 +35,7 @@
                     <Anchor point="TOPRIGHT" x="-8" y="-8"/>
                 </Anchors>
             </Button>
-            <EditBox parentKey="Input" autoFocus="true" justifyH="CENTER" inherits="InputBoxInstructionsTemplate">
+            <EditBox parentKey="Input" autoFocus="false" justifyH="CENTER" inherits="InputBoxInstructionsTemplate">
                 <Size x="340" y="16" />
                 <Anchors>
                     <Anchor point="CENTER" x="0" y="-50" />
@@ -60,6 +60,7 @@
             <OnShow>
                 self:SetFrameLevel(self:GetParent():GetFrameLevel() + 100)
                 self.Blocker:SetFrameLevel(self:GetFrameLevel() - 1)
+                self.Input:SetFocus()
             </OnShow>
             <OnHide>
                 self:Hide()
