@@ -1,3 +1,12 @@
+## [2.0.2](https://github.com/DengSir/tdAuction/compare/v2.0.1...v2.0.2) (2025-12-24)
+
+
+### Bug Fixes
+
+* 修复战斗中可能打不开背包的问题 ([17a50cb](https://github.com/DengSir/tdAuction/commit/17a50cb2cb3574323e0b0245ad43e6fef4586954))
+
+
+
 ## [2.0.1](https://github.com/DengSir/tdAuction/compare/v2.0.0...v2.0.1) (2025-12-18)
 
 
