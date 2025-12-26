@@ -187,4 +187,25 @@
             <Color r="1" g="1" b="1" a="0.3" />
         </HighlightTexture>
     </Button>
+
+    <Frame name="tdAuctionWarningTemplate" enableMouse="true" hidden="true" virtual="true">
+        <Size x="20" y="20"/>
+        <Layers>
+            <Layer level="ARTWORK">
+                <Texture file="Interface\DialogFrame\UI-Dialog-Icon-AlertNew">
+                    <Size x="20" y="20"/>
+                    <Anchors>
+                        <Anchor point="CENTER" />
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+        <Scripts>
+            <OnEnter>
+                GameTooltip:SetOwner(self, 'ANCHOR_RIGHT')
+                GameTooltip:SetText(self.text, 1, 0, 0, 1, true)
+            </OnEnter>
+            <OnLeave function="GameTooltip_Hide" />
+        </Scripts>
+    </Frame>
 </Ui>

@@ -71,10 +71,33 @@ function Secure:OnEnable()
 
     self:SecureHook(BrowseName, 'SetText', 'BrowseName_SetText')
     self:SecureHook('QueryAuctionItems')
+
+    self.timer = C_Timer.NewTicker(1, function()
+        if not self:IsEnabled() then
+            return
+        end
+
+        if not self:IsSecure() then
+            self:GetWarningFrame():Show()
+        elseif self.WarningFrame then
+            self.WarningFrame:Hide()
+        end
+    end)
+
+    if AtlasLootMY and AtlasLootMY.Button and AtlasLootMY.Button.AddChatLink then
+        self:RawHook(AtlasLootMY.Button, 'AddChatLink', function(_, link)
+            ChatEdit_InsertLink(link)
+        end, true)
+    end
 end
 
 function Secure:OnDisable()
     self:CloseOverlay()
+
+    if self.timer then
+        self.timer:Cancel()
+        self.timer = nil
+    end
 end
 
 local secures = {
@@ -297,6 +320,16 @@ function Secure:GetCurrentMode()
     elseif AuctionFrameAuctions:IsVisible() and ns.profile.sell.quickSell then
         return MODE_SELL
     end
+end
+
+function Secure:GetWarningFrame()
+    if not self.WarningFrame then
+        local WarningFrame = CreateFrame('Frame', nil, ns.Addon.Features, 'tdAuctionWarningTemplate')
+        WarningFrame:SetPoint('LEFT', ns.Addon.Features.OptionButton, 'RIGHT', 6, 0)
+        WarningFrame.text = L['I found that some addons prevent quick search and quick selling from working.']
+        self.WarningFrame = WarningFrame
+    end
+    return self.WarningFrame
 end
 
 -- @debug@
