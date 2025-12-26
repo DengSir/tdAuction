@@ -80,7 +80,7 @@ L['Auto clean database'] = '自动清理数据库'
 L.Never = '从不'
 L['Cannot perform this action while the search is locked.'] = '搜索被锁定时，无法执行此操作。'
 L['I found that some addons prevent quick search and quick selling from working.'] =
-    '我发现有些插件阻止了快速搜索和快速出售功能的正常工作。'
+    '|cff00fffftdAuction|r发现有些插件阻止了快速搜索和快速出售功能的正常工作。普通的搜索也可能受到影响。'
 L['Insecure Input'] = '不安全的输入'
 L['Items with random enchantments cannot be searched correctly on the Chinese client, |cff00fffftdAuction|r have fixed this issue, but you need to manually enter the search text in TITAN realm.'] =
     '带有随机附魔的物品在国服客户端无法正确搜索，|cff00fffftdAuction|r已经修复了此问题，但你需要在时光服手动输入搜索文本。'
