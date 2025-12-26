@@ -181,13 +181,15 @@ function Browse:LayoutBlizzard()
     point(self.IsUsableCheckButton, 'TOPLEFT', nameWidth + 300, -38)
     point(ShowOnPlayerCheckButton, 'TOPLEFT', self.IsUsableCheckButton, 'BOTTOMLEFT', 0, 2)
 
-    parent(self.PrevPageButton)
-    parent(self.NextPageButton)
-    parent(self.SearchCountText)
-    parent(self.BidButton)
-    parent(self.BuyoutButton)
-    parent(self.SearchButton)
-    parent(self.ResetButton)
+    if not ns.TITAN then
+        parent(self.PrevPageButton)
+        parent(self.NextPageButton)
+        parent(self.SearchCountText)
+        parent(self.BidButton)
+        parent(self.BuyoutButton)
+        parent(self.SearchButton)
+        parent(self.ResetButton)
+    end
 
     if ns.NARROW_FILTER then
         local function SetWidth(button, width, our)
