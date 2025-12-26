@@ -1,3 +1,14 @@
+## [2.0.3](https://github.com/DengSir/tdAuction/compare/v2.0.2...v2.0.3) (2025-12-26)
+
+
+### Features
+
+* 更新一处说明 ([f825bfe](https://github.com/DengSir/tdAuction/commit/f825bfeb452ec915953618b5a45a9974e6d81b4f))
+* 修复分类列表产生污染的问题 ([52dbcad](https://github.com/DengSir/tdAuction/commit/52dbcadb1c4972b09af9a6cd752861405e03ffd9))
+* 增强已被污染的提醒 ([7f5974a](https://github.com/DengSir/tdAuction/commit/7f5974a83bd91676ae1dcd962947f342ee2f7613))
+
+
+
 ## [2.0.2](https://github.com/DengSir/tdAuction/compare/v2.0.1...v2.0.2) (2025-12-24)
 
 
