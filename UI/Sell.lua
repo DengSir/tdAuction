@@ -259,6 +259,11 @@ function Sell:OnSellItemUpdate()
         stackSize = min(stackSize, totalCount, stackCount)
         local numStacks = floor(totalCount / stackSize)
 
+        local numStacksSetting = ns.profile.sell.numStacks
+        if numStacksSetting ~= 0 then
+            numStacks = min(numStacksSetting, numStacks)
+        end
+
         self.StackSizeEntry:SetNumber(stackSize)
         self.NumStacksEntry:SetNumber(numStacks)
 

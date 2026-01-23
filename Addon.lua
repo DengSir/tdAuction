@@ -50,6 +50,7 @@ local DEFAULT_PROFILE = { --
     },
     sell = {
         stackSize = 0,
+        numStacks = 0,
         duration = 2,
         durationNoDeposit = false,
         autoOpenPriceList = true,
