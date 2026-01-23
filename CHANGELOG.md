@@ -1,3 +1,14 @@
+## [2.0.4](https://github.com/DengSir/tdAuction/compare/v2.0.3...v2.0.4) (2026-01-23)
+
+
+### Features
+
+* 添加缩小物品分类列表的选项 ([cb9931c](https://github.com/DengSir/tdAuction/commit/cb9931cf035793682faa007dcf85369868d4b678))
+* 允许设置默认出售的组数 ([a51c705](https://github.com/DengSir/tdAuction/commit/a51c70551f31f5ed289427b38f93e2dda5d8fb65))
+* 支持tbc ([bafe777](https://github.com/DengSir/tdAuction/commit/bafe777e34d08ef68b66581f321d486d59ddd1ba))
+
+
+
 ## [2.0.3](https://github.com/DengSir/tdAuction/compare/v2.0.2...v2.0.3) (2025-12-26)
 
 
