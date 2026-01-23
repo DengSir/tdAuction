@@ -25,6 +25,7 @@ L["Count"] = true
 L["Database"] = true
 L["Date"] = true
 L["Default auction duration"] = true
+L["Default number of stacks"] = true
 L["Default stack size"] = true
 L["Disenchant price"] = true
 L["Duration no deposit"] = true
@@ -162,6 +163,7 @@ L['Please press |cff00ff00CTRL-X|r, then press |cff00ff00CTRL-V|r and |cff00ff00
 L['|cff00fffftdAuction|r cannot detect the source of the link, this may cause taint, so you need to manually enter the search text.'] = true
 L['Enable %s to sell'] = true
 L['Support me'] = true
+L['Default number of stacks'] = true
 -- @locale-fill@
 -- @end-import@
 -- @end-debug@

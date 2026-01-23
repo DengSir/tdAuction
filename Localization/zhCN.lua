@@ -90,6 +90,7 @@ L['|cff00fffftdAuction|r cannot detect the source of the link, this may cause ta
     '|cff00fffftdAuction|r 无法检测链接来源，这可能导致污染，因此你需要手动输入搜索文本。'
 L['Enable %s to sell'] = '开启%s出售'
 L['Support me'] = '支持我'
+L['Default number of stacks'] = true
 -- @locale-fill@
 
 -- @end-import@

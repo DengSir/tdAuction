@@ -43,6 +43,8 @@ L["Database"] = "Datenbank"
 --[[Translation missing --]]
 --[[ L["Date"] = "Date"--]] 
 L["Default auction duration"] = "Standardwert für Auktionslänge"
+--[[Translation missing --]]
+--[[ L["Default number of stacks"] = "Default number of stacks"--]] 
 L["Default stack size"] = "Standardtwert für Stapelgröße"
 L["Disenchant price"] = "Entzauberungspreis"
 --[[Translation missing --]]
@@ -154,6 +156,8 @@ L = L or {}
 --[[ L["Date"] = "Date"--]] 
 --[[Translation missing --]]
 --[[ L["Default auction duration"] = "Default auction duration"--]] 
+--[[Translation missing --]]
+--[[ L["Default number of stacks"] = "Default number of stacks"--]] 
 --[[Translation missing --]]
 --[[ L["Default stack size"] = "Default stack size"--]] 
 --[[Translation missing --]]
@@ -305,6 +309,8 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Default auction duration"] = "Default auction duration"--]] 
 --[[Translation missing --]]
+--[[ L["Default number of stacks"] = "Default number of stacks"--]] 
+--[[Translation missing --]]
 --[[ L["Default stack size"] = "Default stack size"--]] 
 --[[Translation missing --]]
 --[[ L["Disenchant price"] = "Disenchant price"--]] 
@@ -454,6 +460,8 @@ L = L or {}
 --[[ L["Date"] = "Date"--]] 
 --[[Translation missing --]]
 --[[ L["Default auction duration"] = "Default auction duration"--]] 
+--[[Translation missing --]]
+--[[ L["Default number of stacks"] = "Default number of stacks"--]] 
 --[[Translation missing --]]
 --[[ L["Default stack size"] = "Default stack size"--]] 
 --[[Translation missing --]]
@@ -605,6 +613,8 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Default auction duration"] = "Default auction duration"--]] 
 --[[Translation missing --]]
+--[[ L["Default number of stacks"] = "Default number of stacks"--]] 
+--[[Translation missing --]]
 --[[ L["Default stack size"] = "Default stack size"--]] 
 --[[Translation missing --]]
 --[[ L["Disenchant price"] = "Disenchant price"--]] 
@@ -755,6 +765,8 @@ L = L or {}
 --[[Translation missing --]]
 --[[ L["Default auction duration"] = "Default auction duration"--]] 
 --[[Translation missing --]]
+--[[ L["Default number of stacks"] = "Default number of stacks"--]] 
+--[[Translation missing --]]
 --[[ L["Default stack size"] = "Default stack size"--]] 
 --[[Translation missing --]]
 --[[ L["Disenchant price"] = "Disenchant price"--]] 
@@ -886,6 +898,8 @@ L["Count"] = "Считать"
 L["Database"] = "База данных"
 L["Date"] = "Дата"
 L["Default auction duration"] = "Продолжительность аукциона по умолчанию"
+--[[Translation missing --]]
+--[[ L["Default number of stacks"] = "Default number of stacks"--]] 
 L["Default stack size"] = "Размер стака по умолчанию"
 L["Disenchant price"] = "Цена наложения чар"
 L["Duration no deposit"] = "Продолжительность без депозита"
@@ -990,6 +1004,8 @@ L = L or {}
 --[[ L["Date"] = "Date"--]] 
 --[[Translation missing --]]
 --[[ L["Default auction duration"] = "Default auction duration"--]] 
+--[[Translation missing --]]
+--[[ L["Default number of stacks"] = "Default number of stacks"--]] 
 --[[Translation missing --]]
 --[[ L["Default stack size"] = "Default stack size"--]] 
 --[[Translation missing --]]
