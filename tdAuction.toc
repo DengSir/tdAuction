@@ -11,8 +11,8 @@
 
 Libs\Libs.xml
 Localization\Localization.xml
-Addon.lua
 API.lua
+Addon.lua
 Data.lua
 
 Query\Querier.lua
@@ -23,7 +23,7 @@ Query\BrowseScaner.lua
 Query\PriceScaner.lua
 
 UI\Template.xml
-UI\Vanilla.xml  [AllowLoadGameType Vanilla]
+UI\Vanilla.xml  [AllowLoadGameType Vanilla, TBC]
 UI\Wrath.xml  [AllowLoadGameType Wrath]
 UI\UI.xml
 UI\FullScan.lua
