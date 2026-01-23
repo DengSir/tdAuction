@@ -11,13 +11,11 @@ local ripairs = ipairs_reverse or ripairs
 local L = ns.L
 
 local BUTTON_HEIGHT = 18
-local FILTER_FRAME_SHORT = ns.NARROW_FILTER and 48 or 0
-local CONTROL_LABEL_SPACING = ns.NARROW_FILTER and 0 or -3
 
-local BUTTON_WIDTH_WITHSCROLL = 608 + FILTER_FRAME_SHORT
-local BUTTON_WIDTH_NOSCROLL = BUTTON_WIDTH_WITHSCROLL + 28
-local FRAME_WIDTH_WITHSCROLL = BUTTON_WIDTH_WITHSCROLL + 4
-local FRAME_WIDTH_NOSCROLL = BUTTON_WIDTH_NOSCROLL + 4
+local BUTTON_WIDTH_WITHSCROLL
+local BUTTON_WIDTH_NOSCROLL
+local FRAME_WIDTH_WITHSCROLL
+local FRAME_WIDTH_NOSCROLL
 
 ---@class UI.Browse: Object, Frame
 local Browse = ns.Addon:NewClass('UI.Browse', 'Frame')
@@ -47,6 +45,14 @@ function Browse:Constructor(parent)
 end
 
 function Browse:LayoutBlizzard()
+    local FILTER_FRAME_SHORT = ns.profile.buy.narrowItemClass and 48 or 0
+    local CONTROL_LABEL_SPACING = ns.profile.buy.narrowItemClass and 0 or -3
+
+    BUTTON_WIDTH_WITHSCROLL = 608 + FILTER_FRAME_SHORT
+    BUTTON_WIDTH_NOSCROLL = BUTTON_WIDTH_WITHSCROLL + 28
+    FRAME_WIDTH_WITHSCROLL = BUTTON_WIDTH_WITHSCROLL + 4
+    FRAME_WIDTH_NOSCROLL = BUTTON_WIDTH_NOSCROLL + 4
+
     local BrowseDropDown = BrowseDropDown or BrowseDropdown
     local BrowseDropDownName = BrowseDropDownName or BrowseDropdownName
 
@@ -191,7 +197,7 @@ function Browse:LayoutBlizzard()
         parent(self.ResetButton)
     end
 
-    if ns.NARROW_FILTER then
+    if ns.profile.buy.narrowItemClass then
         local function SetWidth(button, width, our)
             if our then
                 return
@@ -340,6 +346,7 @@ function Browse:SetupEventsAndHooks()
     if not ns.TITAN then
         AuctionFrameBrowse_Update = nop
         AuctionFrameBrowse_UpdateArrows = nop
+        print(AuctionFrameBrowse_Search)
         AuctionFrameBrowse_Search = function()
             return self:RequestSearch()
         end
@@ -379,11 +386,12 @@ function Browse:SetupEventsAndHooks()
     end)
 
     if not ns.TITAN then
-        local orig_ChatEdit_InsertLink = ChatEdit_InsertLink
-        _G.ChatEdit_InsertLink = function(text)
+        local orig
+
+        local function InsertLink(text)
             if self.Name:IsVisible() and IsShiftKeyDown() then
                 self.Name:Hide()
-                local ok = orig_ChatEdit_InsertLink(text)
+                local ok = orig(text)
                 self.Name:Show()
 
                 if not ok then
@@ -396,8 +404,20 @@ function Browse:SetupEventsAndHooks()
                 end
                 return ok
             else
-                return orig_ChatEdit_InsertLink(text)
+                return orig(text)
             end
+        end
+
+        if ChatFrameUtil and ChatFrameUtil.InsertLink then
+            orig = ChatFrameUtil.InsertLink
+            ChatFrameUtil.InsertLink = InsertLink
+        end
+
+        if ChatEdit_InsertLink then
+            if not orig then
+                orig = ChatEdit_InsertLink
+            end
+            ChatEdit_InsertLink = InsertLink
         end
     else
         self:RegisterMessage('TDAUCTION_QUERY_BROWSE', function()

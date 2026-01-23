@@ -164,6 +164,8 @@ L['|cff00fffftdAuction|r cannot detect the source of the link, this may cause ta
 L['Enable %s to sell'] = true
 L['Support me'] = true
 L['Default number of stacks'] = true
+L['Narrow item class filter list'] = true
+L['Need reload UI, continue?'] = true
 -- @locale-fill@
 -- @end-import@
 -- @end-debug@

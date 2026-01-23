@@ -138,7 +138,7 @@ function Addon:SetupOptionFrame()
 
     local options = {
         type = 'group',
-        name = 'tdAuction ' .. GetAddOnMetadata(ADDON, 'Version'),
+        name = 'tdAuction ' .. C_AddOns.GetAddOnMetadata(ADDON, 'Version'),
         get = function(paths)
             return getConfig(paths)
         end,
@@ -149,6 +149,18 @@ function Addon:SetupOptionFrame()
             sellTitle = treeTitle(AUCTIONS),
             buy = treeItem(BROWSE) { --
                 quickBuy = toggle(L['Enable ALT-CTRL click to buyout']),
+                narrowItemClass = ns.NARROW_FILTER and {
+                    type = 'toggle',
+                    name = L['Narrow item class filter list'],
+                    width = 'double',
+                    order = orderGen(),
+                    confirm = true,
+                    confirmText = L['Need reload UI, continue?'],
+                    set = function(paths, value)
+                        setConfig(paths, value)
+                        C_UI.Reload()
+                    end
+                } or nil,
             },
             sell = treeItem(AUCTIONS) {
                 quickSell = toggle(format(L['Enable %s to sell'], ns.TITAN and 'SHIFT' or 'ALT')),

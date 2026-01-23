@@ -61,7 +61,8 @@ local DEFAULT_PROFILE = { --
     },
     buy = { --
         quickBuy = true,
-        hiddenColumns = {Seller = true, UnitBid = not ns.ZH or nil},
+        narrowItemClass = ns.NARROW_FILTER,
+        hiddenColumns = {Seller = true, UnitBid = not ns.NARROW_FILTER or nil},
     },
     db = {clean = 0},
 }
@@ -169,7 +170,7 @@ function Addon:CleanPrices()
 end
 
 function Addon:SetupBlizzardUI()
-    if IsAddOnLoaded('Blizzard_AuctionUI') then
+    if C_AddOns.IsAddOnLoaded('Blizzard_AuctionUI') then
         self:OnAuctionLoaded()
     else
         self:RegisterEvent('ADDON_LOADED', function(_, addon)
@@ -206,10 +207,10 @@ function Addon:SetupBackground()
             end
         end
 
-        T('TopLeft', ns.NARROW_FILTER and 'Browse-zh' or 'Browse', 'Bid', 'Auction')
+        T('TopLeft', ns.profile.buy.narrowItemClass and 'Browse-zh' or 'Browse', 'Bid', 'Auction')
         T('Top', 'Browse', 'Auction', 'Auction')
         T('TopRight', 'Browse', 'Auction', 'Auction')
-        T('BotLeft', ns.NARROW_FILTER and 'Browse-zh' or 'Browse', 'Bid', 'Auction')
+        T('BotLeft', ns.profile.buy.narrowItemClass and 'Browse-zh' or 'Browse', 'Bid', 'Auction')
         T('Bot', 'Auction', 'Auction', 'Auction')
         T('BotRight', 'Bid', 'Bid', 'Auction')
     end
