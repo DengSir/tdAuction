@@ -354,6 +354,10 @@ function Browse:SetupEventsAndHooks()
         hooksecurefunc('BrowseWowTokenResults_Update', function()
             self.BuyFrame:SetShown(not self:IsAtWowToken())
         end)
+    else
+        hooksecurefunc('AuctionFrameBrowse_Update', function()
+            self.SearchCountText:Show()
+        end)
     end
 
     hooksecurefunc('SetSelectedAuctionItem', function(listType)
