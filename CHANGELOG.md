@@ -1,3 +1,9 @@
+## [2.0.5](https://github.com/DengSir/tdAuction/compare/v2.0.4...v2.0.5) (2026-04-06)
+
+
+### Bug Fixes
+
+* 修复不显示总数的问题 ([d17db40](https://github.com/DengSir/tdAuction/commit/d17db4055dcd2d2c145b9da30081a9d4f2b43fd8))
 ## [2.0.4](https://github.com/DengSir/tdAuction/compare/v2.0.3...v2.0.4) (2026-01-23)
 
 
