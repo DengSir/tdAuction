@@ -12,6 +12,7 @@
 ---@field PriceScaner PriceScaner
 ---@field Secure Secure
 ---@field LastLink LastLink
+---@field Overlay Overlay
 -- module
 ---@field Querier Querier
 local ns = select(2, ...)
@@ -186,6 +187,20 @@ function Addon:OnAuctionLoaded()
     self:SetupSort()
     self:SetupBackground()
     self:SetupUI()
+
+    -- @debug@
+    hooksecurefunc('AuctionFrameBrowse_Search', function()
+        print('AuctionFrameBrowse_Search')
+    end)
+
+    hooksecurefunc('AuctionFrameBrowse_Reset', function()
+        print('AuctionFrameBrowse_Reset')
+    end)
+
+    hooksecurefunc(ChatFrameUtil, 'InsertLink', function(link)
+        print('ChatFrameUtil.InsertLink', link)
+    end)
+    -- @end-debug@
 end
 
 function Addon:SetupSort()

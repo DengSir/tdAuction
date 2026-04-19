@@ -23,8 +23,9 @@ Query\BrowseScaner.lua
 Query\PriceScaner.lua
 
 UI\Template.xml
-UI\Vanilla.xml  [AllowLoadGameType Vanilla, TBC]
-UI\Wrath.xml  [AllowLoadGameType Wrath]
+UI\Vanilla.xml
+# UI\Vanilla.xml  [AllowLoadGameType Vanilla, TBC]
+# UI\Wrath.xml  [AllowLoadGameType Wrath]
 UI\UI.xml
 UI\FullScan.lua
 UI\BrowseItem.lua
@@ -37,4 +38,5 @@ UI\Option.lua
 Secure\Secure.xml [AllowLoadGameType Wrath]
 Secure\LastLink.lua [AllowLoadGameType Wrath]
 Secure\Secure.lua [AllowLoadGameType Wrath]
+Secure\Overlay.lua [AllowLoadGameType Wrath]
 Secure\SecureInput.lua [AllowLoadGameType Wrath]

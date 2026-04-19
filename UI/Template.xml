@@ -115,7 +115,7 @@
         </Layers>
     </Frame>
 
-    <Button name="tdAuctionSortButtonBaseTemplate" inherits="SecureActionButtonTemplate" virtual="true">
+    <Button name="tdAuctionSortButtonBaseTemplate" virtual="true">
         <Size y="19" />
         <Layers>
             <Layer level="BACKGROUND">

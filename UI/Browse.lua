@@ -115,9 +115,17 @@ function Browse:LayoutBlizzard()
     for i = 1, NUM_BROWSE_TO_DISPLAY do
         hide(_G['BrowseButton' .. i])
     end
-    hide(BrowseQualitySort)
-    hide(BrowseLevelSort)
-    hide(BrowseDurationSort)
+
+    if not ns.TITAN then
+        hide(BrowseQualitySort)
+        hide(BrowseLevelSort)
+        hide(BrowseDurationSort)
+    else
+        BrowseQualitySort:SetAlpha(0)
+        BrowseLevelSort:SetAlpha(0)
+        BrowseDurationSort:SetAlpha(0)
+    end
+
     hide(BrowseHighBidderSort)
     hide(BrowseCurrentBidSort)
     hide(BrowseScrollFrame)
@@ -261,15 +269,28 @@ function Browse:SetupSortButtons()
         self:SaveSorts()
     end
 
+    if ns.TITAN then
+        -- 给排序按钮用
+        BrowseQualitySort:ClearAllPoints()
+
+        BrowseQualitySort:SetParent(self.SortButtonFrame)
+        BrowseQualitySort:SetFrameLevel(self.SortButtonFrame:GetFrameLevel() + 90)
+
+        BrowseQualitySort:SetPoint('TOPLEFT', self.SortButtonFrame[self.headers[1].key], 'TOPLEFT', 0, 0)
+        BrowseQualitySort:SetPoint('BOTTOMRIGHT', self.SortButtonFrame[self.headers[#self.headers].key], 'BOTTOMRIGHT',
+                                   0, 0)
+    end
+
     for _, info in pairs(self.headers) do
+        ---@type Button
         local button = self.SortButtonFrame[info.key]
         button.key = info.key
         button.reverse = not not info.reverse
         button.sortColumn = info.sortColumn
         if ns.TITAN then
-            button:SetScript('PreClick', PreClick)
-            button:SetAttribute('type', 'macro')
-            button:SetAttribute('macrotext', '/click BrowseSearchButton')
+            button:SetScript('OnMouseDown', PreClick)
+            button:SetFrameLevel(self.SortButtonFrame:GetFrameLevel() + 10)
+            button:SetPropagateMouseClicks(true)
         else
             button:SetScript('OnClick', OnClick)
         end

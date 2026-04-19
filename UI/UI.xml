@@ -119,7 +119,7 @@
                 self:SetBackdrop(BACKDROP_DIALOG_32_32)
             </OnLoad>
             <OnShow>
-                self:SetFrameLevel(self:GetParent():GetFrameLevel() + 100)
+                self:SetFrameLevel(self:GetParent():GetFrameLevel() + 1000)
                 self.Blocker:SetFrameLevel(self:GetFrameLevel() - 1)
             </OnShow>
             <OnHide>

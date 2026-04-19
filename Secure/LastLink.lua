@@ -11,7 +11,11 @@ local LastLink = ns.Addon:NewModule('LastLink', 'AceEvent-3.0', 'AceHook-3.0')
 LastLink:Disable()
 
 function LastLink:OnEnable()
-    self:SecureHook('ChatEdit_InsertLink')
+    if ChatFrameUtil and ChatFrameUtil.InsertLink then
+        self:SecureHook(ChatFrameUtil, 'InsertLink', 'ChatEdit_InsertLink')
+    else
+        self:SecureHook('ChatEdit_InsertLink')
+    end
 
     self:SecureHook(BrowseName, 'SetText', 'BrowseNameSetText')
     self:HookScript(BrowseName, 'OnTextChanged', 'BrowseNameOnTextChanged')

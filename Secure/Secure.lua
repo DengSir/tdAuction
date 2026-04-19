@@ -12,19 +12,6 @@ local MODE_SELL = 2
 local MODE_LOCKED = 3
 local MODE_SUFFIX = 4
 
-local SELL_TEMPLATE = [[
-/click AuctionFrameTab1
-/click BrowseResetButton
-/click %s
-/click BrowseSearchButton ForSell
-/click AuctionFrameTab3
-]]
-
-local SEARCH_TEMPLATE = [[
-/click %s
-/click BrowseSearchButton
-]]
-
 ---@class Secure : AceModule, AceHook-3.0, AceEvent-3.0
 local Secure = ns.Addon:NewModule('Secure', 'AceHook-3.0', 'AceEvent-3.0')
 Secure:Disable()
@@ -72,6 +59,40 @@ function Secure:OnEnable()
     self:SecureHook(BrowseName, 'SetText', 'BrowseName_SetText')
     self:SecureHook('QueryAuctionItems')
 
+    -- 给browse排序用的
+    self:HookScript(BrowseQualitySort, 'PreClick', function()
+        self:BlockBlizzardSetSorts(1)
+        self:SendMessage('TDAUCTION_QUERY_BROWSE')
+    end)
+
+    -- 给背包里搜索用的
+    self:HookScript(BrowseLevelSort, 'PreClick', function()
+        self:BlockBlizzardSetSorts(1)
+        self:SendMessage('TDAUCTION_QUERY_BROWSE')
+    end)
+
+    -- 上架用的
+    self:HookScript(BrowseDurationSort, 'PreClick', function()
+        AuctionFrameBrowse.page = nil
+        self:BlockBlizzardSetSorts(2)
+        self:SendMessage('TDAUCTION_QUERY_FOR_SELL')
+    end)
+
+    self:SecureHook('AuctionFrame_SetSort', function()
+        if not self.secureSorting then
+            return
+        end
+
+        if self.secureSorting == 1 then
+            ns.Addon.Browse:RestoreSorts()
+        else
+            SortAuctionClearSort('list')
+            SortAuctionSetSort('list', 'unitprice', false)
+        end
+
+        self.secureSorting = false
+    end)
+
     self.timer = C_Timer.NewTicker(1, function()
         if not self:IsEnabled() then
             return
@@ -92,7 +113,9 @@ function Secure:OnEnable()
 end
 
 function Secure:OnDisable()
-    self:CloseOverlay()
+    if self.overlay then
+        self.overlay:Close()
+    end
 
     if self.timer then
         self.timer:Cancel()
@@ -175,7 +198,9 @@ end
 function Secure:MODIFIER_STATE_CHANGED()
     local mode = self:GetCurrentMode()
     if not mode then
-        self:CloseOverlay()
+        if self.overlay then
+            self.overlay:Close()
+        end
         return
     end
     for _, v in ipairs(GetMouseFoci()) do
@@ -183,77 +208,6 @@ function Secure:MODIFIER_STATE_CHANGED()
             self:CheckItemButton(v)
             return
         end
-    end
-end
-
-function Secure:CreateOverlay()
-    ---@type Button
-    local overlay = CreateFrame('Button', nil, UIParent,
-                                'SecureActionButtonTemplate SecureHandlerShowHideTemplate SecureHandlerEnterLeaveTemplate SecureHandlerStateTemplate')
-    overlay:SetPropagateMouseMotion(true)
-    overlay:SetFrameStrata('FULLSCREEN_DIALOG')
-
-    overlay:SetAttribute('type', 'macro')
-    overlay:SetScript('PreClick', function(overlay)
-        if overlay.mode == MODE_LOCKED then
-            UIErrorsFrame:AddMessage(L['Cannot perform this action while the search is locked.'],
-                                     RED_FONT_COLOR:GetRGB())
-        end
-    end)
-    overlay:SetScript('PostClick', function(overlay)
-        if overlay.mode == MODE_SELL then
-            C_Container.PickupContainerItem(overlay.bag, overlay.slot)
-            ClickAuctionSellItemButton()
-            ClearCursor()
-        end
-    end)
-    overlay:SetAttribute('_onstate-usable', [[
-        if newstate == '1' then
-            self:Hide()
-        end
-    ]])
-    overlay:SetAttribute('_onleave', [[
-        self:Hide()
-    ]])
-    overlay:SetAttribute('_onhide', [[
-        self:Hide()
-        self:SetParent(nil)
-        self:ClearAllPoints()
-    ]])
-
-    RegisterStateDriver(overlay, 'usable', '[combat]1;0')
-
-    self.Overlay = overlay
-    return overlay
-end
-
-function Secure:SetupOverlay(button, bag, slot, mode)
-    local overlay = self.Overlay or self:CreateOverlay()
-    overlay:ClearAllPoints()
-    overlay:SetAllPoints(button)
-    overlay:SetFrameStrata('FULLSCREEN_DIALOG')
-    overlay:SetFrameLevel(9900)
-    overlay:SetAttribute('macrotext', self:GenerateMacro(button, mode))
-    overlay:Show()
-    overlay.bag = bag
-    overlay.slot = slot
-    overlay.mode = mode
-end
-
-function Secure:CloseOverlay()
-    if not self.Overlay then
-        return
-    end
-    self.Overlay:Hide()
-end
-
-function Secure:GenerateMacro(button, mode)
-    if mode == MODE_BROWSE then
-        return format(SEARCH_TEMPLATE, button:GetName())
-    elseif mode == MODE_SELL then
-        return format(SELL_TEMPLATE, button:GetName())
-    else
-        return ''
     end
 end
 
@@ -289,7 +243,8 @@ function Secure:CheckItemButton(button)
         return
     end
 
-    self:SetupOverlay(button, bag, slot, mode)
+    self.overlay = self.overlay or ns.Overlay:Create()
+    self.overlay:Setup(button, bag, slot, mode)
 end
 
 function Secure:IsSecureButton(button)
@@ -330,6 +285,10 @@ function Secure:GetWarningFrame()
         self.WarningFrame = WarningFrame
     end
     return self.WarningFrame
+end
+
+function Secure:BlockBlizzardSetSorts(flag)
+    self.secureSorting = flag
 end
 
 -- @debug@
