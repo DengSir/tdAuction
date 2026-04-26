@@ -274,7 +274,7 @@ function Browse:SetupSortButtons()
         BrowseQualitySort:ClearAllPoints()
 
         BrowseQualitySort:SetParent(self.SortButtonFrame)
-        BrowseQualitySort:SetFrameLevel(self.SortButtonFrame:GetFrameLevel() + 90)
+        BrowseQualitySort:SetFrameLevel(self.SortButtonFrame:GetFrameLevel() + 10)
 
         BrowseQualitySort:SetPoint('TOPLEFT', self.SortButtonFrame[self.headers[1].key], 'TOPLEFT', 0, 0)
         BrowseQualitySort:SetPoint('BOTTOMRIGHT', self.SortButtonFrame[self.headers[#self.headers].key], 'BOTTOMRIGHT',
@@ -289,7 +289,7 @@ function Browse:SetupSortButtons()
         button.sortColumn = info.sortColumn
         if ns.TITAN then
             button:SetScript('OnMouseDown', PreClick)
-            button:SetFrameLevel(self.SortButtonFrame:GetFrameLevel() + 10)
+            button:SetFrameLevel(self.SortButtonFrame:GetFrameLevel() + 20)
             button:SetPropagateMouseClicks(true)
         else
             button:SetScript('OnClick', OnClick)
