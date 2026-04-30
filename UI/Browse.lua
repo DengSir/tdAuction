@@ -367,7 +367,6 @@ function Browse:SetupEventsAndHooks()
     if not ns.TITAN then
         AuctionFrameBrowse_Update = nop
         AuctionFrameBrowse_UpdateArrows = nop
-        print(AuctionFrameBrowse_Search)
         AuctionFrameBrowse_Search = function()
             return self:RequestSearch()
         end
