@@ -1,3 +1,4 @@
+## [2.0.6](https://github.com/DengSir/tdAuction/compare/v2.0.5...v2.0.6) (2026-04-30)
 ## [2.0.5](https://github.com/DengSir/tdAuction/compare/v2.0.4...v2.0.5) (2026-04-06)
 
 
